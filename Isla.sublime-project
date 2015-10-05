@@ -1,0 +1,22 @@
+{
+  "folders":
+  [
+    {
+      "folder_exclude_patterns":
+      [
+        "build",
+        "gradle",
+        "node_modules",
+        "targer"
+      ],
+      "path": "."
+    }
+  ],
+  "settings":
+  {
+    "tab_size": 4,
+    "FuzzyFilePath":
+    {
+    }
+  }
+}

@@ -1,0 +1,760 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"main",
+				"mainClassName"
+			],
+			[
+				"Reque",
+				"RequestParam"
+			],
+			[
+				"Request",
+				"RequestMapping"
+			],
+			[
+				"_Coo",
+				"$_COOKIE〔variable〕"
+			],
+			[
+				"tex",
+				"text-decoration"
+			],
+			[
+				"in",
+				"inline-block"
+			],
+			[
+				"dis",
+				"display"
+			],
+			[
+				"list",
+				"listStore"
+			],
+			[
+				"desc",
+				"description"
+			],
+			[
+				"defau",
+				"defaultSettings"
+			],
+			[
+				"comma",
+				"commands"
+			],
+			[
+				"command",
+				"command_block_instert_input_or_output"
+			],
+			[
+				"current",
+				"currentLog"
+			],
+			[
+				"param",
+				"parameters"
+			],
+			[
+				"comman",
+				"commandEntry"
+			],
+			[
+				"curre",
+				"currentLog"
+			],
+			[
+				"pack",
+				"pack_end"
+			],
+			[
+				"ex",
+				"executeCommandByName"
+			],
+			[
+				"co",
+				"command"
+			],
+			[
+				"com",
+				"commands"
+			],
+			[
+				"en",
+				"commandEntry"
+			],
+			[
+				"action",
+				"actionGroup"
+			],
+			[
+				"fileSa",
+				"fileSaveAs"
+			],
+			[
+				"addA",
+				"add_action"
+			],
+			[
+				"ui",
+				"uimanager"
+			],
+			[
+				"__",
+				"__init__"
+			],
+			[
+				"w",
+				"Window"
+			],
+			[
+				"cla",
+				"class"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 400.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"rena",
+				"ANF: Rename File"
+			],
+			[
+				"renamef",
+				"ANF: Rename File"
+			],
+			[
+				"ren",
+				"ANF: Rename File"
+			],
+			[
+				"renam	",
+				"ANF: Rename File"
+			],
+			[
+				"",
+				"ANF: Rename File"
+			],
+			[
+				"live",
+				"LiveStyle: Install WebKit extension"
+			],
+			[
+				"css",
+				"Run CSScomb"
+			],
+			[
+				"col",
+				"Color Picker"
+			],
+			[
+				"ssle",
+				"Set Syntax: LESS"
+			],
+			[
+				"inpa",
+				"Package Control: Install Package"
+			],
+			[
+				"colo",
+				"Color Picker"
+			],
+			[
+				"ssja",
+				"Set Syntax: Jade"
+			],
+			[
+				"remopa",
+				"Package Control: Remove Package"
+			],
+			[
+				"packag",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"syn",
+				"Set Syntax: HTML"
+			],
+			[
+				"packa",
+				"Package Control: List Packages"
+			],
+			[
+				"shtml",
+				"Set Syntax: HTML"
+			],
+			[
+				"setsynhml",
+				"Set Syntax: HTML"
+			],
+			[
+				"sethtm",
+				"Set Syntax: HTML"
+			],
+			[
+				"rename",
+				"ANF: Rename File"
+			],
+			[
+				"renam",
+				"ANF: Rename File"
+			],
+			[
+				"pytho",
+				"Set Syntax: Python3"
+			],
+			[
+				"inp",
+				"Package Control: Install Package"
+			],
+			[
+				"pain",
+				"Package Control: Install Package"
+			],
+			[
+				"termi",
+				"Preferences: Terminal Key Bindings – Default"
+			],
+			[
+				"settin",
+				"Preferences: Settings - Default"
+			],
+			[
+				"packai",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"termina",
+				"Preferences: Terminal Key Bindings – Default"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 601.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/Touko/Documents/Koulu/Isla/isla"
+	],
+	"file_history":
+	[
+		"/Users/Touko/Documents/Koulu/Isla/isla/.gitignore",
+		"/Users/Touko/Documents/Omat projektit/luisto/routes/index.js",
+		"/Users/Touko/Documents/Omat projektit/luisto/app.js",
+		"/Users/Touko/Documents/Omat projektit/luisto/routes/initialize.js",
+		"/Users/Touko/Documents/Koulu/Isla/isla/Isla.sublime-project",
+		"/Users/Touko/Documents/Omat projektit/luisto/luisto.sublime-project",
+		"/Users/Touko/Downloads/sagan-master/build.gradle",
+		"/Users/Touko/Documents/Koulu/Isla/isla/build.gradle",
+		"/Users/Touko/Documents/Omat projektit/luisto/views/master.dot",
+		"/Users/Touko/Documents/Omat projektit/luisto/public/stylesheets/style.css",
+		"/Users/Touko/Documents/Omat projektit/luisto/libs/MenuItem.js",
+		"/Users/Touko/Documents/Omat projektit/luisto/libs/Menu.js",
+		"/Users/Touko/Documents/Omat projektit/luisto/.gitignore",
+		"/Users/Touko/Documents/Koulu/Isla/isla/src/main/java/core/Application.java",
+		"/Users/Touko/Documents/Omat projektit/luisto/package.json",
+		"/Users/Touko/Documents/Koulu/Isla/isla/src/main/java/Application.java",
+		"/Users/Touko/Documents/Koulu/Isla/isla/src/main/java/room/Application.java",
+		"/Users/Touko/Documents/Koulu/Isla/isla/core/Application.java",
+		"/Users/Touko/Documents/Koulu/Isla/isla/src/main/java/room/Room.java",
+		"/Users/Touko/Documents/Koulu/Isla/isla/RoomController.java",
+		"/Users/Touko/Documents/Koulu/Isla/isla/isla.sublime-project",
+		"/Users/Touko/Documents/Koulu/Isla/isla/Room.java",
+		"/Users/Touko/Documents/Koulu/Isla/isla/src/main/java/room/room.java",
+		"/Users/Touko/Documents/Koulu/Isla/isla/Isla.java",
+		"/Users/Touko/Documents/Koulu/Isla/isla/src/main/java/hello/HelloWorld.java",
+		"/Users/Touko/Documents/Koulu/Isla/isla/gradle.properties",
+		"/Users/Touko/Documents/Koulu/Isla/isla/settings.gradle",
+		"/Users/Touko/Documents/Omat projektit/seminaari/init.php",
+		"/Users/Touko/Documents/Omat projektit/seminaari/kysymys_kasittely.php",
+		"/Users/Touko/Documents/Omat projektit/seminaari/ti02to.sublime-project",
+		"/Users/Touko/Documents/Omat projektit/seminaari/kysymyshaku.php",
+		"/Users/Touko/Documents/Omat projektit/seminaari/data.php",
+		"/Users/Touko/Documents/Omat projektit/seminaari/setup.php",
+		"/Users/Touko/Documents/Omat projektit/seminaari/index.html",
+		"/Users/Touko/Documents/Omat projektit/seminaari/index.php",
+		"/C/Users/touko/webdev/siima/app/public/stylesheets/style.less",
+		"/C/Users/touko/webdev/siima/app/public/stylesheets/login.less",
+		"/C/Users/touko/webdev/ti02to/kirjautuminen.php",
+		"/C/Users/touko/webdev/siima/app/templates/login.jade",
+		"/C/Users/touko/webdev/siima/app/controllers/Login.js",
+		"/C/Users/touko/webdev/siima/app/db.js",
+		"/C/Users/touko/webdev/siima/app/bin/www",
+		"/C/Users/touko/webdev/siima/app/app.js",
+		"/C/Users/touko/webdev/ti02to/tyylitys/kysymys.css",
+		"/C/Users/touko/webdev/ti02to/tyylitys/main.css",
+		"/C/Users/touko/webdev/ti02to/tyylitys/kirjautuminen.css",
+		"/C/Users/touko/webdev/siima/app/templates/layout.jade",
+		"/C/Users/touko/webdev/siima/app/controllers/Page.js",
+		"/C/Users/touko/webdev/siima/app/controllers/Index.js",
+		"/C/Users/touko/webdev/siima/app/templates/index.jade",
+		"/C/Users/touko/webdev/siima/app/controllers/Archive.js",
+		"/C/Users/touko/webdev/siima/app/views/Base.js",
+		"/C/Users/touko/webdev/siima/app/package.json",
+		"/C/Users/touko/webdev/siima/app/controllers/Base.js",
+		"/C/Users/touko/webdev/siima/app/____/index.js",
+		"/C/Users/touko/webdev/siima/app/controllers/Home.js",
+		"/C/Users/touko/webdev/siima/app/config/index.js",
+		"/C/Users/touko/webdev/siima/app/routes/index.js",
+		"/C/Users/touko/webdev/siima/app/models/ContentModel.js",
+		"/C/Users/touko/webdev/siima/app/views/index.jade",
+		"/C/Users/touko/webdev/siima/app/views/layout.jade",
+		"/C/Users/touko/webdev/siima/app/models/Base.js",
+		"//RT-N56U/Seagate/webdev/cms/css/base.css",
+		"/C/Users/touko/AppData/Local/Temp/Temp1_less.js-2.5.0.zip/less.js-2.5.0/package.json",
+		"/C/Users/touko/webdev/siima/app/less.js/dist/less.js",
+		"/C/Users/touko/webdev/siima/app/public/stylesheets/style.css",
+		"/C/Users/touko/webdev/siima/app/todo.txt",
+		"/C/Users/touko/webdev/siima/app/node_modules/normalize.css/package.json",
+		"/C/Users/touko/webdev/siima/app/node_modules/normalize.css/LICENSE.md",
+		"/C/Users/touko/webdev/siima/app/siima.sublime-project",
+		"/C/Users/touko/webdev/siima/app/node_modules/normalize.css/README.md",
+		"/C/Users/touko/programming/python/flouv/flouv.sublime-project",
+		"/C/Users/touko/webdev/siima/config/index.js",
+		"/C/Users/touko/webdev/siima/app.js",
+		"/C/Users/touko/webdev/siima/siima.sublime-project",
+		"/C/Users/touko/webdev/siima/tests/config.spec.js",
+		"/C/Users/touko/webdev/siima/tests/mongodb.spec.js",
+		"/C/Users/touko/webdev/siima/package.json",
+		"/C/Users/touko/app.js",
+		"/C/Users/touko/config/index.js",
+		"/C/Users/touko/webdev/siima/node_modules/bootstrap/dist/css/bootstrap.css",
+		"/C/Users/touko/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/touko/AppData/Roaming/Sublime Text 3/Packages/User/SublimeLinter/predawn (SL).tmTheme",
+		"/C/Users/touko/AppData/Roaming/Sublime Text 3/Packages/ASP/ASP.tmLanguage",
+		"/C/Users/touko/webdev/siima/app/styles/main.css",
+		"/C/Users/touko/webdev/siima/app/views/main.html",
+		"/C/Users/touko/webdev/siima/app/scripts/controllers/main.js",
+		"/C/Users/touko/webdev/siima/bower.json",
+		"/C/Users/touko/webdev/ti02to/index.php",
+		"/C/Users/touko/AppData/Roaming/Sublime Text 3/Packages/User/doctype.sublime-snippet",
+		"/C/Users/touko/programming/python/flouv/src/Settings.py",
+		"/C/Users/touko/programming/python/flouv/src/Block.py",
+		"/C/Users/touko/programming/python/flouv/src/Command.py",
+		"/C/Users/touko/programming/python/flouv/src/Flouv.py",
+		"/C/Users/touko/programming/python/flouv/src/Display.py",
+		"/C/Users/touko/programming/python/flouv/src/Display",
+		"/C/Users/touko/Desktop/wp/index.html",
+		"/C/Users/touko/Desktop/wp/style.css",
+		"/C/Users/touko/programming/python/flouv/src/Log.py",
+		"/C/Users/touko/Desktop/index.html",
+		"//RT-N56U/Seagate/webdev/cms/index.php",
+		"/C/Users/touko/programming/python/flouv/src/History.py",
+		"/C/Users/touko/programming/python/flouv/src/blocks/Block.py",
+		"/C/Users/touko/programming/python/flouv/src/commands.py",
+		"/C/Users/touko/programming/python/flouv/src/Log",
+		"/C/Users/touko/programming/python/flouv/src/CommandHistory.Py",
+		"/C/Users/touko/programming/python/flouv/src/command/Command.py",
+		"/C/Users/touko/programming/python/flouv/src/block/Block.py",
+		"/C/Users/touko/programming/python/flouv/src/blocks/block.py",
+		"/C/Users/touko/programming/python/flouv/src/blocks/__init__.py",
+		"/C/Users/touko/programming/python/flouv/src/__init__.py",
+		"/C/Users/touko/programming/python/flouv/src/command/__init__.py",
+		"/C/Users/touko/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
+		"/C/Users/touko/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/touko/AppData/Roaming/Sublime Text 3/Packages/Terminal/Default (Windows).sublime-keymap",
+		"//RT-N56U/Seagate/webprojects/cms/app/setup.php",
+		"//RT-N56U/Seagate/webprojects/cms/app/init.php",
+		"//RT-N56U/Seagate/webdev/cms/setup.php",
+		"//RT-N56U/Seagate/webdev/cms/init.php",
+		"//RT-N56U/Seagate/www/pt/php/Init.php",
+		"//RT-N56U/Seagate/www/pt/php/Setup.php",
+		"//RT-N56U/Seagate/www/pt/index.php"
+	],
+	"find":
+	{
+		"height": 22.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"Isla",
+			"isla",
+			"page_id",
+			"post",
+			"Isla",
+			"room",
+			"application",
+			"_GET",
+			"$IP",
+			"ip",
+			":",
+			"echo",
+			"::",
+			"navC",
+			"\"",
+			"name",
+			"Index",
+			"path",
+			"About",
+			"font",
+			"');\n",
+			"\n@",
+			" =",
+			"footerHeight",
+			"\n@",
+			"footerHeight",
+			"message",
+			"package",
+			"direction",
+			";\n",
+			"10",
+			"])\n",
+			"0",
+			"param",
+			"command",
+			"Command",
+			".\")\n",
+			")\n",
+			"()\n",
+			"command",
+			")\n",
+			"/>\n",
+			")\n",
+			"/>\n",
+			")\n",
+			");\n",
+			"FileNew",
+			"vim",
+			"close",
+			"vim",
+			"angle = ",
+			"d",
+			"}",
+			"{"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "Isla.sublime-project",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				".git",
+				".gitignore"
+			],
+			[
+				"ind",
+				"routes/index.js"
+			],
+			[
+				"initi",
+				"routes/initialize.js"
+			],
+			[
+				"app",
+				"app.js"
+			],
+			[
+				"",
+				"luisto.sublime-project"
+			],
+			[
+				"menui",
+				"libs/MenuItem.js"
+			],
+			[
+				".",
+				".gitignore"
+			],
+			[
+				"appli",
+				"src/main/java/core/Application.java"
+			],
+			[
+				"room",
+				"src/main/java/room/RoomController.java"
+			],
+			[
+				"proj",
+				"isla.sublime-project"
+			],
+			[
+				"isla",
+				"isla.sublime-project"
+			],
+			[
+				"roo",
+				"src/main/java/room/room.java"
+			],
+			[
+				"hell",
+				"src/main/java/hello/HelloWorld.java"
+			],
+			[
+				"gra",
+				"settings.gradle"
+			],
+			[
+				"proje",
+				"ti02to.sublime-project"
+			],
+			[
+				"kysymy",
+				"kysymys_kasittely.php"
+			],
+			[
+				"init",
+				"init.php"
+			],
+			[
+				"kysy",
+				"kysymyshaku.php"
+			],
+			[
+				"set",
+				"setup.php"
+			],
+			[
+				"less",
+				"public\\stylesheets\\style.less"
+			],
+			[
+				"layo",
+				"templates\\layout.jade"
+			],
+			[
+				"logi",
+				"templates\\login.jade"
+			],
+			[
+				"pac",
+				"package.json"
+			],
+			[
+				"base",
+				"controllers\\Base.js"
+			],
+			[
+				"controller",
+				"controllers\\Page.js"
+			],
+			[
+				"inde",
+				"controllers\\Index.js"
+			],
+			[
+				"view",
+				"views\\Base.js"
+			],
+			[
+				"la",
+				"templates\\layout.jade"
+			],
+			[
+				"jad",
+				"templates\\index.jade"
+			],
+			[
+				"st",
+				"public\\stylesheets\\style.less"
+			],
+			[
+				"tem",
+				"templates\\index.jade"
+			],
+			[
+				"pajs",
+				"package.json"
+			],
+			[
+				"pa",
+				"package.json"
+			],
+			[
+				"apj",
+				"app.js"
+			],
+			[
+				"pack",
+				"package.json"
+			],
+			[
+				"ine",
+				"views\\index.jade"
+			],
+			[
+				"main",
+				"views\\main.html"
+			],
+			[
+				"aijs",
+				"scripts\\controllers\\main.js"
+			],
+			[
+				"comm",
+				"Command.py"
+			],
+			[
+				"bl",
+				"Block.py"
+			],
+			[
+				"bloc",
+				"blocks\\Block.py"
+			],
+			[
+				"log",
+				"Log.py"
+			],
+			[
+				"com",
+				"Command.py"
+			],
+			[
+				"sett",
+				"Settings.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
