@@ -28,7 +28,7 @@ Add the `-h` flag on any command to see how you can use it. For example, `bower 
 
 # Coding guidelines
 
-We use [Google Styles](https://github.com/google/styleguide) for Angular.js, Javascript and Java. There is a [preference file](https://github.com/google/styleguide/blob/gh-pages/eclipse-java-google-style.xml) for Eclipse.
+We use [Google Styles](https://github.com/google/styleguide) for Angular.js, Javascript and Java. There is Eclipse [preference file](https://github.com/google/styleguide/blob/gh-pages/eclipse-java-google-style.xml) for Java.
 
 # Building for production
 
