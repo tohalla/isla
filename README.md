@@ -26,6 +26,10 @@ Bower is used to manage CSS and JavaScript dependencies used in this application
 specifying a newer version in `bower.json`. You can also run `bower update` and `bower install` to manage dependencies.
 Add the `-h` flag on any command to see how you can use it. For example, `bower update -h`.
 
+# Coding guidelines
+
+We use [Google Styles](https://github.com/google/styleguide) for Angular.js, Javascript and Java. There is a [preference file](https://github.com/google/styleguide/blob/gh-pages/eclipse-java-google-style.xml) for Eclipse.
+
 # Building for production
 
 To optimize the isla client for production, run:
