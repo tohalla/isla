@@ -28,7 +28,7 @@ Add the `-h` flag on any command to see how you can use it. For example, `bower 
 
 # Coding guidelines
 
-We use [Google Styles](https://github.com/google/styleguide) for Angular.js, Javascript and Java. There is Eclipse [formatter file](https://github.com/google/styleguide/blob/gh-pages/eclipse-java-google-style.xml) for Java. You need to change Java formatter identation from 2 spaces to 4 spaces.
+We use [Google Styles](https://github.com/google/styleguide) for Javascript and Java. There is Eclipse [formatter file](https://github.com/google/styleguide/blob/gh-pages/eclipse-java-google-style.xml) for Java. You need to change Java formatter identation from 2 spaces to 4 spaces.
 
 # Building for production
 
