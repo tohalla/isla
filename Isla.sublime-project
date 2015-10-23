@@ -4,17 +4,22 @@
     {
       "folder_exclude_patterns":
       [
-        "build",
-        "gradle",
-        "node_modules",
-        "targer"
+        "bower_components",
+        "swagger-ui",
+        "dist"
       ],
-      "path": "."
+      "path": "./src/main/webapp"
+    },
+    {
+      "folder_exclude_patterns":
+      [
+      ],
+      "path": "./src/test/javascript"
     }
   ],
   "settings":
   {
-    "tab_size": 4,
+    "tab_size": 2,
     "FuzzyFilePath":
     {
     }

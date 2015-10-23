@@ -280,15 +280,16 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/Touko/Documents/Koulu/Isla/isla"
 	],
 	"file_history":
 	[
+		"/Users/Touko/Documents/Koulu/Isla/isla/Isla.sublime-project",
+		"/Users/Touko/Documents/Koulu/Isla/isla/src/main/webapp/index.html",
+		"/Users/Touko/Documents/Koulu/Isla/isla/README.md",
 		"/Users/Touko/Documents/Koulu/Isla/isla/.gitignore",
 		"/Users/Touko/Documents/Omat projektit/luisto/routes/index.js",
 		"/Users/Touko/Documents/Omat projektit/luisto/app.js",
 		"/Users/Touko/Documents/Omat projektit/luisto/routes/initialize.js",
-		"/Users/Touko/Documents/Koulu/Isla/isla/Isla.sublime-project",
 		"/Users/Touko/Documents/Omat projektit/luisto/luisto.sublime-project",
 		"/Users/Touko/Downloads/sagan-master/build.gradle",
 		"/Users/Touko/Documents/Koulu/Isla/isla/build.gradle",
@@ -547,6 +548,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"index.html",
+				"src/main/webapp/index.html"
+			],
 			[
 				".git",
 				".gitignore"

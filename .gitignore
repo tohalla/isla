@@ -122,3 +122,8 @@ Desktop.ini
 # Gradle Wrapper
 ######################
 !gradle/wrapper/gradle-wrapper.jar
+
+######################
+# Sublime Workspace
+######################
+Isla.sublime-workspace
