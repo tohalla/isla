@@ -7,6 +7,7 @@
             "entities": {
                 "main": "Entités",
                 "lecture": "Lecture",
+                "comment": "Comment",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
