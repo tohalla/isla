@@ -57,7 +57,7 @@ public class Lecture implements Serializable {
     @OneToMany(mappedBy = "lecture")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Comment> commentss = new HashSet<>();
+    private Set<Comment> comments = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -99,12 +99,12 @@ public class Lecture implements Serializable {
         this.description = description;
     }
 
-    public Set<Comment> getCommentss() {
-        return commentss;
+    public Set<Comment> getComments() {
+        return comments;
     }
 
-    public void setCommentss(Set<Comment> comments) {
-        this.commentss = comments;
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override
