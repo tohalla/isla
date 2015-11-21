@@ -27,7 +27,7 @@ angular.module('islaApp')
  They are written in English to avoid character encoding issues (not a perfect solution)
  */
     .constant('LANGUAGES', [
-        'en', 'fr'
+        'en'
         //JHipster will add new languages here
     ]
 );
