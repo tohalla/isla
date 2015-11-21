@@ -1,5 +1,6 @@
 angular.module('islaApp')
     .config(function ($stateProvider) {
+        'use strict';
         $stateProvider
             .state('tracker', {
                 parent: 'admin',

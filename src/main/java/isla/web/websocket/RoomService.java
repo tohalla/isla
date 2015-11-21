@@ -10,6 +10,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
@@ -17,7 +18,7 @@ import javax.inject.Inject;
 import java.security.Principal;
 
 @Controller
-public class LectureService {
+public class RoomService {
 
     private static final Logger log = LoggerFactory.getLogger(ActivityService.class);
 
@@ -25,8 +26,8 @@ public class LectureService {
     @Inject
     SimpMessageSendingOperations messagingTemplate;
 
-    @MessageMapping("/lecture/comment")
-    @SendTo("/comment/tracker")
+    @SubscribeMapping("/topic/comment")
+    @SendTo("/topic/room")
     public CommentDTO sendComment(@Payload CommentDTO commentDTO, StompHeaderAccessor stompHeaderAccessor, Principal principal) {
     	commentDTO.setPostedBy(SecurityUtils.getCurrentLogin());
         commentDTO.setCreatedAt(DateTime.now());

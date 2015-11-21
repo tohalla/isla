@@ -1,7 +1,7 @@
 angular.module('islaApp')
     .controller('TrackerController', function ($scope, $cookies, $http, Tracker) {
         // This controller uses a Websocket connection to receive user activities in real-time.
-
+        'use strict';
         $scope.activities = [];
         Tracker.receive().then(null, null, function(activity) {
             showActivity(activity);
@@ -22,5 +22,5 @@ angular.module('islaApp')
             if (!existingActivity && (activity.page != 'logout')) {
                 $scope.activities.push(activity);
             }
-        };
+        }
     });
