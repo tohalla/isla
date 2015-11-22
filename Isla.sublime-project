@@ -8,13 +8,17 @@
         "swagger-ui",
         "dist"
       ],
+      "file_exclude_patterns":
+      [
+        "*.css"
+      ],
       "path": "./src/main/webapp"
     },
     {
-      "folder_exclude_patterns":
-      [
-      ],
       "path": "./src/test/javascript"
+    },
+    {
+      "path": "./src/main/scss"
     }
   ],
   "settings":
