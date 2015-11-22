@@ -1,3 +1,9 @@
+<div class="comment comment-main">
+	<form ng-action="vm.sendComment()" name="commentForm">
+		<input type="text" ng-model="vm.commentText">
+  	<button>Send</button>
+	</form>
+</div>
 <div class="row" ng-repeat="comment in comments">
   {{comment.content}}
 </div>

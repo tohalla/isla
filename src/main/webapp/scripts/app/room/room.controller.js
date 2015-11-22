@@ -1,25 +1,45 @@
-angular.module('islaApp')
+(function(){
+  'use strict';
+  angular.module('islaApp')
   .controller('RoomController', ['$scope','$cookies','$http','Room',
     function ($scope, $cookies, $http, Room) {
-      'use strict';
-      $scope.comments = [];
+      var vm = this;
+
+      vm.comments = [];
+
+
+      vm.test = '1234';
+
+      vm.sendComment = sendComment;
+      vm.showComment = showComment;
 
       Room.connect();
+      Room.subscribe();
+
 
       Room.receive().then(null, null, function(comment){
         showComment(comment);
       });
 
+
+      Room.sendComment({'content':'test'});
+
       function showComment(comment){
         var existingComment = false;
-        for(var index = 0; index < $scope.comments.length; index++){
-          if($scope.comments[index].sessionId === comment.sessionId){
+        for(var index = 0; index < vm.comments.length; index++){
+          if(vm.comments[index].sessionId === comment.sessionId){
             existingComment = true;
-            $scope.comments[index] = comment;
+            vm.comments[index] = comment;
           }
         }
         if(!existingComment){
-          $scope.comments.push(comment);
+          vm.comments.push(comment);
         }
       }
-    }]);
+      function sendComment(){
+        alert(123);
+        Room.sendComment(vm.messageText);
+      }
+    }]
+  );
+}());

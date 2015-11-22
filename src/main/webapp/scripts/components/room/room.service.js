@@ -1,15 +1,26 @@
-'use strict';
+(function(){
+  'use strict';
 
-angular.module('islaApp')
-  .factory('Room', ['$rootScope', '$cookies', '$http', '$q',
-    function($rootScope, $cookies, $http, $q){
-      var stompClient = null;
-      var subscriber = null;
-      var listener = $q.defer();
-      var connected = $q.defer();
+  angular.module('islaApp')
+    .factory('Room', ['$rootScope', '$cookies', '$http', '$q',
+      function($rootScope, $cookies, $http, $q){
+        var stompClient = null;
+        var subscriber = null;
+        var listener = $q.defer();
+        var connected = $q.defer();
 
-      return{
-        connect: function(){
+        var service = {
+          connect: connect,
+          subscribe: subscribe,
+          unsubscribe: unsubscribe,
+          receive: receive,
+          sendComment: sendComment,
+          disconnect: disconnect
+        };
+
+        return service;
+
+        function connect(){
           var loc = window.location;
           var url = '//' + loc.host + loc.pathname + 'websocket/room';
           var socket = new SockJS(url);
@@ -19,23 +30,23 @@ angular.module('islaApp')
           stompClient.connect(headers, function(){
             connected.resolve('success');
           });
-        },
-        subscribe: function(){
+        }
+        function subscribe(){
           connected.promise.then(function(){
             subscriber = stompClient.subscribe('/topic/room', function(data){
               listener.notify(JSON.parse(data.body));
             }, null, null);
           });
-        },
-        unsubscribe: function() {
+        }
+        function unsubscribe() {
           if (subscriber !== null) {
             subscriber.unsubscribe();
           }
-        },
-        receive: function() {
+        }
+        function receive() {
           return listener.promise;
-        },
-        sendComment: function(comment){
+        }
+        function sendComment(comment){
           if(stompClient !== null){
             connected.promise.then(function(){
               stompClient
@@ -44,12 +55,12 @@ angular.module('islaApp')
                 JSON.stringify(comment));
             });
           }
-        },
-        disconnect: function() {
+        }
+        function disconnect() {
           if (stompClient !== null) {
             stompClient.disconnect();
             stompClient = null;
           }
         }
-      };
-  }]);
+    }]);
+})();

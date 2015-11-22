@@ -1,6 +1,7 @@
-angular.module('islaApp')
+(function(){
+  'use strict';
+  angular.module('islaApp')
   .config(['$stateProvider', function ($stateProvider) {
-    'use strict';
     $stateProvider.state('room',{
       parent: 'site',
       url: '/room',
@@ -10,7 +11,8 @@ angular.module('islaApp')
       views: {
         'content@': {
           templateUrl: 'scripts/app/room/room.html',
-          controller: 'RoomController'
+          controller: 'RoomController',
+          controllerAs: 'vm'
         }
       },resolve: {
         mainTranslatePartialLoader: ['$translate', '$translatePartialLoader',
@@ -27,3 +29,4 @@ angular.module('islaApp')
       }
     });
   }]);
+}());
