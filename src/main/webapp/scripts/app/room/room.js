@@ -5,8 +5,7 @@ angular.module('islaApp')
       parent: 'site',
       url: '/room',
       data: {
-        authorities: [],
-        pageTitle: 'room.title'
+          authorities: []
       },
       views: {
         'content@': {

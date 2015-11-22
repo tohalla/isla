@@ -19,7 +19,7 @@ angular.module('islaApp').controller('CommentDialogController',
         };
 
         $scope.save = function () {
-            if ($scope.comment.id != null) {
+            if ($scope.comment.id !== null) {
                 Comment.update($scope.comment, onSaveFinished);
             } else {
                 Comment.save($scope.comment, onSaveFinished);

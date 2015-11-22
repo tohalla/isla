@@ -35,13 +35,12 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic");
-		config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-    	registry.addEndpoint("/comment")
-    	.withSockJS();
+    	registry.addEndpoint("/websocket/room")
+	    	.withSockJS();
         registry.addEndpoint("/websocket/tracker")
             .setHandshakeHandler(new DefaultHandshakeHandler() {
                 @Override

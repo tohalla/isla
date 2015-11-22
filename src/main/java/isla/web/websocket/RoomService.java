@@ -28,7 +28,7 @@ public class RoomService {
 
     @SubscribeMapping("/topic/comment")
     @SendTo("/topic/room")
-    public CommentDTO sendComment(@Payload CommentDTO commentDTO, StompHeaderAccessor stompHeaderAccessor, Principal principal) {
+    public CommentDTO sendComment(@Payload CommentDTO commentDTO) {
     	commentDTO.setPostedBy(SecurityUtils.getCurrentLogin());
         commentDTO.setCreatedAt(DateTime.now());
         log.debug("Sending comment tracking data {}", commentDTO);

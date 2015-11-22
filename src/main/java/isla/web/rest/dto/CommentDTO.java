@@ -10,6 +10,8 @@ import org.joda.time.DateTime;
  * A DTO representing a comment.
  */
 public class CommentDTO {
+	private long id;
+	
     @Size(min = 2, max = 512)        
     private String content;
     
@@ -22,13 +24,15 @@ public class CommentDTO {
 
     public CommentDTO(Comment comment) {
         this(
+        	comment.getId(),
     		comment.getContent(),
     		comment.getPostedBy().getLogin(),
     		comment.getCreatedAt()
 		);
     }
 
-    public CommentDTO(String content, String postedByLogin, DateTime createdAt) {
+    public CommentDTO(long id, String content, String postedByLogin, DateTime createdAt) {
+    	this.id = id;
         this.content = content;
         this.postedByLogin = postedByLogin;
         this.createdAt = createdAt;
@@ -45,11 +49,16 @@ public class CommentDTO {
     public void setCreatedAt(DateTime createdAt){
     	this.createdAt = createdAt;
     }
+    
+    public void setContent(String content){
+    	this.content = content;
+    }
 
     @Override
     public String toString() {
         return "CommentDTO{" +
-        "content='" + content + '\'' +
+        "id='" + id + '\'' +
+        ",content='" + content + '\'' +
         ", postedByLogin='" + postedByLogin + '\'' +
         ", createdAt='" + createdAt +
         '}';

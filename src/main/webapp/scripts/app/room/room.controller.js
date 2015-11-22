@@ -3,6 +3,9 @@ angular.module('islaApp')
     function ($scope, $cookies, $http, Room) {
       'use strict';
       $scope.comments = [];
+
+      Room.connect();
+
       Room.receive().then(null, null, function(comment){
         showComment(comment);
       });
