@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('islaApp')
-  .controller('CommentDetailController', function ($scope, $rootScope, $stateParams, entity, Comment, User, Lecture) {
+  .controller('CommentDetailController', function ($scope, $rootScope, $stateParams, entity, commentService, User, Lecture) {
     $scope.comment = entity;
     $scope.load = function (id) {
-      Comment.get({id: id}, function(result) {
+      commentService.get({id: id}, function(result) {
         $scope.comment = result;
       });
     };

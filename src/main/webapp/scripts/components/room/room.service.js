@@ -8,7 +8,7 @@
     '$rootScope',
     '$cookies',
     '$http',
-    '$q'
+    '$q',
   ];
 
   function roomService(
@@ -28,14 +28,15 @@
       unsubscribe: unsubscribe,
       receive: receive,
       sendComment: sendComment,
-      disconnect: disconnect
+      disconnect: disconnect,
+      setLectureId: setLectureId
     };
 
     return service;
 
     function connect(){
       var loc = window.location;
-      var url = '//' + loc.host + loc.pathname + 'websocket/room';
+      var url = '//' + loc.host + loc.pathname + 'websocket/room/';
       var socket = new SockJS(url);
       stompClient = Stomp.over(socket);
       var headers = {};
@@ -47,7 +48,7 @@
     }
     function subscribe(){
       connected.promise.then(function(){
-        subscriber = stompClient.subscribe('/topic/room', function(data){
+        subscriber = stompClient.subscribe('/topic/room/'+service.lectureId, function(data){
           listener.notify(JSON.parse(data.body));
         }, null, null);
       });
@@ -64,7 +65,7 @@
       if(stompClient !== null){
         connected.promise.then(function(){
           stompClient
-            .send('/topic/comment',
+            .send('/topic/comment/'+service.lectureId,
             {},
             JSON.stringify(comment));
         });
@@ -75,6 +76,16 @@
         stompClient.disconnect();
         stompClient = null;
       }
+    }
+    function setLectureId(lectureId){
+      var q = $q.defer();
+      if(lectureId !== null && lectureId >= 0){ //should also check if lecture exists and is open
+        q.resolve(service.lectureId = lectureId);
+      }else{
+        q.reject('invalid lectureId');
+      }
+      connected = $q.defer();
+      return q.promise;
     }
   }
 })();

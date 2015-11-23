@@ -4,7 +4,7 @@
   .config(['$stateProvider', function ($stateProvider) {
     $stateProvider.state('room',{
     parent: 'site',
-    url: '/room',
+    url: '/room/{lectureId}',
     data: {
       authorities: []
     },
@@ -21,8 +21,10 @@
         return $translate.refresh();
       }
     },
-    onEnter: function(roomService){
-      roomService.connect().then(roomService.subscribe());
+    onEnter: function($stateParams, roomService){
+      roomService.setLectureId($stateParams.lectureId)
+      .then(roomService.connect())
+      .then(roomService.subscribe());
     },
     onExit: function(roomService){
       roomService.unsubscribe();

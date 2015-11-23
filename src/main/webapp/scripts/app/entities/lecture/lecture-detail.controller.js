@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('islaApp')
-  .controller('LectureDetailController', function ($scope, $rootScope, $stateParams, entity, Lecture, Comment) {
+  .controller('LectureDetailController', function ($scope, $rootScope, $stateParams, entity, Lecture, commentService) {
     $scope.lecture = entity;
     $scope.load = function (id) {
       Lecture.get({id: id}, function(result) {

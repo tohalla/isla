@@ -42,8 +42,8 @@ angular.module('islaApp')
             $translatePartialLoader.addPart('comment');
             return $translate.refresh();
           }],
-          entity: ['$stateParams', 'Comment', function($stateParams, Comment) {
-            return Comment.get({id : $stateParams.id});
+          entity: ['$stateParams', 'Comment', function($stateParams, commentService) {
+            return commentService.get({id : $stateParams.id});
           }]
         }
       })
@@ -82,8 +82,8 @@ angular.module('islaApp')
             controller: 'CommentDialogController',
             size: 'lg',
             resolve: {
-              entity: ['Comment', function(Comment) {
-                return Comment.get({id : $stateParams.id});
+              entity: ['Comment', function(commentService) {
+                return commentService.get({id : $stateParams.id});
               }]
             }
           }).result.then(function(result) {

@@ -33,7 +33,9 @@
       vm.commentText = '';
     }
     function loadComments(){
-      commentService.getComments();
+      commentService.query({}, function(result){
+        vm.comments = result;
+      });
     }
   }
 
