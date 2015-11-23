@@ -1,22 +1,22 @@
 {
-    "islaApp": {
-        "comment" : {
-            "home": {
-                "title": "Comments",
-                "createLabel": "Créer un nouveau Comment",
-                "createOrEditLabel": "Créer ou éditer un Comment"
-            },
-            "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Comment {{ id }} ?"
-            },
-            "detail": {
-                "title": "Comment"
-            },
-            "createdAt": "CreatedAt",
-            "content": "Content",
-            "postedBy": "PostedBy",
-            "lecture": "Lecture"
-        }
+  "islaApp": {
+    "comment" : {
+      "home": {
+        "title": "Comments",
+        "createLabel": "Créer un nouveau Comment",
+        "createOrEditLabel": "Créer ou éditer un Comment"
+      },
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Comment {{ id }} ?"
+      },
+      "detail": {
+        "title": "Comment"
+      },
+      "createdAt": "CreatedAt",
+      "content": "Content",
+      "postedBy": "PostedBy",
+      "lecture": "Lecture"
     }
+  }
 }
 

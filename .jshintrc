@@ -19,5 +19,5 @@
     "smarttabs": true,
     "white": true,
     "browser": true,
-    "predef": ["angular", "SockJS", "Stomp"]
+    "predef": ["angular", "SockJS", "Stomp", "$"]
 }

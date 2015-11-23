@@ -1,23 +1,23 @@
 {
-    "islaApp": {
-        "lecture" : {
-            "home": {
-                "title": "Lectures",
-                "createLabel": "Créer un nouveau Lecture",
-                "createOrEditLabel": "Créer ou éditer un Lecture"
-            },
-            "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Lecture {{ id }} ?"
-            },
-            "detail": {
-                "title": "Lecture"
-            },
-            "createdAt": "CreatedAt",
-            "startsAt": "StartsAt",
-            "closesAt": "ClosesAt",
-            "description": "Description",
-            "comments": "Comments"
-        }
+  "islaApp": {
+    "lecture" : {
+      "home": {
+        "title": "Lectures",
+        "createLabel": "Créer un nouveau Lecture",
+        "createOrEditLabel": "Créer ou éditer un Lecture"
+      },
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Lecture {{ id }} ?"
+      },
+      "detail": {
+        "title": "Lecture"
+      },
+      "createdAt": "CreatedAt",
+      "startsAt": "StartsAt",
+      "closesAt": "ClosesAt",
+      "description": "Description",
+      "comments": "Comments"
     }
+  }
 }
 

@@ -1,4 +1,4 @@
-package isla.web.rest.dto;
+package isla.web.websocket.dto;
 
 import isla.domain.Comment;
 
@@ -15,40 +15,25 @@ public class CommentDTO {
     @Size(min = 2, max = 512)        
     private String content;
     
-    private String postedByLogin;
-
-    private DateTime createdAt;
-    
     public CommentDTO() {
     }
 
     public CommentDTO(Comment comment) {
         this(
         	comment.getId(),
-    		comment.getContent(),
-    		comment.getPostedBy().getLogin(),
-    		comment.getCreatedAt()
+    		comment.getContent()
 		);
     }
 
-    public CommentDTO(long id, String content, String postedByLogin, DateTime createdAt) {
+    public CommentDTO(long id, String content) {
     	this.id = id;
         this.content = content;
-        this.postedByLogin = postedByLogin;
-        this.createdAt = createdAt;
     }
 
     public String getContent(){
     	return content;
     }
     
-    public void setPostedBy(String postedByLogin){
-    	this.postedByLogin = postedByLogin;
-    }
-    
-    public void setCreatedAt(DateTime createdAt){
-    	this.createdAt = createdAt;
-    }
     
     public void setContent(String content){
     	this.content = content;
@@ -59,8 +44,6 @@ public class CommentDTO {
         return "CommentDTO{" +
         "id='" + id + '\'' +
         ",content='" + content + '\'' +
-        ", postedByLogin='" + postedByLogin + '\'' +
-        ", createdAt='" + createdAt +
         '}';
     }
 }

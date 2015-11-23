@@ -24,7 +24,8 @@
   "settings":
   {
     "tab_size": 2,
-    "translate_tabs_to_spaces": false,
+    "translate_tabs_to_spaces": true,
+    "detect_indentation": false,
     "FuzzyFilePath":
     {
     }

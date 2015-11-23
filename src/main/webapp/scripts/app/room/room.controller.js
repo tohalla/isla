@@ -1,45 +1,40 @@
 (function(){
   'use strict';
   angular.module('islaApp')
-  .controller('RoomController', ['$scope','$cookies','$http','Room',
-    function ($scope, $cookies, $http, Room) {
-      var vm = this;
+    .controller('RoomController', RoomController);
 
-      vm.comments = [];
+  RoomController.$inject = [
+    '$scope',
+    '$cookies',
+    '$http',
+    'roomService',
+    'commentService'
+  ];
 
+  function RoomController($scope, $cookies, $http, roomService, commentService) {
+    var vm = this;
 
-      vm.test = '1234';
+    vm.comments = [];
 
-      vm.sendComment = sendComment;
-      vm.showComment = showComment;
+    vm.sendComment = sendComment;
+    vm.showComment = showComment;
 
-      Room.connect();
-      Room.subscribe();
+    loadComments();
 
+    roomService.receive().then(null, null, function(comment){
+      showComment(comment);
+    });
 
-      Room.receive().then(null, null, function(comment){
-        showComment(comment);
-      });
+    function showComment(comment){
+      vm.comments.push(comment);
+    }
+    function sendComment(){
+      roomService.sendComment({'content':vm.commentText});
+      vm.commentText = '';
+    }
+    function loadComments(){
+      commentService.getComments();
+    }
+  }
 
-
-      Room.sendComment({'content':'test'});
-
-      function showComment(comment){
-        var existingComment = false;
-        for(var index = 0; index < vm.comments.length; index++){
-          if(vm.comments[index].sessionId === comment.sessionId){
-            existingComment = true;
-            vm.comments[index] = comment;
-          }
-        }
-        if(!existingComment){
-          vm.comments.push(comment);
-        }
-      }
-      function sendComment(){
-        alert(123);
-        Room.sendComment(vm.messageText);
-      }
-    }]
-  );
 }());

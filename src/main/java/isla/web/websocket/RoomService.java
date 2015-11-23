@@ -1,7 +1,11 @@
 package isla.web.websocket;
 
+import isla.domain.Comment;
+import isla.repository.CommentRepository;
+import isla.repository.search.CommentSearchRepository;
 import isla.security.SecurityUtils;
-import isla.web.rest.dto.CommentDTO;
+import isla.web.rest.CommentResource;
+import isla.web.websocket.dto.CommentDTO;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -24,13 +28,19 @@ public class RoomService {
 
 
     @Inject
+    private CommentRepository commentRepository;
+    @Inject
     SimpMessageSendingOperations messagingTemplate;
 
-    @SubscribeMapping("/topic/comment")
+    @MessageMapping("/topic/comment")
     @SendTo("/topic/room")
     public CommentDTO sendComment(@Payload CommentDTO commentDTO) {
-    	commentDTO.setPostedBy(SecurityUtils.getCurrentLogin());
-        commentDTO.setCreatedAt(DateTime.now());
+        Comment comment = new Comment();
+        comment.setContent(commentDTO.getContent());
+        comment.setCreatedAt(DateTime.now());
+
+        commentRepository.save(comment);
+        
         log.debug("Sending comment tracking data {}", commentDTO);
         return commentDTO;
     }
