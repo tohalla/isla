@@ -1,4 +1,5 @@
 'use strict';
+/*globals filepath */
 var fs = require('fs');
 
 // Returns the first occurence of the version number

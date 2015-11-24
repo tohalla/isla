@@ -9,13 +9,15 @@
     '$cookies',
     '$http',
     '$q',
+    'Lecture'
   ];
 
   function roomService(
     $rootScope,
     $cookies,
     $http,
-    $q
+    $q,
+    Lecture
   ){
     var stompClient = null;
     var subscriber = null;
@@ -80,6 +82,7 @@
     function setLectureId(lectureId){
       var q = $q.defer();
       if(lectureId !== null && lectureId >= 0){ //should also check if lecture exists and is open
+        alert(Lecture.get(lectureId));
         q.resolve(service.lectureId = lectureId);
       }else{
         q.reject('invalid lectureId');

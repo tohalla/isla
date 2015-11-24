@@ -23,8 +23,8 @@
     },
     onEnter: function($stateParams, roomService){
       roomService.setLectureId($stateParams.lectureId)
-      .then(roomService.connect())
-      .then(roomService.subscribe());
+        .then(roomService.connect())
+        .then(roomService.subscribe());
     },
     onExit: function(roomService){
       roomService.unsubscribe();
