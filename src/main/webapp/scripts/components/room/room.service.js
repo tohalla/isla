@@ -21,16 +21,15 @@
   ){
     var stompClient = null;
     var subscriber = null;
-    var listener = $q.defer();
 
     var service = {
       connect: connect,
       subscribe: subscribe,
       unsubscribe: unsubscribe,
-      receive: receive,
       sendComment: sendComment,
       disconnect: disconnect,
       initialize: initialize,
+      addComment: addComment,
       loadComments: loadComments,
       comments: []
     };
@@ -56,25 +55,34 @@
       });
     }
     function subscribe(){
+      var deferred = $q.defer();
       subscriber = stompClient.subscribe('/topic/room/'+service.lectureId, function(data){
-        listener.notify(JSON.parse(data.body));
-      }, null, null);
+        deferred.resolve();
+        refer(JSON.parse(data.body));
+      }, function(){
+        deferred.reject();
+        refer({content: 'error reading the message'});
+      }, null);
+
+      function refer(data){
+        deferred.promise.then(function(){
+          service.addComment(data);
+        }/* ,TODO:function(){error}*/);
+      }
+    }
+    function addComment(comment){
+      service.comments.push(comment);
     }
     function unsubscribe() {
       if (subscriber !== null) {
         subscriber.unsubscribe();
       }
     }
-    function receive() {
-      return listener.promise;
-    }
     function sendComment(comment){
-      if(stompClient !== null){
-        stompClient
-          .send('/topic/comment/'+service.lectureId,
-          {},
-          JSON.stringify(comment));
-      }
+      stompClient
+        .send('/topic/comment/'+service.lectureId,
+        {},
+        JSON.stringify(comment));
     }
     function disconnect() {
       if (stompClient !== null) {
