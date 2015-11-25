@@ -47,7 +47,7 @@ if (project.hasProperty('prod')) {
 }
 
 group = 'isla'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.0'
 
 description = ''
 
@@ -95,7 +95,7 @@ dependencies {
     compile (group: 'com.ryantenney.metrics', name: 'metrics-spring', version: metrics_spring_version) {
         exclude(module: 'metrics-core')
         exclude(module: 'metrics-healthchecks')
-    } 
+    }
     compile group: 'com.hazelcast', name: 'hazelcast', version: hazelcast_version
     compile group: 'com.hazelcast', name: 'hazelcast-wm', version: hazelcast_version
     compile(group: 'com.zaxxer', name: 'HikariCP', version: HikariCP_version) {
@@ -141,11 +141,11 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-config', version: spring_security_version
     compile group: 'org.springframework.security', name: 'spring-security-data', version: spring_security_version
     compile group: 'org.springframework.security', name: 'spring-security-web', version: spring_security_version
-    compile group: 'org.springframework.security', name: 'spring-security-messaging', version: spring_security_version 
+    compile group: 'org.springframework.security', name: 'spring-security-messaging', version: spring_security_version
     compile(group: 'io.springfox', name: 'springfox-swagger2', version: springfox_version){
         exclude module: 'mapstruct'
     }
-    
+
     compile group: 'org.postgresql', name: 'postgresql', version: postgresql_version
     compile group: 'com.h2database', name: 'h2'
     compile group: 'fr.ippon.spark.metrics', name: 'metrics-spark-reporter', version: metrics_spark_reporter_version
@@ -160,7 +160,7 @@ dependencies {
     testCompile group: 'com.mattbertolini', name: 'liquibase-slf4j', version: liquibase_slf4j_version
     testCompile group: 'org.hamcrest', name: 'hamcrest-library'
     testCompile group: 'io.gatling.highcharts', name: 'gatling-charts-highcharts', version: gatling_version
-    
+
 
 }
 

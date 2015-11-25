@@ -1,0 +1,8 @@
+{
+  "room": {
+    "title": "Room",
+    "form":{
+      "sendComment":"Send"
+    }
+  }
+}

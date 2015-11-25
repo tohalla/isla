@@ -4,10 +4,10 @@
     "bitwise": true,
     "camelcase": true,
     "curly": true,
-    "eqeqeq": true,
+    "eqeqeq": false,
     "immed": true,
-    "indent": 4,
-    "latedef": true,
+    "indent": 2,
+    "latedef": "nofunc",
     "newcap": true,
     "noarg": true,
     "quotmark": "single",
@@ -18,5 +18,6 @@
     "trailing": true,
     "smarttabs": true,
     "white": true,
-    "predef": ["angular"]
+    "browser": true,
+    "predef": ["angular", "SockJS", "Stomp", "$"]
 }

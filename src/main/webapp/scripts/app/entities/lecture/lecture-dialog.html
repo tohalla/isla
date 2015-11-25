@@ -1,0 +1,60 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+        ng-click="clear()">&times;</button>
+    <h4 class="modal-title" id="myLectureLabel" translate="islaApp.lecture.home.createOrEditLabel">Create or edit a Lecture</h4>
+  </div>
+  <div class="modal-body">
+    <jh-alert-error></jh-alert-error>
+    <div class="form-group">
+      <label for="id" translate="global.field.id">ID</label>
+      <input type="text" class="form-control" id="id" name="id"
+          ng-model="lecture.id" readonly>
+    </div>
+    <div class="form-group">
+      <label translate="islaApp.lecture.createdAt" for="field_createdAt">CreatedAt</label>
+      <input type="datetime-local" class="form-control" name="createdAt" id="field_createdAt"
+          ng-model="lecture.createdAt" ng-model-options="{timezone: 'UTC'}"
+          >
+    </div>
+    <div class="form-group">
+      <label translate="islaApp.lecture.startsAt" for="field_startsAt">StartsAt</label>
+      <input type="datetime-local" class="form-control" name="startsAt" id="field_startsAt"
+          ng-model="lecture.startsAt" ng-model-options="{timezone: 'UTC'}"
+          >
+    </div>
+    <div class="form-group">
+      <label translate="islaApp.lecture.closesAt" for="field_closesAt">ClosesAt</label>
+      <input type="datetime-local" class="form-control" name="closesAt" id="field_closesAt"
+          ng-model="lecture.closesAt" ng-model-options="{timezone: 'UTC'}"
+          >
+    </div>
+    <div class="form-group">
+      <label translate="islaApp.lecture.description" for="field_description">Description</label>
+      <input type="text" class="form-control" name="description" id="field_description"
+          ng-model="lecture.description"
+          required ng-maxlength="512">
+      <div ng-show="editForm.description.$invalid">
+        <p class="help-block"
+          ng-show="editForm.description.$error.required" translate="entity.validation.required">
+          This field is required.
+        </p>
+        <p class="help-block"
+          ng-show="editForm.description.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="512">
+          This field cannot be longer than 512 characters.
+        </p>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+      <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+    </button>
+    <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+      <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+    </button>
+  </div>
+</form>

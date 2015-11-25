@@ -39,6 +39,8 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+    	registry.addEndpoint("/websocket/room")
+	    	.withSockJS();
         registry.addEndpoint("/websocket/tracker")
             .setHandshakeHandler(new DefaultHandshakeHandler() {
                 @Override

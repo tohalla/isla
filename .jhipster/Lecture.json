@@ -1,0 +1,42 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "comments",
+            "otherEntityName": "comment",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "lecture"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "createdAt",
+            "fieldType": "DateTime",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "startsAt",
+            "fieldType": "DateTime"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "closesAt",
+            "fieldType": "DateTime"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "512"
+        }
+    ],
+    "changelogDate": "20151120114836",
+    "dto": "no",
+    "pagination": "no"
+}
