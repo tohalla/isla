@@ -1,12 +1,17 @@
 package isla.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
+import isla.domain.Comment;
 import isla.domain.Lecture;
+import isla.repository.CommentRepository;
 import isla.repository.LectureRepository;
 import isla.repository.search.LectureSearchRepository;
 import isla.web.rest.util.HeaderUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +41,9 @@ public class LectureResource {
     @Inject
     private LectureRepository lectureRepository;
 
+    @Inject 
+    private CommentRepository commentRepository;
+    
     @Inject
     private LectureSearchRepository lectureSearchRepository;
 
@@ -87,6 +95,16 @@ public class LectureResource {
     public List<Lecture> getAllLectures() {
         log.debug("REST request to get all Lectures");
         return lectureRepository.findAll();
+    }
+    /**
+     * GET  /lectures/:id/comments -> get all the comments of lecture.
+     */
+    @RequestMapping(value = "/lectures/{id}/comments",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Comment>> getAllComments(Pageable pageable, @PathVariable Long id){
+        return new ResponseEntity<>(commentRepository.findByPostedByLectureId(id), null, HttpStatus.OK);
     }
 
     /**
