@@ -22,7 +22,6 @@
     var stompClient = null;
     var subscriber = null;
     var listener = $q.defer();
-    var connected = $q.defer();
 
     var service = {
       connect: connect,
@@ -31,7 +30,10 @@
       receive: receive,
       sendComment: sendComment,
       disconnect: disconnect,
-      setLectureId: setLectureId
+      initialize: initialize,
+      loadComments: loadComments,
+      commentsLoaded: $q.defer(),
+      comments: []
     };
 
     return service;
@@ -43,17 +45,21 @@
       stompClient = Stomp.over(socket);
       var headers = {};
       headers['X-CSRF-TOKEN'] = $cookies[$http.defaults.xsrfCookieName];
-      stompClient.connect(headers, function(){
-        connected.resolve('success');
+      return $q(function(resolve, reject){
+        stompClient.connect(headers,
+          function(){
+            resolve('connected');
+          },
+          function(){
+            reject('couldn\'t connect');
+          }
+        );
       });
-      return connected.promise;
     }
     function subscribe(){
-      connected.promise.then(function(){
-        subscriber = stompClient.subscribe('/topic/room/'+service.lectureId, function(data){
-          listener.notify(JSON.parse(data.body));
-        }, null, null);
-      });
+      subscriber = stompClient.subscribe('/topic/room/'+service.lectureId, function(data){
+        listener.notify(JSON.parse(data.body));
+      }, null, null);
     }
     function unsubscribe() {
       if (subscriber !== null) {
@@ -65,12 +71,10 @@
     }
     function sendComment(comment){
       if(stompClient !== null){
-        connected.promise.then(function(){
-          stompClient
-            .send('/topic/comment/'+service.lectureId,
-            {},
-            JSON.stringify(comment));
-        });
+        stompClient
+          .send('/topic/comment/'+service.lectureId,
+          {},
+          JSON.stringify(comment));
       }
     }
     function disconnect() {
@@ -79,16 +83,25 @@
         stompClient = null;
       }
     }
-    function setLectureId(lectureId){
-      var q = $q.defer();
-      if(lectureId !== null && lectureId >= 0){ //should also check if lecture exists and is open
-        alert(Lecture.get(lectureId));
-        q.resolve(service.lectureId = lectureId);
-      }else{
-        q.reject('invalid lectureId');
-      }
-      connected = $q.defer();
-      return q.promise;
+    function initialize(lectureId){
+      return $q(function(resolve, reject){
+        service.lectureId = lectureId;
+        if(service.lectureId !== null && service.lectureId >= 0){ //should also check if lecture is open
+          Lecture.get({id:lectureId}, function() {
+            resolve('subscribed');
+          },function(){
+            reject('invalid lectureId');
+          });
+        }else{
+          reject('invalid lectureId');
+        }
+      });
+    }
+    function loadComments(){
+      Lecture.getComments({lectureId: service.lectureId}, function(result){
+        service.comments = result;
+        service.commentsLoaded.resolve('comments loaded');
+      });
     }
   }
 })();

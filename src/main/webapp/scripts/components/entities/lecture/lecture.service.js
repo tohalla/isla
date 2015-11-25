@@ -1,8 +1,16 @@
-'use strict';
+(function(){
+  'use strict';
 
-angular.module('islaApp')
-  .factory('Lecture', function ($resource, DateUtils) {
-    return $resource('api/lectures/:id', {}, {
+  angular.module('islaApp')
+    .factory('Lecture', Lecture);
+
+  Lecture.$inject = [
+    '$resource',
+    'DateUtils'
+  ];
+
+  function Lecture($resource, DateUtils){
+    return $resource('/api/lectures/:id', {id:'@id'}, {
       'query': { method: 'GET', isArray: true},
       'get': {
         method: 'GET',
@@ -12,8 +20,16 @@ angular.module('islaApp')
           data.startsAt = DateUtils.convertDateTimeFromServer(data.startsAt);
           data.closesAt = DateUtils.convertDateTimeFromServer(data.closesAt);
           return data;
-        }
+        },
       },
-      'update': { method:'PUT' }
+      'update': { method:'PUT' },
+      'getComments': {
+        merhod: 'GET',
+        isArray: true,
+        params: {lectureId: '@lectureId'},
+        url: '/api/lectures/:lectureId/comments'
+      }
     });
-  });
+  }
+
+})();

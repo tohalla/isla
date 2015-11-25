@@ -10,21 +10,24 @@
     },
     views: {
       'content@': {
-      templateUrl: 'scripts/app/room/room.html',
-      controller: 'RoomController',
-      controllerAs: 'room'
+        templateUrl: 'scripts/app/room/room.html',
+        controller: 'RoomController',
+        controllerAs: 'room'
       }
-    },resolve: { /* @ngInject */
+    },resolve: {
       mainTranslatePartialLoader:
       function($translate, $translatePartialLoader){
         $translatePartialLoader.addPart('room');
         return $translate.refresh();
-      }
+      },
     },
     onEnter: function($stateParams, roomService){
-      roomService.setLectureId($stateParams.lectureId)
-        .then(roomService.connect())
-        .then(roomService.subscribe());
+      roomService.initialize($stateParams.lectureId)
+        .then(function(){return roomService.connect();})
+        .then(function(){
+          roomService.subscribe();
+          roomService.loadComments();
+        });
     },
     onExit: function(roomService){
       roomService.unsubscribe();
