@@ -1,9 +1,4 @@
-<div class="comment comment-main">
-	<form name="commentForm">
-		<input type="text" ng-model="room.commentText">
-  	<button ng-click="room.sendComment()" translate="room.form.sendComment">Send</button>
-	</form>
-</div>
+<isla-comment></isla-comment>
 <div class="row" ng-repeat="comment in room.comments">
   {{comment.content}}
 </div>
