@@ -97,10 +97,16 @@
           Lecture.get({id:lectureId}, function() {
             resolve('subscribed');
           },function(){
-            reject('invalid lectureId: lecture not greated');
+            reject({
+              msg: 'error.invalidLecture',
+              params: {lectureId: lectureId}
+            });
           });
         }else{
-          reject('invalid lectureId: lecture id must be set and be greater than 0');
+          reject({
+            msg: 'error.invalidLecture',
+            params: {lectureId: lectureId}
+          });
         }
       });
     }

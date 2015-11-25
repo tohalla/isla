@@ -108,7 +108,8 @@
   },
   "error": {
     "serverNotReachable": "Server not reachable",
-    "NotNull": "Field {{fieldName}} cannot be empty!"
+    "NotNull": "Field {{fieldName}} cannot be empty!",
+    "invalidLecture": "The lecture by id {{lectureId}} was not found"
   },
   "footer": "This is your footer"
 }

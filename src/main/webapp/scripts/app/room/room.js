@@ -21,9 +21,17 @@
         return $translate.refresh();
       },
     },
-    onEnter: function($stateParams, roomService){
+    onEnter: function($stateParams, $q, roomService, AlertService){
       roomService.initialize($stateParams.lectureId)
-        .then(function(){return roomService.connect();})
+        .then(
+          function(){
+            return roomService.connect();
+          },
+          function(error){
+            AlertService.error(error.msg, error.params);
+            return $q.reject();
+          }
+        )
         .then(function(){
           roomService.subscribe();
           roomService.loadComments();
