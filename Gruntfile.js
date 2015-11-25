@@ -95,7 +95,7 @@ module.exports = function (grunt) {
               js: /'(.*\.js)'/gi
             },
             replace: {
-              js: '\'\','
+              js: '\'{{filePath}}\','
             }
           }
         }
