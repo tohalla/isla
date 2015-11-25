@@ -27,7 +27,18 @@
         merhod: 'GET',
         isArray: true,
         params: {lectureId: '@lectureId'},
-        url: '/api/lectures/:lectureId/comments'
+        url: '/api/lectures/:lectureId/comments',
+        transformResponse: function (data) {
+          data = angular.fromJson(data);
+          var modified = [];
+          angular.forEach(data, function(value) {
+            this.push({
+              content:value.content,
+              createdAt:value.createdAt
+            });
+          }, modified);
+          return modified;
+        }
       }
     });
   }
