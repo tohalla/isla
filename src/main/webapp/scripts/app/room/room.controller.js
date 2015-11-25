@@ -8,7 +8,6 @@
     '$cookies',
     '$http',
     'roomService',
-    'Lecture'
   ];
 
   function RoomController(

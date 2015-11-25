@@ -1,7 +1,7 @@
 <div class="comment comment-main">
 	<form name="commentForm">
 		<input type="text" ng-model="room.commentText">
-  	<button ng-click="room.sendComment()">Send</button>
+  	<button ng-click="room.sendComment()" translate="room.form.sendComment">Send</button>
 	</form>
 </div>
 <div class="row" ng-repeat="comment in room.comments">
