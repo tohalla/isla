@@ -8,7 +8,6 @@
     '$cookies',
     '$http',
     'roomService',
-    'commentService',
     'Lecture'
   ];
 
@@ -20,12 +19,12 @@
   ){
     var vm = this;
 
-    $scope.$watch(roomService.getComments(), function(){
-      vm.comments = roomService.comments;
-    });
     vm.sendComment = sendComment;
     vm.showComment = showComment;
 
+    $scope.$watch(roomService.comments, function(){
+      vm.comments = roomService.comments;
+    });
 
     roomService.receive().then(null, null, function(comment){
       showComment(comment);

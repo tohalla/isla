@@ -32,7 +32,6 @@
       disconnect: disconnect,
       initialize: initialize,
       loadComments: loadComments,
-      commentsLoaded: $q.defer(),
       comments: []
     };
 
@@ -98,9 +97,9 @@
       });
     }
     function loadComments(){
+      service.comments.splice(0, service.comments.length);
       Lecture.getComments({lectureId: service.lectureId}, function(result){
-        service.comments = result;
-        service.commentsLoaded.resolve('comments loaded');
+        angular.extend(service.comments, result);
       });
     }
   }
