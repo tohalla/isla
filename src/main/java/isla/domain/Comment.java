@@ -1,5 +1,6 @@
 package isla.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import isla.domain.util.CustomDateTimeDeserializer;
@@ -45,6 +46,7 @@ public class Comment implements Serializable {
     private User postedBy;
 
     @ManyToOne
+    @JsonIgnore
     private Lecture lecture;
 
     public Long getId() {
