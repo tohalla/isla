@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import isla.domain.Comment;
 import isla.repository.CommentRepository;
 import isla.repository.search.CommentSearchRepository;
+import isla.security.AuthoritiesConstants;
 import isla.web.rest.util.HeaderUtil;
 import isla.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -68,6 +70,7 @@ public class CommentResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.USER,AuthoritiesConstants.ADMIN}) /* REPLACE USER WITH TEACHER WHEN GENERATED */
     public ResponseEntity<Comment> updateComment(@Valid @RequestBody Comment comment) throws URISyntaxException {
         log.debug("REST request to update Comment : {}", comment);
         if (comment.getId() == null) {
@@ -117,6 +120,7 @@ public class CommentResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.USER,AuthoritiesConstants.ADMIN}) /* REPLACE USER WITH TEACHER WHEN GENERATED */
     public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
         log.debug("REST request to delete Comment : {}", id);
         commentRepository.delete(id);

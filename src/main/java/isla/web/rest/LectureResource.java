@@ -7,6 +7,7 @@ import isla.domain.Lecture;
 import isla.repository.CommentRepository;
 import isla.repository.LectureRepository;
 import isla.repository.search.LectureSearchRepository;
+import isla.security.AuthoritiesConstants;
 import isla.web.rest.util.HeaderUtil;
 
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -54,6 +56,7 @@ public class LectureResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.USER,AuthoritiesConstants.ADMIN}) /* REPLACE USER WITH TEACHER WHEN GENERATED */
     public ResponseEntity<Lecture> createLecture(@Valid @RequestBody Lecture lecture) throws URISyntaxException {
         log.debug("REST request to save Lecture : {}", lecture);
         if (lecture.getId() != null) {
@@ -73,6 +76,7 @@ public class LectureResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.USER,AuthoritiesConstants.ADMIN}) /* REPLACE USER WITH TEACHER WHEN GENERATED */
     public ResponseEntity<Lecture> updateLecture(@Valid @RequestBody Lecture lecture) throws URISyntaxException {
         log.debug("REST request to update Lecture : {}", lecture);
         if (lecture.getId() == null) {
@@ -130,6 +134,7 @@ public class LectureResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.USER,AuthoritiesConstants.ADMIN}) /* REPLACE USER WITH TEACHER WHEN GENERATED */
     public ResponseEntity<Void> deleteLecture(@PathVariable Long id) {
         log.debug("REST request to delete Lecture : {}", id);
         lectureRepository.delete(id);
