@@ -48,6 +48,11 @@ public class Comment implements Serializable {
     @ManyToOne
     @JsonIgnore
     private Lecture lecture;
+    
+    @ElementCollection
+    @CollectionTable(name="LIKE", joinColumns=@JoinColumn(name="comment_id"))
+    @Column(name="user_sid")
+    public Set<String> likes;
 
     public Long getId() {
         return id;
@@ -87,6 +92,14 @@ public class Comment implements Serializable {
 
     public void setLecture(Lecture lecture) {
         this.lecture = lecture;
+    }
+    
+    public Set<String> getLikes(){
+    	return likes;
+    }
+    
+    public void setLikes(Set<String> likes){
+    	this.likes = likes;
     }
 
     @Override
