@@ -43,6 +43,10 @@ module.exports = function (grunt) {
       dist: 'src/main/webapp/dist'
     },
     watch: {
+      compass: {
+          files: ['src/main/scss/main.{scss,sass}'],
+          tasks: ['compass:server']
+      },
       bower: {
         files: ['bower.json'],
         tasks: ['wiredep']
@@ -52,7 +56,8 @@ module.exports = function (grunt) {
         tasks: ['ngconstant:dev']
       },
       styles: {
-        files: ['src/main/webapp/assets/styles/**/*.css']
+        files: ['src/main/scss/**/*.scss'],
+        tasks: ['compass']
       },
       includeSource: {
         // Watch for added and deleted scripts to update index.html
@@ -60,6 +65,22 @@ module.exports = function (grunt) {
         tasks: ['includeSource'],
         options: {
           event: ['added', 'deleted']
+        }
+      }
+    },
+    compass: {
+      options: {
+        sassDir: 'src/main/scss',
+        cssDir: 'src/main/webapp/assets/styles',
+        imagesDir: 'src/main/webapp/assets/images',
+        importPath: 'src/main/webapp/bower_components',
+        relativeAssets: false,
+        noLineComments: true
+      },
+      dist: {},
+      server: {
+        options: {
+            debugInfo: true
         }
       }
     },
@@ -340,10 +361,13 @@ module.exports = function (grunt) {
     },
     concurrent: {
       server: [
+        'compass:server'
       ],
       test: [
+      'compass'
       ],
       dist: [
+        'compass:dist',
         'imagemin',
         'svgmin'
       ]

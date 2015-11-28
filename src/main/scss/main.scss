@@ -3,6 +3,8 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 // bower:scss
 @import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
+@import "settings.scss";
+@import "mixins.scss";
 
 body {
   background: #fafafa;
@@ -138,6 +140,13 @@ ul#strength {
 }
 /* end Password strength bar style */
 /* Custom alerts for notification */
+.alerts{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
 .alerts .alert{
   text-overflow: ellipsis;
 }
