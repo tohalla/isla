@@ -487,4 +487,29 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+
+  grunt.registerTask('cl', 'created changelog file for liquibase', function(name){
+    var time = new Date();
+    var timePrefix =  ''+
+                      time.getFullYear()+
+                      time.getMonth()+
+                      time.getDate()+
+                      time.getHours()+
+                      time.getMinutes()+
+                      time.getSeconds();
+    var open = require('open');
+    var filel = 'src/main/resources/config/liquibase/changelog/'+timePrefix+'_'+name+'.xml';
+    grunt.file.write(filel,
+        '<?xml version="1.0" encoding="utf-8"?>\n'+
+        '<databaseChangeLog\n'+
+        '\txmlns="http://www.liquibase.org/xml/ns/dbchangelog"\n'+
+        '\txmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n'+
+        '\txsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">\n\n'+
+        '\t<changeSet id="'+timePrefix+'" author="">\n'+
+        '\t</changeSet>\n'+
+        '</databaseChangeLog>\n'
+      );
+    open(filel);
+  });
 };
