@@ -1,6 +1,6 @@
-<div class="comment comment-main">
-  <form name="commentForm">
-    <input type="text" ng-model="vm.commentText">
-    <button ng-click="vm.sendComment()" translate="room.form.sendComment">Send</button>
-  </form>
+<div class="row comment">
+  <div class="col-sm-10 comment-content">{{comment.content}}</div>
+  <div class="col-sm-2 comment-items">
+    <button class="comment-item like"></button>
+  </div>
 </div>

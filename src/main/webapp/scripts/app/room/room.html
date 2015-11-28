@@ -1,4 +1,6 @@
-<isla-comment></isla-comment>
-<div class="row" ng-repeat="comment in room.comments">
-  {{comment.content}}
+<isla-comment-form></isla-comment-form>
+<div class="container">
+  <div ng-repeat-start="comment in room.comments"></div>
+    <isla-comment comment={{comment}}></isla-comment>
+  <div ng-repeat-end></div>
 </div>

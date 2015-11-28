@@ -16,6 +16,29 @@ body {
   display: none !important;
 }
 
+.comment{
+  width: 100%;
+
+  .comment-content{
+    display: inline-block;
+  }
+  .comment-items{
+    display: inline-block;
+    margin-right: 0;
+    margin-left: auto;
+  }
+  .comment-item{
+    border: none;
+    display: inline-block;
+    width: $commentItemsWidth;
+    height: $commentItemsHeight;
+  }
+  .like{
+    background: url("../images/like.png") no-repeat center top;
+    background-size: contain;
+  }
+}
+
 .development {
   position: absolute;
   width: 149px;
