@@ -20,7 +20,8 @@
     Lecture
   ){
     var stompClient = null;
-    var subscriber = null;
+    var commentSubscriber = null;
+    var commentLikesSubscriber = null;
 
     var service = {
       connect: connect,
@@ -31,7 +32,8 @@
       initialize: initialize,
       addComment: addComment,
       loadComments: loadComments,
-      comments: []
+      likeComment: likeComment,
+      comments: {likes: []}
     };
 
     return service;
@@ -55,8 +57,12 @@
       });
     }
     function subscribe(){
+      subscribeComments();
+      subscribeCommentLikes();
+    }
+    function subscribeComments(){
       var deferred = $q.defer();
-      subscriber = stompClient.subscribe('/topic/room/'+service.lectureId, function(data){
+      commentSubscriber = stompClient.subscribe('/topic/room/'+service.lectureId, function(data){
         deferred.resolve();
         refer(JSON.parse(data.body));
       }, function(){
@@ -70,12 +76,30 @@
         }/* ,TODO:function(){error}*/);
       }
     }
+    function subscribeCommentLikes(){
+      var deferred = $q.defer();
+      commentLikesSubscriber = stompClient.subscribe('/topic/room/'+service.lectureId+'/likes',
+        function(data){
+          deferred.resolve();
+          refer(JSON.parse(data.body));
+        }, function(){
+          deferred.reject();
+          refer({content: 'error reading the message'});
+        },
+      null);
+
+      function refer(data){
+        deferred.promise.then(function(){
+          service.comments[data.commentId].likes.push(data.userSid);
+        }/* ,TODO:function(){error}*/);
+      }
+    }
     function addComment(comment){
-      service.comments.push(comment);
+      service.comments[comment.id] = comment;
     }
     function unsubscribe() {
-      if (subscriber !== null) {
-        subscriber.unsubscribe();
+      if (commentSubscriber !== null) {
+        commentSubscriber.unsubscribe();
       }
     }
     function sendComment(comment){
@@ -83,6 +107,11 @@
         .send('/topic/comment/'+service.lectureId,
         {},
         JSON.stringify(comment));
+    }
+    function likeComment(commentId){
+      stompClient
+        .send('/topic/comment/'+service.lectureId+'/'+commentId,
+        {});
     }
     function disconnect() {
       if (stompClient !== null) {
@@ -111,9 +140,11 @@
       });
     }
     function loadComments(){
-      service.comments.splice(0, service.comments.length);
       Lecture.getComments({lectureId: service.lectureId}, function(result){
-        angular.extend(service.comments, result);
+        service.comments = {};
+        angular.forEach(result, function(item){
+          service.comments[item.id] = item;
+        });
       });
     }
   }

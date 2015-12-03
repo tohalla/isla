@@ -7,6 +7,7 @@
     <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20151120114836_added_entity_Lecture.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20151120115453_added_entity_Comment.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/2015102816627_add_likes.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/2015102816627_add_comment_score.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/2015113132136_add_load_default_data_to_lectures.xml" relativeToChangelogFile="false"/>
     <!-- JHipster will add liquibase changelogs here -->
 </databaseChangeLog>

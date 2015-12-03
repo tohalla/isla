@@ -18,14 +18,12 @@
   ){
     var vm = this;
 
-    $scope.$watch(roomService.comments, function(){
+    $scope.$watch(
+      function(){
+        return roomService.comments;
+      },
+      function(){
       vm.comments = roomService.comments;
     });
-
-    vm.likeComment = function(){
-      if($cookies.get('hazelcast.sessionId') !== null){
-      }//add error handling..
-    };
   }
-
 }());

@@ -13,8 +13,8 @@ public class WebsocketSecurityConfiguration extends AbstractSecurityWebSocketMes
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
         messages
 	        .simpTypeMatchers(SimpMessageType.CONNECT, SimpMessageType.HEARTBEAT, SimpMessageType.UNSUBSCRIBE, SimpMessageType.DISCONNECT).permitAll()
-	        .simpDestMatchers("/topic/comment/*").permitAll()
-            .simpSubscribeDestMatchers("/topic/room/*").permitAll()
+	        .simpDestMatchers("/topic/comment/**").permitAll()
+            .simpSubscribeDestMatchers("/topic/room/**").permitAll()
 	        .simpDestMatchers("/topic/**").authenticated()
 	        .simpTypeMatchers(SimpMessageType.MESSAGE, SimpMessageType.SUBSCRIBE).denyAll()
 	        .anyMessage().denyAll();

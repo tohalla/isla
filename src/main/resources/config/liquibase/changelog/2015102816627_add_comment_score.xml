@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
 	<changeSet id="2015102816627" author="touko">
-    <createTable tableName="LIKE">
+    <createTable tableName="COMMENT_SCORE">
       <column name="comment_id" type="bigint">
         <constraints nullable="false"/>
       </column>
@@ -16,10 +16,10 @@
 
     <addPrimaryKey columnNames="comment_id, user_sid"
                    constraintName="pk_like"
-                   tableName="LIKE"/>
+                   tableName="COMMENT_SCORE"/>
 
     <addForeignKeyConstraint baseColumnNames="comment_id"
-                             baseTableName="LIKE"
+                             baseTableName="COMMENT_SCORE"
                              constraintName="fk_comment_liked_by_id"
                              referencedColumnNames="id"
                              referencedTableName="COMMENT"/>

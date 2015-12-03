@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfigurer {
@@ -31,6 +33,7 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
     private final Logger log = LoggerFactory.getLogger(WebsocketConfiguration.class);
 
     public static final String IP_ADDRESS = "IP_ADDRESS";
+    public static final String SESSION_ID = "SESSION_ID";
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
@@ -64,7 +67,9 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
             public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
                 if (request instanceof ServletServerHttpRequest) {
                     ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+                    HttpSession session = servletRequest.getServletRequest().getSession(false);
                     attributes.put(IP_ADDRESS, servletRequest.getRemoteAddress());
+                    attributes.put(SESSION_ID, session.getId());
                 }
                 return true;
             }

@@ -1,6 +1,8 @@
 <isla-comment-form></isla-comment-form>
 <div class="container">
-  <div ng-repeat-start="comment in room.comments"></div>
-    <isla-comment comment={{comment}}></isla-comment>
+  <div ng-repeat-start="comment in room.comments | orderByDate"></div>
+    <isla-comment comment-id="{{comment.id}}" score="{{comment.likes.length}}">
+      {{comment.content}}
+    </isla-comment>
   <div ng-repeat-end></div>
 </div>

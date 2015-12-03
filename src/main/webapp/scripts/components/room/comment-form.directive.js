@@ -6,19 +6,19 @@
 
   function islaCommentForm() {
     var directive = {
-      $scope: {} ,
+      scope: {} ,
       restrict: 'E',
-      transclude: true,
       templateUrl: 'scripts/components/room/comment-form.directive.html',
-      controller: commentController,
+      controller: commentFormController,
       controllerAs: 'vm',
       bindToController: true
     };
 
     return directive;
   }
-  commentController.$inject = ['roomService'];
-  function commentController(roomService){
+  commentFormController.$inject = ['roomService'];
+  function commentFormController(roomService){
+    /*jshint validthis: true */
     var vm = this;
     vm.sendComment = sendComment;
 

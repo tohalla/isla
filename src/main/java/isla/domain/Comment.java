@@ -5,10 +5,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import isla.domain.util.CustomDateTimeDeserializer;
 import isla.domain.util.CustomDateTimeSerializer;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -23,10 +27,8 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "COMMENT")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName="comment")
 public class Comment implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -49,10 +51,10 @@ public class Comment implements Serializable {
     @JsonIgnore
     private Lecture lecture;
     
-    @ElementCollection
-    @CollectionTable(name="LIKE", joinColumns=@JoinColumn(name="comment_id"))
+    @ElementCollection(fetch=FetchType.EAGER)
+    @CollectionTable(name="COMMENT_SCORE", joinColumns=@JoinColumn(name="comment_id"))
     @Column(name="user_sid")
-    public Set<String> likes;
+    private Set<String> likes = new HashSet<String>();
 
     public Long getId() {
         return id;
@@ -61,7 +63,7 @@ public class Comment implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public DateTime getCreatedAt() {
         return createdAt;
     }
@@ -131,4 +133,11 @@ public class Comment implements Serializable {
                 ", content='" + content + "'" +
                 '}';
     }
+
+	public boolean addLike(String userSid) {
+		if(likes.contains(userSid))
+			return false;
+		likes.add(userSid);
+		return true;
+	}
 }

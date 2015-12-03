@@ -1,4 +1,4 @@
-package isla.web.rest;
+ package isla.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import isla.domain.Comment;
@@ -127,7 +127,7 @@ public class CommentResource {
         commentSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("comment", id.toString())).build();
     }
-
+    
     /**
      * SEARCH  /_search/comments/:query -> search for the comment corresponding
      * to the query.
