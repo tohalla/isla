@@ -30,11 +30,15 @@ public class Course implements Serializable {
     @NotNull
     @Size(min = 2, max = 255)
     @Column(name = "course_name")
-    private String course_name;
+    private String courseName;
     
     @Size(max = 4000)
     @Column(name = "course_description")
-    private String course_description;
+    private String courseDescription;
+    
+    @OneToMany(mappedBy = "course")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Lecture> lectures = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -44,21 +48,29 @@ public class Course implements Serializable {
         this.id = id;
     }
 
-    public String getCourse_name() {
-        return course_name;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setCourse_name(String course_name) {
-        this.course_name = course_name;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
-    public String getCourse_description() {
-        return course_description;
+    public String getCourseDescription() {
+        return courseDescription;
     }
 
-    public void setCourse_description(String course_description) {
-        this.course_description = course_description;
+    public void setCourseDescription(String courseDescription) {
+        this.courseDescription = courseDescription;
     }
+    
+    public void setLectures(Set<Lecture> lectures) {
+		this.lectures = lectures;
+	}
+    
+    public Set<Lecture> getLectures() {
+		return lectures;
+	}
 
     @Override
     public boolean equals(Object o) {
@@ -85,8 +97,8 @@ public class Course implements Serializable {
     public String toString() {
         return "Course{" +
                 "id=" + id +
-                ", course_name='" + course_name + "'" +
-                ", course_description='" + course_description + "'" +
+                ", course_name='" + courseName + "'" +
+                ", course_description='" + courseDescription + "'" +
                 '}';
     }
 }

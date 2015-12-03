@@ -77,8 +77,8 @@ public class CourseResourceTest {
     @Before
     public void initTest() {
         course = new Course();
-        course.setCourse_name(DEFAULT_COURSE_NAME);
-        course.setCourse_description(DEFAULT_COURSE_DESCRIPTION);
+        course.setCourseName(DEFAULT_COURSE_NAME);
+        course.setCourseDescription(DEFAULT_COURSE_DESCRIPTION);
     }
 
     @Test
@@ -97,8 +97,8 @@ public class CourseResourceTest {
         List<Course> courses = courseRepository.findAll();
         assertThat(courses).hasSize(databaseSizeBeforeCreate + 1);
         Course testCourse = courses.get(courses.size() - 1);
-        assertThat(testCourse.getCourse_name()).isEqualTo(DEFAULT_COURSE_NAME);
-        assertThat(testCourse.getCourse_description()).isEqualTo(DEFAULT_COURSE_DESCRIPTION);
+        assertThat(testCourse.getCourseName()).isEqualTo(DEFAULT_COURSE_NAME);
+        assertThat(testCourse.getCourseDescription()).isEqualTo(DEFAULT_COURSE_DESCRIPTION);
     }
 
     @Test
@@ -148,8 +148,8 @@ public class CourseResourceTest {
 		int databaseSizeBeforeUpdate = courseRepository.findAll().size();
 
         // Update the course
-        course.setCourse_name(UPDATED_COURSE_NAME);
-        course.setCourse_description(UPDATED_COURSE_DESCRIPTION);
+        course.setCourseName(UPDATED_COURSE_NAME);
+        course.setCourseDescription(UPDATED_COURSE_DESCRIPTION);
 
         restCourseMockMvc.perform(put("/api/courses")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -160,8 +160,8 @@ public class CourseResourceTest {
         List<Course> courses = courseRepository.findAll();
         assertThat(courses).hasSize(databaseSizeBeforeUpdate);
         Course testCourse = courses.get(courses.size() - 1);
-        assertThat(testCourse.getCourse_name()).isEqualTo(UPDATED_COURSE_NAME);
-        assertThat(testCourse.getCourse_description()).isEqualTo(UPDATED_COURSE_DESCRIPTION);
+        assertThat(testCourse.getCourseName()).isEqualTo(UPDATED_COURSE_NAME);
+        assertThat(testCourse.getCourseDescription()).isEqualTo(UPDATED_COURSE_DESCRIPTION);
     }
 
     @Test

@@ -53,6 +53,9 @@ public class Lecture implements Serializable {
     @Size(max = 512)        
     @Column(name = "description", length = 512, nullable = false)
     private String description;
+    
+    @ManyToOne
+    private Course course;
 
     @OneToMany(mappedBy = "lecture")
     @JsonIgnore

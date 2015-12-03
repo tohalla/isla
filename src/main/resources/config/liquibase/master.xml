@@ -9,5 +9,7 @@
     <include file="classpath:config/liquibase/changelog/20151120115453_added_entity_Comment.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/2015102816627_add_likes.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20151202201650_added_entity_Course.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20151202220000_added_course_id_to_Lecture.xml" relativeToChangelogFile="false"/>
+    
     <!-- JHipster will add liquibase changelogs here -->
 </databaseChangeLog>
