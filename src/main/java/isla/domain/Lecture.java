@@ -110,6 +110,14 @@ public class Lecture implements Serializable {
         this.comments = comments;
     }
 
+    public void setCourse(Course course) {
+		this.course = course;
+	}
+
+    public Course getCourse() {
+		return course;
+	}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

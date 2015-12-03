@@ -1,20 +1,31 @@
 package isla.web.rest;
 
-import isla.Application;
-import isla.domain.Course;
-import isla.repository.CourseRepository;
-import isla.repository.search.CourseSearchRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -22,13 +33,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import isla.Application;
+import isla.domain.Course;
+import isla.domain.Lecture;
+import isla.repository.CourseRepository;
+import isla.repository.LectureRepository;
+import isla.repository.search.CourseSearchRepository;
 
 
 /**
@@ -54,6 +64,9 @@ public class CourseResourceTest {
     private CourseSearchRepository courseSearchRepository;
 
     @Inject
+    private LectureRepository lectureRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
@@ -69,6 +82,7 @@ public class CourseResourceTest {
         CourseResource courseResource = new CourseResource();
         ReflectionTestUtils.setField(courseResource, "courseRepository", courseRepository);
         ReflectionTestUtils.setField(courseResource, "courseSearchRepository", courseSearchRepository);
+        ReflectionTestUtils.setField(courseResource, "lectureRepository", lectureRepository);
         this.restCourseMockMvc = MockMvcBuilders.standaloneSetup(courseResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -112,8 +126,8 @@ public class CourseResourceTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(course.getId().intValue())))
-                .andExpect(jsonPath("$.[*].course_name").value(hasItem(DEFAULT_COURSE_NAME.toString())))
-                .andExpect(jsonPath("$.[*].course_description").value(hasItem(DEFAULT_COURSE_DESCRIPTION.toString())));
+                .andExpect(jsonPath("$.[*].courseName").value(hasItem(DEFAULT_COURSE_NAME.toString())))
+                .andExpect(jsonPath("$.[*].courseDescription").value(hasItem(DEFAULT_COURSE_DESCRIPTION.toString())));
     }
 
     @Test
@@ -127,8 +141,8 @@ public class CourseResourceTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(course.getId().intValue()))
-            .andExpect(jsonPath("$.course_name").value(DEFAULT_COURSE_NAME.toString()))
-            .andExpect(jsonPath("$.course_description").value(DEFAULT_COURSE_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.courseName").value(DEFAULT_COURSE_NAME.toString()))
+            .andExpect(jsonPath("$.courseDescription").value(DEFAULT_COURSE_DESCRIPTION.toString()));
     }
 
     @Test
@@ -180,5 +194,36 @@ public class CourseResourceTest {
         // Validate the database is empty
         List<Course> courses = courseRepository.findAll();
         assertThat(courses).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void getAllLectures() throws Exception {
+        // Initialize the database
+        courseRepository.saveAndFlush(course);
+
+		// Add two lectures
+        Lecture lecture1 = new Lecture();
+        lecture1.setDescription("eka luento");
+        lecture1.setCreatedAt(DateTime.now());
+        lecture1.setStartsAt(DateTime.now().plusHours(1));
+        lecture1.setClosesAt(DateTime.now().plusHours(2).plusMinutes(30));
+        lecture1.setCourse(course);
+        lectureRepository.saveAndFlush(lecture1);
+
+        Lecture lecture2 = new Lecture();
+        lecture2.setDescription("toka luento");
+        lecture2.setCreatedAt(DateTime.now());
+        lecture2.setStartsAt(DateTime.now().plusDays(1).plusHours(1));
+        lecture2.setClosesAt(DateTime.now().plusDays(1).plusHours(2).plusMinutes(30));
+        lecture2.setCourse(course);
+        lectureRepository.saveAndFlush(lecture2);
+
+        // Get all lectures of course
+        restCourseMockMvc.perform(get("/api/courses/{id}/lectures", course.getId())
+                .accept(TestUtil.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[*].id").value(hasItem(lecture1.getId().intValue())))
+                .andExpect(jsonPath("$.[*].id").value(hasItem(lecture2.getId().intValue())));
     }
 }

@@ -1,19 +1,7 @@
 package isla.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import isla.domain.Course;
-import isla.repository.CourseRepository;
-import isla.repository.search.CourseSearchRepository;
-import isla.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryString;
 
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -21,7 +9,27 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.codahale.metrics.annotation.Timed;
+
+import isla.domain.Course;
+import isla.domain.Lecture;
+import isla.repository.CourseRepository;
+import isla.repository.LectureRepository;
+import isla.repository.search.CourseSearchRepository;
+import isla.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing Course.
@@ -37,6 +45,9 @@ public class CourseResource {
 
     @Inject
     private CourseSearchRepository courseSearchRepository;
+
+    @Inject
+    private LectureRepository lectureRepository;
 
     /**
      * POST  /courses -> Create a new course.
@@ -130,5 +141,20 @@ public class CourseResource {
         return StreamSupport
             .stream(courseSearchRepository.search(queryString(query)).spliterator(), false)
             .collect(Collectors.toList());
+    }
+
+    /**
+     * GET  /courses/:id/lectures -> get all the lectures of the course.
+     */
+    @RequestMapping(value = "/courses/{id}/lectures",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Lecture>> getAllLectures(@PathVariable Long id) {
+        log.debug("REST request to get all lectures of the course");
+
+        return Optional.ofNullable(courseRepository.findOne(id))
+        		.map(course -> new ResponseEntity<>(lectureRepository.findAllByCourse(course), HttpStatus.OK))
+        		.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
