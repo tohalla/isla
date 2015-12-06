@@ -95,6 +95,7 @@
       }
     }
     function addComment(comment){
+      comment.likes = typeof comment.likes !== 'undefined' ? comment.likes : [];
       service.comments[comment.id] = comment;
     }
     function unsubscribe() {
