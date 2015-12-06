@@ -4,6 +4,7 @@ import isla.Application;
 import isla.domain.Comment;
 import isla.repository.CommentRepository;
 import isla.repository.search.CommentSearchRepository;
+import isla.service.CommentService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -60,6 +61,9 @@ public class CommentResourceTest {
 
     @Inject
     private CommentSearchRepository commentSearchRepository;
+    
+    @Inject 
+    private CommentService commentService;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -105,8 +109,13 @@ public class CommentResourceTest {
         List<Comment> comments = commentRepository.findAll();
         assertThat(comments).hasSize(databaseSizeBeforeCreate + 1);
         Comment testComment = comments.get(comments.size() - 1);
+        
+        // Add a like to the comment
+        commentService.addLike(testComment.getId(), "sid");
+        
         assertThat(testComment.getCreatedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_CREATED_AT);
         assertThat(testComment.getContent()).isEqualTo(DEFAULT_CONTENT);
+        assertThat(testComment.getLikes()).contains("sid");
     }
 
     @Test
