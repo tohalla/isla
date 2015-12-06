@@ -33,7 +33,7 @@
       addComment: addComment,
       loadComments: loadComments,
       likeComment: likeComment,
-      comments: {likes: []}
+      comments: {}
     };
 
     return service;
