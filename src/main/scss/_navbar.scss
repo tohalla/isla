@@ -1,0 +1,80 @@
+.navbar{
+  ul{
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+
+    li{
+      display: inline-block;
+      margin: 0;
+    }
+  }
+
+  a{
+      display: inline-block;
+  }
+
+  &.navbar-sub{
+    background: $aluminum;
+    border-bottom: 1px solid $gray;
+    font-size: 80%;
+
+    a{
+      color: $darkgray;
+      text-decoration: none;
+      padding: 4px;
+      &:hover{
+        color: $black;
+      }
+    }
+    .active a{
+      text-decoration: underline;
+    }
+  }
+
+  &.navbar-default{
+    background: $nav-background;
+    color: $nav-text-color;
+
+    a{
+      padding: $nav-link-padding-vertical $nav-link-padding-horizontal;
+    }
+
+    a:not(.navbar-brand){
+      color: $nav-link-color;
+      background: $nav-link-background;
+      text-decoration: none;
+
+      @include box-sizing(border-box);
+
+      &:hover{
+        color: $nav-link-hover-color;
+        background: $nav-link-hover-background;
+      }
+    }
+    ul .active a{
+      color: $nav-link-active-color;
+      text-decoration: underline;
+    }
+  }
+  &.navbar-plain{
+    position: absolute;
+    padding-left: 5%;
+    top: 0;
+
+    a{
+      background: $nav-plain-link-background;
+      padding: 2px 4px;
+    }
+  }
+}
+
+.navbar-brand{
+  padding: $nav-link-padding-vertical $nav-link-padding-horizontal;
+  margin-right: 80px;
+  color: $nav-brand-color;
+  text-decoration: none;
+}
+
+//edit later for mobile..

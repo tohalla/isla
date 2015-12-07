@@ -11,7 +11,7 @@ angular.module('islaApp')
           pageTitle: 'global.menu.account.password'
         },
         views: {
-          'content@': {
+          'content': {
             templateUrl: 'scripts/app/account/password/password.html',
             controller: 'PasswordController'
           }

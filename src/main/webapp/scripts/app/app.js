@@ -71,11 +71,8 @@ function islaConfig($stateProvider, $urlRouterProvider, $httpProvider, $location
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('site', {
     'abstract': true,
-    views: {
-      'navbar@': {
-        templateUrl: 'scripts/components/navbar/navbar.html',
-        controller: 'NavbarController'
-      }
+    data: {
+      authorities: []
     },
     resolve: {
       authorize: ['Auth',

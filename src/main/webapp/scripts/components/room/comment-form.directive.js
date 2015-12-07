@@ -9,15 +9,15 @@
       scope: {} ,
       restrict: 'E',
       templateUrl: 'scripts/components/room/comment-form.directive.html',
-      controller: commentFormController,
+      controller: CommentFormController,
       controllerAs: 'vm',
       bindToController: true
     };
 
     return directive;
   }
-  commentFormController.$inject = ['roomService'];
-  function commentFormController(roomService){
+  CommentFormController.$inject = ['roomService'];
+  function CommentFormController(roomService){
     /*jshint validthis: true */
     var vm = this;
     vm.sendComment = sendComment;

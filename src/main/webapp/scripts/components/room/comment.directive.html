@@ -1,9 +1,9 @@
-<div class="row comment">
-  <div class="col-sm-10 comment-content">
+<div class="comment">
+  <div class="comment-content">
     <ng-transclude></ng-transclude>
   </div>
-  <div class="col-sm-2 comment-items">
+  <div class="comment-items">
     {{score}}
-    <button ng-if="vm.allowLike()" ng-click="vm.likeComment()" class="comment-item like"></button>
+    <button title="{{'room.actions.like' | translate}}" ng-if="vm.allowLike()" ng-click="vm.likeComment()" class="comment-item like"></button>
   </div>
 </div>

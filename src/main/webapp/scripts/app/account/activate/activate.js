@@ -7,11 +7,10 @@ angular.module('islaApp')
         parent: 'account',
         url: '/activate?key',
         data: {
-          authorities: [],
           pageTitle: 'activate.title'
         },
         views: {
-          'content@': {
+          'content': {
             templateUrl: 'scripts/app/account/activate/activate.html',
             controller: 'ActivationController'
           }

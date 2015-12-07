@@ -11,7 +11,6 @@ angular.module('islaApp')
         },
         views: {
           'content@': {
-            templateUrl: 'scripts/app/main/main.html',
             controller: 'LogoutController'
           }
         }

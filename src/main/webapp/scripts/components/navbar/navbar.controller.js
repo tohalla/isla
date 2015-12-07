@@ -1,13 +1,36 @@
-'use strict';
+(function(){
+  'use strict';
+  angular.module('islaApp')
+    .controller('NavbarController', NavbarController);
 
-angular.module('islaApp')
-  .controller('NavbarController', function ($scope, $location, $state, Auth, Principal, ENV) {
-    $scope.isAuthenticated = Principal.isAuthenticated;
-    $scope.$state = $state;
-    $scope.inProduction = ENV === 'prod';
+  NavbarController.$inject = [
+    '$scope',
+    '$location',
+    '$state',
+    '$rootScope',
+    'Auth',
+    'Principal',
+    'ENV'
+  ];
+  function NavbarController(
+    $scope,
+    $location,
+    $state,
+    $rootScope,
+    Auth,
+    Principal,
+    ENV
+  ) {
+    this.isAuthenticated = Principal.isAuthenticated;
+    this.$state = $state;
+    this.inProduction = ENV === 'prod';
+    this.back = $rootScope.back;
+    this.logout = logout;
+    this.accountMenu = false;
 
-    $scope.logout = function () {
+    function logout() {
       Auth.logout();
       $state.go('home');
-    };
-  });
+    }
+  }
+}());

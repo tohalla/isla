@@ -3,12 +3,12 @@
 angular.module('islaApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('account', {
+      .state('contained', {
         abstract: true,
-        parent: 'contained',
+        parent: 'layout',
         views: {
-          'content': {
-            template: '<div ui-view="content"></div>',
+          '': {
+            'template': '<div ui-view="content" class="container"></div>'
           }
         }
       });

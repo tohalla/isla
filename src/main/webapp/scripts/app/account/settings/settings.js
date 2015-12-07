@@ -11,7 +11,7 @@ angular.module('islaApp')
           pageTitle: 'global.menu.account.settings'
         },
         views: {
-          'content@': {
+          'content': {
             templateUrl: 'scripts/app/account/settings/settings.html',
             controller: 'SettingsController'
           }

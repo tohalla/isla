@@ -11,7 +11,7 @@ angular.module('islaApp')
           pageTitle: 'global.menu.account.sessions'
         },
         views: {
-          'content@': {
+          'content': {
             templateUrl: 'scripts/app/account/sessions/sessions.html',
             controller: 'SessionsController'
           }

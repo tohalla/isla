@@ -1,0 +1,68 @@
+.comment-form{
+  background: $orange;
+  width: 100;
+  display: block;
+  clear: both;
+  padding: 38px 0;
+
+  form{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  button{
+    padding: 6px 10px;
+  }
+
+  .comment-input{
+    width: 80%;
+    border-top-left-radius: $default-border-radius;
+    border-bottom-left-radius: $default-border-radius;
+    border: none;
+  }
+  .comment-send{
+    border-top-right-radius: $default-border-radius;
+    border-bottom-right-radius: $default-border-radius;
+    border: none;
+    background: $aluminum;
+    color: $gray;
+  }
+}
+
+.comment{
+  width: 100%;
+  min-height: $comment-items-height * 1.5;
+  display: flex;
+  align-content: space-between;
+  border-bottom: 2px solid $aluminum;
+  padding: 0 $comment-horizontal-padding;
+  @include box-sizing(border-box);
+
+  .comment-content{
+    display: inline-block;
+    max-width: calc(100% - 100px);
+    word-wrap: break-word;
+    display: flex;
+    align-items: center;
+    text-overflow: ellipsis;
+    padding: $comment-vertical-padding 0;
+    @include box-sizing(border-box);
+  }
+  .comment-items{
+    display: flex;
+    align-items: center;
+    margin-right: 0;
+    margin-left: auto;
+  }
+  .comment-item{
+    border: none;
+    display: inline-block;
+    width: $comment-items-width;
+    height: $comment-items-height;
+  }
+  .like{
+    background: url("../images/like.png") no-repeat center top;
+    background-size: contain;
+  }
+}

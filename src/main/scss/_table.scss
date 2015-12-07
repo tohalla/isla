@@ -1,0 +1,18 @@
+.table-striped{
+  tr:nth-child(2){
+    background: $table-highlight-color;
+  }
+}
+th, td{
+  padding: 8px;
+  text-align: left;
+}
+table{
+  font-size: 90%;
+  width: 100%;
+  border: 1px solid $gray;
+}
+th{
+  color: $white;
+  background: $gray;
+}

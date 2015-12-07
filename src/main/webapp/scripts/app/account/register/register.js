@@ -11,7 +11,7 @@ angular.module('islaApp')
           pageTitle: 'register.title'
         },
         views: {
-          'content@': {
+          'content': {
             templateUrl: 'scripts/app/account/register/register.html',
             controller: 'RegisterController'
           }

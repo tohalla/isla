@@ -1,6 +1,53 @@
-$commentItemsWidth  : 24px;
-$commentItemsHeight : 24px;
+$comment-items-height   : 24px;
+$comment-items-width    : 24px;
 
-$orange : #f39c12;
-$clouds : #ecf0f1;
-$silver : #bdc3c7
+$orange         : #F6BF26;
+$white          : #FFFFFF;
+$carrara        : #F2F1EF;
+$silver         : #bdc3c7;
+$aluminum       : #e1e1e1;
+$asphalt        : #34495e;
+$gray           : #868686;
+$darkgray       : #414141;
+$black          : #000000;
+$blue           : #2980b9;
+$lighblue       : #4aa3df;
+$midnight       : #2c3e50;
+$lightyellow    : #FFF2D0;
+
+$background     : $white;
+
+$nav-background                 : $darkgray;
+$nav-text-color                 : $aluminum;
+$nav-link-padding-vertical      : 10px;
+$nav-link-padding-horizontal    : 15px;
+$nav-link-background            : none;
+$nav-link-color                 : $nav-text-color;
+$nav-link-hover-background      : none;
+$nav-brand-color                : $orange;
+$nav-link-hover-color           : $white;
+$nav-link-active-color          : $white;
+
+$nav-plain-link-background        : $white;
+
+$footer-height        : 50px;
+$footer-background    : $carrara;
+
+$link-color         : $blue;
+$link-hover-color   : $orange;
+
+$comment-vertical-padding     : 14px;
+$comment-horizontal-padding   : 16px;
+
+$default-font-family  : "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+
+$default-border-radius  : 7px;
+
+$default-btn-background         : $lighblue;
+$default-btn-hover-background   : $blue;
+$default-btn-color              : $white;
+
+$default-indentation-size       : 20px;
+
+$default-highlight-color  : $lightyellow;
+$table-highlight-color    : $carrara;

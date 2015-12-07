@@ -1,14 +1,13 @@
 (function(){
   'use strict';
   angular.module('islaApp')
-    .directive('islaNavbar', islaNavbar);
+    .directive('islaNavbarPlain', islaNavbarPlain);
 
-  function islaNavbar(){
+  function islaNavbarPlain(){
     var directive = {
-      scope: {
-      },
+      scope: {},
       restrict: 'E',
-      templateUrl: 'scripts/components/navbar/navbar.directive.html',
+      templateUrl: 'scripts/components/navbar/navbar-plain.directive.html',
       controller: 'NavbarController',
       controllerAs: 'vm',
       bindToController: true

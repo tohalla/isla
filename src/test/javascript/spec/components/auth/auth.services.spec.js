@@ -14,8 +14,9 @@ describe('Services Tests ', function () {
       spiedAuthServerProvider = AuthServerProvider;
       //Request on app init
       $httpBackend.whenGET(/api\/account\?cacheBuster=\d+/).respond({});
-      $httpBackend.whenGET('scripts/app/main/main.html').respond({});
-      $httpBackend.whenGET('scripts/components/navbar/navbar.html').respond({});
+      $httpBackend.whenGET('scripts/app/layout/layout.html').respond({});
+      $httpBackend.whenGET('scripts/app/layout/footer.html').respond({});
+      $httpBackend.whenGET('scripts/app/home/home.html').respond({});
       var globalJson = new RegExp('i18n\/.*\/global.json')
       var mainJson = new RegExp('i18n\/.*\/main.json');
       $httpBackend.whenGET(globalJson).respond({});
@@ -33,7 +34,7 @@ describe('Services Tests ', function () {
       //GIVEN
       //Set spy
       spyOn(spiedAuthServerProvider, 'logout').and.callThrough();
-      spyOn(spiedLocalStorageService, "clearAll").and.callThrough();
+      spyOn(spiedLocalStorageService, 'clearAll').and.callThrough();
 
       //WHEN
       authService.logout();

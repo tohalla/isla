@@ -3,13 +3,16 @@
   angular.module('islaApp')
   .config(['$stateProvider', function ($stateProvider) {
     $stateProvider.state('room',{
-    parent: 'site',
+    parent: 'layout',
     url: '/room/{lectureId}',
     data: {
       authorities: []
     },
     views: {
-      'content@': {
+      'navbar@layout': {
+        'template': '<isla-navbar-plain></isla-navbar-plain>'
+      },
+      '': {
         templateUrl: 'scripts/app/room/room.html',
         controller: 'RoomController',
         controllerAs: 'room'

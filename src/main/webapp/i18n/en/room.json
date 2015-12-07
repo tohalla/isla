@@ -1,7 +1,11 @@
 {
   "room": {
     "title": "Room",
+    "actions":{
+      "like": "Like comment"
+    },
     "form":{
+      "writeComment": "Write comment",
       "sendComment":"Send"
     }
   }

@@ -3,6 +3,7 @@
     "title": "isla",
     "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
     "menu": {
+      "back": "Back",
       "home": "Home",
       "entities": {
         "main": "Entities",
@@ -47,7 +48,8 @@
     "messages": {
       "info": {
         "authenticated": "If you want to <a class=\"alert-link\" href=\"#/login\">authenticate</a>, you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\").",
-        "register": "You don't have an account yet? <a class=\"alert-link\" href=\"#/register\">Register a new account</a>"
+        "noAccount": "You don't have an account yet?",
+        "register": "Register a new account"
       },
       "error": {
         "dontmatch": "The password and its confirmation do not match!"

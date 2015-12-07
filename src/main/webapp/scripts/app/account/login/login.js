@@ -7,11 +7,10 @@ angular.module('islaApp')
         parent: 'account',
         url: '/login',
         data: {
-          authorities: [],
           pageTitle: 'login.title'
         },
         views: {
-          'content@': {
+          'content': {
             templateUrl: 'scripts/app/account/login/login.html',
             controller: 'LoginController'
           }
