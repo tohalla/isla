@@ -53,6 +53,9 @@ public class Lecture implements Serializable {
     @Size(max = 512)        
     @Column(name = "description", length = 512, nullable = false)
     private String description;
+    
+    @ManyToOne
+    private Course course;
 
     @OneToMany(mappedBy = "lecture")
     @JsonIgnore
@@ -106,6 +109,14 @@ public class Lecture implements Serializable {
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
+
+    public void setCourse(Course course) {
+		this.course = course;
+	}
+
+    public Course getCourse() {
+		return course;
+	}
 
     @Override
     public boolean equals(Object o) {

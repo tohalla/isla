@@ -8,6 +8,7 @@
         "main": "Entities",
         "lecture": "Lecture",
         "comment": "Comment",
+        "course": "Course",
         "additionalEntity": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

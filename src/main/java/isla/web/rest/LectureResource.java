@@ -1,5 +1,30 @@
 package isla.web.rest;
 
+import static org.elasticsearch.index.query.QueryBuilders.queryString;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.codahale.metrics.annotation.Timed;
 
 import isla.domain.Comment;
@@ -9,27 +34,6 @@ import isla.repository.LectureRepository;
 import isla.repository.search.LectureSearchRepository;
 import isla.security.AuthoritiesConstants;
 import isla.web.rest.util.HeaderUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Lecture.
@@ -48,7 +52,7 @@ public class LectureResource {
     
     @Inject
     private LectureSearchRepository lectureSearchRepository;
-
+    
     /**
      * POST  /lectures -> Create a new lecture.
      */
@@ -56,7 +60,7 @@ public class LectureResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured({AuthoritiesConstants.USER,AuthoritiesConstants.ADMIN}) /* REPLACE USER WITH TEACHER WHEN GENERATED */
+    @Secured({AuthoritiesConstants.TEACHER, AuthoritiesConstants.ADMIN})
     public ResponseEntity<Lecture> createLecture(@Valid @RequestBody Lecture lecture) throws URISyntaxException {
         log.debug("REST request to save Lecture : {}", lecture);
         if (lecture.getId() != null) {
@@ -76,7 +80,7 @@ public class LectureResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured({AuthoritiesConstants.USER,AuthoritiesConstants.ADMIN}) /* REPLACE USER WITH TEACHER WHEN GENERATED */
+    @Secured({AuthoritiesConstants.TEACHER, AuthoritiesConstants.ADMIN})
     public ResponseEntity<Lecture> updateLecture(@Valid @RequestBody Lecture lecture) throws URISyntaxException {
         log.debug("REST request to update Lecture : {}", lecture);
         if (lecture.getId() == null) {
@@ -134,7 +138,7 @@ public class LectureResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured({AuthoritiesConstants.USER,AuthoritiesConstants.ADMIN}) /* REPLACE USER WITH TEACHER WHEN GENERATED */
+    @Secured({AuthoritiesConstants.TEACHER, AuthoritiesConstants.ADMIN})
     public ResponseEntity<Void> deleteLecture(@PathVariable Long id) {
         log.debug("REST request to delete Lecture : {}", id);
         lectureRepository.delete(id);
