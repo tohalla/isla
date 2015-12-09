@@ -70,7 +70,7 @@ public class CommentResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured({AuthoritiesConstants.USER,AuthoritiesConstants.ADMIN}) /* REPLACE USER WITH TEACHER WHEN GENERATED */
+    @Secured({AuthoritiesConstants.TEACHER, AuthoritiesConstants.ADMIN})
     public ResponseEntity<Comment> updateComment(@Valid @RequestBody Comment comment) throws URISyntaxException {
         log.debug("REST request to update Comment : {}", comment);
         if (comment.getId() == null) {
@@ -120,7 +120,7 @@ public class CommentResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured({AuthoritiesConstants.USER,AuthoritiesConstants.ADMIN}) /* REPLACE USER WITH TEACHER WHEN GENERATED */
+    @Secured({AuthoritiesConstants.TEACHER, AuthoritiesConstants.ADMIN})
     public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
         log.debug("REST request to delete Comment : {}", id);
         commentRepository.delete(id);
