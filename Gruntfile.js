@@ -43,9 +43,9 @@ module.exports = function (grunt) {
       dist: 'src/main/webapp/dist'
     },
     watch: {
-      compass: {
-          files: ['src/main/scss/main.{scss,sass}'],
-          tasks: ['compass:server']
+      sass: {
+        files: ['src/main/scss/**.*.{scss, sass}'],
+        tasks: ['sass:dist']
       },
       bower: {
         files: ['bower.json'],
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
       },
       styles: {
         files: ['src/main/scss/**/*.scss'],
-        tasks: ['compass']
+        tasks: ['sass']
       },
       includeSource: {
         // Watch for added and deleted scripts to update index.html
@@ -68,19 +68,13 @@ module.exports = function (grunt) {
         }
       }
     },
-    compass: {
+    sass: {
       options: {
-        sassDir: 'src/main/scss',
-        cssDir: 'src/main/webapp/assets/styles',
-        imagesDir: 'src/main/webapp/assets/images',
-        importPath: 'src/main/webapp/bower_components',
-        relativeAssets: false,
-        noLineComments: true
+        sourceMap: true,
       },
-      dist: {},
-      server: {
-        options: {
-            debugInfo: true
+      dist: {
+        files: {
+          'src/main/webapp/assets/styles/main.css': 'src/main/scss/main.scss'
         }
       }
     },
@@ -360,14 +354,11 @@ module.exports = function (grunt) {
       }
     },
     concurrent: {
-      server: [
-        'compass:server'
-      ],
       test: [
-      'compass'
+        'sass'
       ],
       dist: [
-        'compass:dist',
+        'sass:dist',
         'imagemin',
         'svgmin'
       ]
