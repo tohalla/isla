@@ -1,0 +1,36 @@
+<h1 translate="islaApp.course.createLabel">Create Course</h1>
+
+<div class="alert alert-danger" ng-show="authenticationError" translate="login.messages.error.authentication">
+  <strong>Authentication failed!</strong> Please check your credentials and try again.
+</div>
+
+<form role="form" ng-submit="vm.save()">
+  <div class="form-vertical-group">
+    <div class="form-group">
+      <label for="courseName" translate="islaApp.course.courseName">courseName</label>
+      <input type="text"
+             class="form-control"
+             name="courseName"
+             id="courseName"
+             placeholder="{{'islaApp.course.courseName' | translate}}"
+             ng-model="vm.course.courseName"
+             required>
+    </div>
+    <div class="form-group">
+      <label for="courseDescription" translate="islaApp.course.courseDescription">courseDescription</label>
+      <input type="text"
+             class="form-control"
+             name="courseDescription"
+             id="courseDescription"
+             placeholder="{{'islaApp.course.courseDescription' | translate}}"
+             ng-model="vm.course.courseDescription"
+             required>
+    </div>
+    <div class="form-group">
+      <span></span>
+      <button type="submit" class="btn" translate="islaApp.course.addCourse">
+        Add course
+      </button>
+    </div>
+  </div>
+</form>

@@ -37,6 +37,7 @@ public class Course implements Serializable {
     private String courseDescription;
     
     @OneToMany(mappedBy = "course")
+    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Lecture> lectures = new HashSet<>();
 

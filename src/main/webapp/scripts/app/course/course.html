@@ -1,0 +1,41 @@
+<div class="row">
+  <a href="#" ui-sref="courses" title="">Back to courses</a>
+</div>
+<div class="row">
+  <h1 translate="islaApp.course.course">Course</h1>
+  <div class="form-vertical-group">
+    <div class="form-group">
+      <b>Id</b>
+      <span>{{course.courseData.id}}</span>
+    </div>
+    <div class="form-group">
+      <b translate="islaApp.course.courseName">Course Name</b>
+      <span>{{course.courseData.courseName}}</span>
+    </div>
+    <div class="form-group">
+      <b translate="islaApp.course.courseDescription">Course Description</b>
+      <span>{{course.courseData.courseDescription}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <h3 translate="islaApp.course.openLectures">Open lectures</h3>
+
+    <a
+      href
+      ng-if="course.ableToAdd"
+      ng-show="!course.openLecture"
+      ng-click="course.openLecture = true"
+      translate="islaApp.course.openNewLecture">
+      Open a new lecture
+    </a>
+    <isla-lecture-form
+      ng-show="course.openLecture"
+      ng-if="course.ableToAdd"
+      course="{{course.courseData.id}}">
+    </isla-lecture-form>
+
+    <div class="lecture-feed" ng-repeat-start="lecture in course.courseData.lectures"></div>
+      <a href ui-sref="room({lectureId: lecture.id})" title="{{course.courseName}}">{{lecture}}</a>
+    <div ng-repeat-end></div>
+  </div>
+</div>

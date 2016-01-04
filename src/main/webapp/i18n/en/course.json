@@ -1,23 +1,20 @@
 {
     "islaApp": {
         "course" : {
-            "home": {
-                "title": "Courses",
-                "createLabel": "Create a new Course",
-                "createOrEditLabel": "Create or edit a Course"
-            },
+            "createLabel": "Create a new Course",
             "created": "A new Course is created with identifier {{ param }}",
             "updated": "A Course is updated with identifier {{ param }}",
             "deleted": "A Course is deleted with identifier {{ param }}",
             "delete": {
                 "question": "Are you sure you want to delete Course {{ id }}?"
             },
-            "detail": {
-                "title": "Course"
-            },
-            "course_name": "Course_name",
-            "course_description": "Course_description",
-            "lecture": "Lecture"
+            "course": "Course",
+            "courseName": "Course name",
+            "courseDescription": "Course description",
+            "addCourse": "Add course",
+            "lecture": "Lecture",
+            "openNewLecture": "Open a new lecture",
+            "openLectures": "Open lectures"
         }
     }
 }
