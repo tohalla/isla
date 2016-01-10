@@ -1,10 +1,10 @@
 'use strict';
-/*globals filepath */
+/* globals filepath */
 var fs = require('fs');
 
 // Returns the first occurence of the version number
 var parseVersionFromBuildGradle = function() {
-  var versionRegex = /^version\s*=\s*[',"]([^',"]*)[',"]/gm; // Match and group the version number
+  var versionRegex = /^version\s*=\s*[',"]([^',"]*)[',"]/gm;
   var buildGradle = fs.readFileSync('build.gradle', 'utf8');
   return versionRegex.exec(buildGradle)[1];
 };
@@ -13,15 +13,15 @@ var parseVersionFromBuildGradle = function() {
 var useminAutoprefixer = {
   name: 'autoprefixer',
   createConfig: function(context, block) {
-    if(block.src.length === 0) {
+    if (block.src.length === 0) {
       return {};
-    } else {
-      return require('grunt-usemin/lib/config/cssmin').createConfig(context, block); // Reuse cssmins createConfig
     }
+    return require('grunt-usemin/lib/config/cssmin')
+      .createConfig(context, block);
   }
 };
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
   grunt.loadNpmTasks('grunt-ng-constant');
@@ -30,12 +30,12 @@ module.exports = function (grunt) {
     app: {
       // Application variables
       scripts: [
-           // JS files to be included by includeSource task into index.html
-           'scripts/app/app.js',
-           'scripts/app/app.constants.js',
-           'scripts/components/**/*.js',
-           'scripts/app/**/*.js'
-         ]
+        // JS files to be included by includeSource task into index.html
+        'scripts/app/app.js',
+        'scripts/app/app.constants.js',
+        'scripts/components/**/*.js',
+        'scripts/app/**/*.js'
+      ]
     },
     yeoman: {
       // configurable paths
@@ -70,7 +70,7 @@ module.exports = function (grunt) {
     },
     sass: {
       options: {
-        sourceMap: true,
+        sourceMap: true
       },
       dist: {
         files: {
@@ -94,14 +94,14 @@ module.exports = function (grunt) {
       app: {
         src: ['src/main/webapp/index.html'],
         exclude: [
-          /angular-i18n/,  // localizations are loaded dynamically
+          /angular-i18n/,
           /swagger-ui/
         ]
       },
       test: {
         src: 'src/test/javascript/karma.conf.js',
         exclude: [/angular-i18n/, /swagger-ui/, /angular-scenario/],
-        ignorePath: /\.\.\/\.\.\//, // remove ../../ from paths of injected javascripts
+        ignorePath: /\.\.\/\.\.\//,
         devDependencies: true,
         fileTypes: {
           js: {
@@ -132,7 +132,7 @@ module.exports = function (grunt) {
     browserSync: {
       dev: {
         bsFiles: {
-          src : [
+          src: [
             'src/main/webapp/**/*.html',
             'src/main/webapp/**/*.json',
             'src/main/webapp/assets/styles/**/*.css',
@@ -220,11 +220,12 @@ module.exports = function (grunt) {
           html: {
             steps: {
               js: ['concat', 'uglifyjs'],
-              css: ['cssmin', useminAutoprefixer] // Let cssmin concat files so it corrects relative paths to fonts and images
+              // Let cssmin concat files so it corrects relative paths to fonts and images
+              css: ['cssmin', useminAutoprefixer]
             },
-              post: {}
-            }
+            post: {}
           }
+        }
       }
     },
     usemin: {
@@ -232,10 +233,16 @@ module.exports = function (grunt) {
       css: ['<%= yeoman.dist %>/assets/styles/**/*.css'],
       js: ['<%= yeoman.dist %>/scripts/**/*.js'],
       options: {
-        assetsDirs: ['<%= yeoman.dist %>', '<%= yeoman.dist %>/assets/styles', '<%= yeoman.dist %>/assets/images', '<%= yeoman.dist %>/assets/fonts'],
+        assetsDirs: [
+          '<%= yeoman.dist %>',
+          '<%= yeoman.dist %>/assets/styles',
+          '<%= yeoman.dist %>/assets/images',
+          '<%= yeoman.dist %>/assets/fonts'
+        ],
         patterns: {
           js: [
-            [/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
+            [/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm,
+            'Update the JS to reference our revved images']
           ]
         },
         dirs: ['<%= yeoman.dist %>']
@@ -246,7 +253,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: 'src/main/webapp/assets/images',
-        src: '**/*.{jpg,jpeg}', // we don't optimize PNG files as it doesn't work on Linux. If you are not on Linux, feel free to use '**/*.{png,jpg,jpeg}'
+          src: '**/*.{jpg,jpeg}',
           dest: '<%= yeoman.dist %>/assets/images'
         }]
       }
@@ -274,18 +281,18 @@ module.exports = function (grunt) {
       //   }
       // }
       options: {
-        root: 'src/main/webapp' // Replace relative paths for static resources with absolute path
+        root: 'src/main/webapp'
       }
     },
-    ngtemplates:  {
+    ngtemplates: {
       dist: {
         cwd: 'src/main/webapp',
-        src: ['scripts/app/**/*.html', 'scripts/components/**/*.html',],
+        src: ['scripts/app/**/*.html', 'scripts/components/**/*.html'],
         dest: '.tmp/templates/templates.js',
         options: {
-          module: 'jhipsterApp',
+          module: 'islaApp',
           usemin: 'scripts/app.js',
-          htmlmin:  {
+          htmlmin: {
             removeCommentsFromCDATA: true,
             // https://github.com/yeoman/grunt-usemin/issues/44
             collapseWhitespace: true,
@@ -345,12 +352,12 @@ module.exports = function (grunt) {
         }]
       },
       generateOpenshiftDirectory: {
-          expand: true,
-          dest: 'deploy/openshift',
-          src: [
-            'pom.xml',
-            'src/main/**'
-          ]
+        expand: true,
+        dest: 'deploy/openshift',
+        src: [
+          'pom.xml',
+          'src/main/**'
+        ]
       }
     },
     concurrent: {
@@ -389,7 +396,8 @@ module.exports = function (grunt) {
         commit: true,
         push: false,
         connectCommits: false,
-        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+        message: 'Built %sourceName% from commit %sourceCommit% ' +
+        'on branch %sourceBranch%'
       },
       openshift: {
         options: {
@@ -436,7 +444,7 @@ module.exports = function (grunt) {
     'watch'
   ]);
 
-  grunt.registerTask('server', function (target) {
+  grunt.registerTask('server', function(target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run([target ? ('serve:' + target) : 'serve']);
   });
@@ -468,8 +476,10 @@ module.exports = function (grunt) {
     'htmlmin'
   ]);
 
-  grunt.registerTask('appendSkipBower', 'Force skip of bower for Gradle', function () {
-
+  grunt.registerTask(
+    'appendSkipBower',
+    'Force skip of bower for Gradle',
+  function() {
     if (!grunt.file.exists(filepath)) {
       // Assume this is a maven project
       return true;
@@ -478,7 +488,7 @@ module.exports = function (grunt) {
     var fileContent = grunt.file.read(filepath);
     var skipBowerIndex = fileContent.indexOf('skipBower=true');
 
-    if (skipBowerIndex != -1) {
+    if (skipBowerIndex !== -1) {
       return true;
     }
 
@@ -488,7 +498,7 @@ module.exports = function (grunt) {
   grunt.registerTask('buildOpenshift', [
     'test',
     'build',
-    'copy:generateOpenshiftDirectory',
+    'copy:generateOpenshiftDirectory'
   ]);
 
   grunt.registerTask('deployOpenshift', [
@@ -503,28 +513,34 @@ module.exports = function (grunt) {
     'build'
   ]);
 
-
-  grunt.registerTask('cl', 'created changelog file for liquibase', function(name){
-    var time = new Date();
-    var timePrefix =  ''+
-                      time.getFullYear()+
-                      time.getMonth()+
-                      time.getDate()+
-                      time.getHours()+
-                      time.getMinutes()+
-                      time.getSeconds();
-    var open = require('open');
-    var filel = 'src/main/resources/config/liquibase/changelog/'+timePrefix+'_'+name+'.xml';
-    grunt.file.write(filel,
-        '<?xml version="1.0" encoding="utf-8"?>\n'+
-        '<databaseChangeLog\n'+
-        '\txmlns="http://www.liquibase.org/xml/ns/dbchangelog"\n'+
-        '\txmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n'+
-        '\txsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">\n\n'+
-        '\t<changeSet id="'+timePrefix+'" author="">\n'+
-        '\t</changeSet>\n'+
-        '</databaseChangeLog>\n'
+  grunt.registerTask(
+    'cl',
+    'created changelog file for liquibase',
+    function(name) {
+      var time = new Date();
+      var timePrefix = String(
+        time.getFullYear() +
+        time.getMonth() +
+        time.getDate() +
+        time.getHours() +
+        time.getMinutes() +
+        time.getSeconds()
       );
-    open(filel);
-  });
+      var open = require('open');
+      var filel =
+        'src/main/resources/config/liquibase/changelog/' +
+        timePrefix + '_' +
+        name + '.xml';
+      grunt.file.write(filel,
+          '<?xml version="1.0" encoding="utf-8"?>\n' +
+          '<databaseChangeLog\n' +
+          '\txmlns="http://www.liquibase.org/xml/ns/dbchangelog"\n' +
+          '\txmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n' +
+          '\txsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">\n\n' +
+          '\t<changeSet id="' + timePrefix + '" author="">\n' +
+          '\t</changeSet>\n' +
+          '</databaseChangeLog>\n'
+        );
+      open(filel);
+    });
 };
