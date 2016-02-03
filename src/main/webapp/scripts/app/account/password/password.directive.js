@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('islaApp')
-  .directive('passwordStrengthBar', function () {
+  .directive('passwordStrengthBar', function() {
     return {
       replace: true,
       restrict: 'E',
@@ -12,13 +12,12 @@ angular.module('islaApp')
         '<li class="point"></li><li class="point"></li><li class="point"></li><li class="point"></li><li class="point"></li>' +
         '</ul>' +
         '</div>',
-      link: function (scope, iElement, attr) {
+      link: function(scope, iElement, attr) {
         var strength = {
           colors: ['#F00', '#F90', '#FF0', '#9F0', '#0F0'],
-          mesureStrength: function (p) {
-
+          mesureStrength: function(p) {
             var _force = 0;
-            var _regex = /[$-/:-?{-~!"^_`\[\]]/g; // "
+            var _regex = /[$-/:-?{-~!"^_`\[\]]/g;
 
             var _lowerLetters = /[a-z]+/.test(p);
             var _upperLetters = /[A-Z]+/.test(p);
@@ -26,7 +25,7 @@ angular.module('islaApp')
             var _symbols = _regex.test(p);
 
             var _flags = [_lowerLetters, _upperLetters, _numbers, _symbols];
-            var _passedMatches = $.grep(_flags, function (el) {
+            var _passedMatches = $.grep(_flags, function(el) {
               return el === true;
             }).length;
 
@@ -42,38 +41,32 @@ angular.module('islaApp')
             _force = (_passedMatches === 3) ? Math.min(_force, 40) : _force;
 
             return _force;
-
           },
-          getColor: function (s) {
-
+          getColor: function(s) {
             var idx = 0;
             if (s <= 10) {
               idx = 0;
-            }
-            else if (s <= 20) {
+            } else if (s <= 20) {
               idx = 1;
-            }
-            else if (s <= 30) {
+            } else if (s <= 30) {
               idx = 2;
-            }
-            else if (s <= 40) {
+            } else if (s <= 40) {
               idx = 3;
-            }
-            else {
+            } else {
               idx = 4;
             }
 
-            return { idx: idx + 1, col: this.colors[idx] };
+            return {idx: idx + 1, col: this.colors[idx]};
           }
         };
-        scope.$watch(attr.passwordToCheck, function (password) {
+        scope.$watch(attr.passwordToCheck, function(password) {
           if (password) {
             var c = strength.getColor(strength.mesureStrength(password));
             iElement.removeClass('ng-hide');
             iElement.find('ul').children('li')
-              .css({ 'background': '#DDD' })
+              .css({background: '#DDD'})
               .slice(0, c.idx)
-              .css({ 'background': c.col });
+              .css({background: c.col});
           }
         });
       }

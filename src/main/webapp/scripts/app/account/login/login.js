@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('islaApp')
-  .config(function ($stateProvider) {
+  .config(function($stateProvider) {
     $stateProvider
       .state('login', {
         parent: 'account',
@@ -10,16 +10,20 @@ angular.module('islaApp')
           pageTitle: 'login.title'
         },
         views: {
-          'content': {
+          content: {
             templateUrl: 'scripts/app/account/login/login.html',
-            controller: 'LoginController'
+            controller: 'LoginController',
+            controllerAs: 'login'
           }
         },
         resolve: {
-          translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+          translatePartialLoader: function(
+            $translate,
+            $translatePartialLoader
+          ) {
             $translatePartialLoader.addPart('login');
             return $translate.refresh();
-          }]
+          }
         }
       });
   });

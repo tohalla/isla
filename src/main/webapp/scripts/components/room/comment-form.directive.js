@@ -1,4 +1,4 @@
-(function(){
+(function() {
   'use strict';
 
   angular.module('islaApp')
@@ -6,7 +6,7 @@
 
   function islaCommentForm() {
     var directive = {
-      scope: {} ,
+      scope: {},
       restrict: 'E',
       templateUrl: 'scripts/components/room/comment-form.directive.html',
       controller: CommentFormController,
@@ -16,14 +16,12 @@
 
     return directive;
   }
-  CommentFormController.$inject = ['roomService'];
-  function CommentFormController(roomService){
-    /*jshint validthis: true */
+  function CommentFormController(roomService) {
     var vm = this;
     vm.sendComment = sendComment;
 
-    function sendComment(){
-      roomService.sendComment({'content':vm.commentText});
+    function sendComment() {
+      roomService.sendComment({content: vm.commentText});
       vm.commentText = '';
     }
   }

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('islaApp')
-  .filter('characters', function () {
-    return function (input, chars, breakOnWord) {
+  .filter('characters', function() {
+    return function(input, chars, breakOnWord) {
       if (isNaN(chars)) {
         return input;
       }
@@ -12,15 +12,15 @@ angular.module('islaApp')
       if (input && input.length > chars) {
         input = input.substring(0, chars);
 
-        if (!breakOnWord) {
+        if (breakOnWord) {
+          while (input.charAt(input.length - 1) === ' ') {
+            input = input.substr(0, input.length - 1);
+          }
+        } else {
           var lastspace = input.lastIndexOf(' ');
           // Get last space
           if (lastspace !== -1) {
             input = input.substr(0, lastspace);
-          }
-        } else {
-          while (input.charAt(input.length-1) === ' ') {
-            input = input.substr(0, input.length - 1);
           }
         }
         return input + '...';
@@ -28,8 +28,8 @@ angular.module('islaApp')
       return input;
     };
   })
-  .filter('words', function () {
-    return function (input, words) {
+  .filter('words', function() {
+    return function(input, words) {
       if (isNaN(words)) {
         return input;
       }

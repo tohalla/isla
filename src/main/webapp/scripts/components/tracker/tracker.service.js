@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('islaApp')
-  .factory('Tracker', function ($rootScope, $cookies, $http, $q) {
+  .factory('Tracker', function($rootScope, $cookies, $http, $q, $window) {
     var stompClient = null;
     var subscriber = null;
     var listener = $q.defer();
@@ -12,23 +12,23 @@ angular.module('islaApp')
         stompClient
           .send('/topic/activity',
           {},
-          JSON.stringify({'page': $rootScope.toState.name}));
+          angular.toJson({page: $rootScope.toState.name}));
       }
     }
     return {
-      connect: function () {
-        //building absolute path so that websocket doesnt fail when deploying with a context path
-        var loc = window.location;
+      connect: function() {
+        // building absolute path so that websocket doesnt fail when deploying with a context path
+        var loc = $window.location;
         var url = '//' + loc.host + loc.pathname + 'websocket/tracker';
         var socket = new SockJS(url);
         stompClient = Stomp.over(socket);
         var headers = {};
         headers['X-CSRF-TOKEN'] = $cookies[$http.defaults.xsrfCookieName];
-        stompClient.connect(headers, function(frame) {
+        stompClient.connect(headers, function() {
           connected.resolve('success');
           sendActivity();
           if (!alreadyConnectedOnce) {
-            $rootScope.$on('$stateChangeStart', function (event) {
+            $rootScope.$on('$stateChangeStart', function() {
               sendActivity();
             });
             alreadyConnectedOnce = true;
@@ -38,7 +38,7 @@ angular.module('islaApp')
       subscribe: function() {
         connected.promise.then(function() {
           subscriber = stompClient.subscribe('/topic/tracker', function(data) {
-            listener.notify(JSON.parse(data.body));
+            listener.notify(angular.fromJson(data.body));
           });
         }, null, null);
       },
@@ -50,7 +50,7 @@ angular.module('islaApp')
       receive: function() {
         return listener.promise;
       },
-      sendActivity: function () {
+      sendActivity: function() {
         if (stompClient !== null) {
           sendActivity();
         }

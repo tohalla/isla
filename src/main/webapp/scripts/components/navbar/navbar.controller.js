@@ -3,15 +3,6 @@
   angular.module('islaApp')
     .controller('NavbarController', NavbarController);
 
-  NavbarController.$inject = [
-    '$scope',
-    '$location',
-    '$state',
-    '$rootScope',
-    'Auth',
-    'Principal',
-    'ENV'
-  ];
   function NavbarController(
     $scope,
     $location,
@@ -21,16 +12,17 @@
     Principal,
     ENV
   ) {
-    this.isAuthenticated = Principal.isAuthenticated;
-    this.$state = $state;
-    this.inProduction = ENV === 'prod';
-    this.back = $rootScope.back;
-    this.logout = logout;
-    this.accountMenu = false;
+    var vm = this;
+    vm.isAuthenticated = Principal.isAuthenticated;
+    vm.$state = $state;
+    vm.inProduction = ENV === 'prod';
+    vm.back = $rootScope.back;
+    vm.logout = logout;
+    vm.accountMenu = false;
 
     function logout() {
       Auth.logout();
       $state.go('home');
     }
   }
-}());
+})();

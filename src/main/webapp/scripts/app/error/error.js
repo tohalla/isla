@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('islaApp')
-  .config(function ($stateProvider) {
+  .config(function($stateProvider) {
     $stateProvider
       .state('error', {
         parent: 'site',
@@ -16,10 +16,13 @@ angular.module('islaApp')
           }
         },
         resolve: {
-          mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
+          mainTranslatePartialLoader: function(
+            $translate,
+            $translatePartialLoader
+          ) {
             $translatePartialLoader.addPart('error');
             return $translate.refresh();
-          }]
+          }
         }
       })
       .state('accessdenied', {
@@ -34,10 +37,13 @@ angular.module('islaApp')
           }
         },
         resolve: {
-          mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
+          mainTranslatePartialLoader: function(
+            $translate,
+            $translatePartialLoader
+          ) {
             $translatePartialLoader.addPart('error');
             return $translate.refresh();
-          }]
+          }
         }
       });
   });

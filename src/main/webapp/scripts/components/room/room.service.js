@@ -1,27 +1,19 @@
-(function(){
+(function() {
   'use strict';
 
   angular.module('islaApp')
     .factory('roomService', roomService);
-
-  roomService.$inject = [
-    '$rootScope',
-    '$cookies',
-    '$http',
-    '$q',
-    'Lecture'
-  ];
 
   function roomService(
     $rootScope,
     $cookies,
     $http,
     $q,
+    $window,
     Lecture
-  ){
+  ) {
     var stompClient = null;
     var commentSubscriber = null;
-    var commentLikesSubscriber = null;
 
     var service = {
       connect: connect,
@@ -38,64 +30,68 @@
 
     return service;
 
-    function connect(){
-      var loc = window.location;
+    function connect() {
+      var loc = $window.location;
       var url = '//' + loc.host + loc.pathname + 'websocket/room/';
       var socket = new SockJS(url);
       stompClient = Stomp.over(socket);
       var headers = {};
       headers['X-CSRF-TOKEN'] = $cookies[$http.defaults.xsrfCookieName];
-      return $q(function(resolve, reject){
+      return $q(function(resolve, reject) {
         stompClient.connect(headers,
-          function(){
+          function() {
             resolve('connected');
           },
-          function(){
+          function() {
             reject('couldn\'t connect');
           }
         );
       });
     }
-    function subscribe(){
+    function subscribe() {
       subscribeComments();
       subscribeCommentLikes();
     }
-    function subscribeComments(){
+    function subscribeComments() {
       var deferred = $q.defer();
-      commentSubscriber = stompClient.subscribe('/topic/room/'+service.lectureId, function(data){
-        deferred.resolve();
-        refer(JSON.parse(data.body));
-      }, function(){
-        deferred.reject();
-        refer({content: 'error reading the message'});
-      }, null);
+      commentSubscriber =
+        stompClient.subscribe(
+          '/topic/room/' + service.lectureId,
+          function(data) {
+            deferred.resolve();
+            refer(angular.fromJson(data.body));
+          }, function() {
+            deferred.reject();
+            refer({content: 'error reading the message'});
+          }, null);
 
-      function refer(data){
-        deferred.promise.then(function(){
+      function refer(data) {
+        deferred.promise.then(function() {
           service.addComment(data);
-        }/* ,TODO:function(){error}*/);
+        });
+        /* ,TODO: error*/
       }
     }
-    function subscribeCommentLikes(){
+    function subscribeCommentLikes() {
       var deferred = $q.defer();
-      commentLikesSubscriber = stompClient.subscribe('/topic/room/'+service.lectureId+'/likes',
-        function(data){
+      stompClient.subscribe('/topic/room/' + service.lectureId + '/likes',
+        function(data) {
           deferred.resolve();
-          refer(JSON.parse(data.body));
-        }, function(){
+          refer(angular.fromJson(data.body));
+        }, function() {
           deferred.reject();
           refer({content: 'error reading the message'});
-        },
-      null);
+        }, null
+      );
 
-      function refer(data){
-        deferred.promise.then(function(){
+      function refer(data) {
+        deferred.promise.then(function() {
           service.comments[data.commentId].likes.push(data.userSid);
-        }/* ,TODO:function(){error}*/);
+        });
       }
     }
-    function addComment(comment){
-      comment.likes = typeof comment.likes !== 'undefined' ? comment.likes : [];
+    function addComment(comment) {
+      comment.likes = angular.isDefined(comment.likes) ? comment.likes : [];
       service.comments[comment.id] = comment;
     }
     function unsubscribe() {
@@ -103,15 +99,15 @@
         commentSubscriber.unsubscribe();
       }
     }
-    function sendComment(comment){
+    function sendComment(comment) {
       stompClient
-        .send('/topic/comment/'+service.lectureId,
+        .send('/topic/comment/' + service.lectureId,
         {},
-        JSON.stringify(comment));
+        angular.toJson(comment));
     }
-    function likeComment(commentId){
+    function likeComment(commentId) {
       stompClient
-        .send('/topic/comment/'+service.lectureId+'/'+commentId,
+        .send('/topic/comment/' + service.lectureId + '/' + commentId,
         {});
     }
     function disconnect() {
@@ -120,19 +116,21 @@
         stompClient = null;
       }
     }
-    function initialize(lectureId){
-      return $q(function(resolve, reject){
+    function initialize(lectureId) {
+      return $q(function(resolve, reject) {
         service.lectureId = lectureId;
-        if(service.lectureId !== null && service.lectureId >= 0){ //should also check if lecture is open
-          Lecture.get({id:lectureId}, function() {
+        // should also check if lecture is open
+        if (service.lectureId !== null && service.lectureId >= 0) {
+          Lecture.get({id: lectureId}, function() {
             resolve('subscribed');
-          },function(){
+          },
+          function() {
             reject({
               msg: 'error.invalidLecture',
               params: {lectureId: lectureId}
             });
           });
-        }else{
+        } else {
           reject({
             msg: 'error.invalidLecture',
             params: {lectureId: lectureId}
@@ -140,10 +138,10 @@
         }
       });
     }
-    function loadComments(){
-      Lecture.getComments({lectureId: service.lectureId}, function(result){
+    function loadComments() {
+      Lecture.getComments({lectureId: service.lectureId}, function(result) {
         service.comments = {};
-        angular.forEach(result, function(item){
+        angular.forEach(result, function(item) {
           service.comments[item.id] = item;
         });
       });

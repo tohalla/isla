@@ -1,26 +1,27 @@
 'use strict';
 
 angular.module('islaApp')
-  .controller('PasswordController', function ($scope, Auth, Principal) {
+  .controller('PasswordController', function($scope, Auth, Principal) {
+    var vm = this;
     Principal.identity().then(function(account) {
-      $scope.account = account;
+      vm.account = account;
     });
 
-    $scope.success = null;
-    $scope.error = null;
-    $scope.doNotMatch = null;
-    $scope.changePassword = function () {
-      if ($scope.password !== $scope.confirmPassword) {
-        $scope.doNotMatch = 'ERROR';
-      } else {
-        $scope.doNotMatch = null;
-        Auth.changePassword($scope.password).then(function () {
-          $scope.error = null;
-          $scope.success = 'OK';
-        }).catch(function () {
-          $scope.success = null;
-          $scope.error = 'ERROR';
+    vm.success = null;
+    vm.error = null;
+    vm.doNotMatch = null;
+    vm.changePassword = function() {
+      if (vm.password === vm.confirmPassword) {
+        vm.doNotMatch = null;
+        Auth.changePassword(vm.password).then(function() {
+          vm.error = null;
+          vm.success = 'OK';
+        }).catch(function() {
+          vm.success = null;
+          vm.error = 'ERROR';
         });
+      } else {
+        vm.doNotMatch = 'ERROR';
       }
     };
   });

@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('islaApp')
-  .factory('Language', function ($q, $http, $translate, LANGUAGES) {
+  .factory('Language', function($q, $http, $translate, LANGUAGES) {
     return {
-      getCurrent: function () {
+      getCurrent: function() {
         var deferred = $q.defer();
         var language = $translate.storage().get('NG_TRANSLATE_LANG_KEY');
 
@@ -14,7 +14,7 @@ angular.module('islaApp')
         deferred.resolve(language);
         return deferred.promise;
       },
-      getAll: function () {
+      getAll: function() {
         var deferred = $q.defer();
         deferred.resolve(LANGUAGES);
         return deferred.promise;
@@ -28,10 +28,6 @@ angular.module('islaApp')
  */
   .constant('LANGUAGES', [
     'en'
-    //JHipster will add new languages here
+    // JHipster will add new languages here
   ]
 );
-
-
-
-

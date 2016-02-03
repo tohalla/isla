@@ -1,8 +1,6 @@
-/* globals $ */
 'use strict';
-
 angular.module('islaApp')
-  .directive('minbytes', function ($q) {
+  .directive('minbytes', function() {
     function endsWith(suffix, str) {
       return str.indexOf(suffix, str.length - suffix.length) !== -1;
     }
@@ -24,11 +22,14 @@ angular.module('islaApp')
     return {
       restrict: 'A',
       require: '?ngModel',
-      link: function (scope, element, attrs, ngModel) {
-        if (!ngModel) return;
+      link: function(scope, element, attrs, ngModel) {
+        if (!ngModel) {
+          return;
+        }
 
-        ngModel.$validators.minbytes = function (modelValue) {
-          return ngModel.$isEmpty(modelValue) || numberOfBytes(modelValue) >= attrs.minbytes;
+        ngModel.$validators.minbytes = function(modelValue) {
+          return ngModel.$isEmpty(modelValue) ||
+            numberOfBytes(modelValue) >= attrs.minbytes;
         };
       }
     };

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('islaApp')
-  .factory('AlertService', function ($timeout, $sce,$translate) {
+  .factory('AlertService', function($timeout, $sce, $translate) {
     var exports = {
       factory: factory,
       add: addAlert,
@@ -12,11 +12,11 @@ angular.module('islaApp')
       success: success,
       error: error,
       info: info,
-      warning : warning
-    },
-    alertId = 0, // unique id for each alert. Starts from 0.
-    alerts = [],
-    timeout = 5000; // default timeout
+      warning
+    };
+    var alertId = 0;
+    var alerts = [];
+    var timeout = 5000;
 
     function clear() {
       alerts = [];
@@ -28,7 +28,7 @@ angular.module('islaApp')
 
     function success(msg, params) {
       this.add({
-        type: "success",
+        type: 'success',
         msg: msg,
         params: params,
         timeout: timeout
@@ -37,7 +37,7 @@ angular.module('islaApp')
 
     function error(msg, params) {
       this.add({
-        type: "danger",
+        type: 'danger',
         msg: msg,
         params: params,
         timeout: timeout
@@ -46,7 +46,7 @@ angular.module('islaApp')
 
     function warning(msg, params) {
       this.add({
-        type: "warning",
+        type: 'warning',
         msg: msg,
         params: params,
         timeout: timeout
@@ -55,7 +55,7 @@ angular.module('islaApp')
 
     function info(msg, params) {
       this.add({
-        type: "info",
+        type: 'info',
         msg: msg,
         params: params,
         timeout: timeout
@@ -68,7 +68,7 @@ angular.module('islaApp')
         msg: $sce.trustAsHtml(alertOptions.msg),
         id: alertOptions.alertId,
         timeout: alertOptions.timeout,
-        close: function () {
+        close: function() {
           return exports.closeAlert(this.id);
         }
       });
@@ -76,18 +76,22 @@ angular.module('islaApp')
 
     function addAlert(alertOptions) {
       alertOptions.alertId = alertId++;
-      alertOptions.msg = $translate.instant(alertOptions.msg, alertOptions.params);
+      alertOptions.msg = $translate
+        .instant(alertOptions.msg, alertOptions.params);
       var that = this;
       this.factory(alertOptions);
       if (alertOptions.timeout && alertOptions.timeout > 0) {
-        $timeout(function () {
+        $timeout(function() {
           that.closeAlert(alertOptions.alertId);
         }, alertOptions.timeout);
       }
     }
 
     function closeAlert(id) {
-      return this.closeAlertByIndex(alerts.map(function(e) { return e.id; }).indexOf(id));
+      return this.closeAlertByIndex(
+        alerts.map(function(e) {
+          return e.id;
+        }).indexOf(id));
     }
 
     function closeAlertByIndex(index) {
@@ -95,5 +99,4 @@ angular.module('islaApp')
     }
 
     return exports;
-
   });

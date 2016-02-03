@@ -3,16 +3,16 @@
 <div class="alert alert-danger" ng-show="authenticationError" translate="login.messages.error.authentication">
   <strong>Authentication failed!</strong> Please check your credentials and try again.
 </div>
-<form role="form" ng-submit="login($event)">
+<form role="form" ng-submit="login.login($event)">
   <div class="form-vertical-group">
     <div class="form-group">
       <label for="username" translate="global.form.username">Login</label>
-      <input type="text" class="form-control" id="username" placeholder="{{'global.form.username.placeholder' | translate}}" ng-model="username">
+      <input type="text" class="form-control" id="username" placeholder="{{'global.form.username.placeholder' | translate}}" ng-model="login.username">
     </div>
     <div class="form-group">
       <label for="password" translate="login.form.password">Password</label>
       <input type="password" class="form-control" id="password" placeholder="{{'login.form.password.placeholder' | translate}}"
-           ng-model="password">
+           ng-model="login.password">
     </div>
     <div class="form-group">
       <label for="rememberMe">

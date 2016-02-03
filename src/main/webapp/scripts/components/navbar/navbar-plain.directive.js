@@ -1,9 +1,9 @@
-(function(){
+(function() {
   'use strict';
   angular.module('islaApp')
     .directive('islaNavbarPlain', islaNavbarPlain);
 
-  function islaNavbarPlain(){
+  function islaNavbarPlain() {
     var directive = {
       scope: {},
       restrict: 'E',

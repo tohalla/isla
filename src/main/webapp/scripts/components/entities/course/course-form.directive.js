@@ -1,4 +1,4 @@
-(function(){
+(function() {
   'use strict';
 
   angular.module('islaApp')
@@ -6,7 +6,7 @@
 
   function islaCourseForm() {
     var directive = {
-      scope: {} ,
+      scope: {},
       restrict: 'E',
       templateUrl: 'scripts/components/entities/course/course-form.directive.html',
       controller: CourseFormController,
@@ -17,8 +17,7 @@
     return directive;
   }
   CourseFormController.$inject = ['Course'];
-  function CourseFormController(Course){
-    /*jshint validthis: true */
+  function CourseFormController(Course) {
     var vm = this;
     vm.save = save;
 
@@ -26,15 +25,17 @@
       courseName: '',
       courseDescription: ''
     };
-    function save(){
-      Course.save(vm.course , function(){
-        clear()
+    function save() {
+      Course.save(vm.course, function() {
+        clear();
       });
     }
 
-    function clear(){
-      for(var prop in vm.course){
-        vm.course[prop] = '';
+    function clear() {
+      for (var prop in vm.course) {
+        if (vm.lecture.hasOwnProperty(prop)) {
+          vm.course[prop] = '';
+        }
       }
     }
   }

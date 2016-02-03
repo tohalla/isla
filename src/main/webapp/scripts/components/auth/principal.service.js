@@ -2,28 +2,28 @@
 
 angular.module('islaApp')
   .factory('Principal', function Principal($q, Account, Tracker) {
-    var _identity,
-      _authenticated = false;
+    var _identity;
+    var _authenticated = false;
 
     return {
-      isIdentityResolved: function () {
+      isIdentityResolved: function() {
         return angular.isDefined(_identity);
       },
-      isAuthenticated: function () {
+      isAuthenticated: function() {
         return _authenticated;
       },
-      hasAuthority: function (authority) {
+      hasAuthority: function(authority) {
         if (!_authenticated) {
-           return false;
-         }
+          return false;
+        }
 
-         return this.identity().then(function(_id) {
-           return _id.authorities && _id.authorities.indexOf(authority) !== -1;
-         }, function(err){
-           return false;
-         });
+        return this.identity().then(function(_id) {
+          return _id.authorities && _id.authorities.indexOf(authority) !== -1;
+        }, function() {
+          return false;
+        });
       },
-      hasAnyAuthority: function (authorities) {
+      hasAnyAuthority: function(authorities) {
         if (!_authenticated || !_identity || !_identity.authorities) {
           return false;
         }
@@ -36,11 +36,11 @@ angular.module('islaApp')
 
         return false;
       },
-      authenticate: function (identity) {
+      authenticate: function(identity) {
         _identity = identity;
         _authenticated = identity !== null;
       },
-      identity: function (force) {
+      identity: function(force) {
         var deferred = $q.defer();
 
         if (force === true) {
@@ -57,7 +57,7 @@ angular.module('islaApp')
 
         // retrieve the identity data from the server, update the identity object, and then resolve.
         Account.get().$promise
-          .then(function (account) {
+          .then(function(account) {
             _identity = account.data;
             _authenticated = true;
             deferred.resolve(_identity);

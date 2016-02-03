@@ -1,4 +1,4 @@
-(function(){
+(function() {
   'use strict';
   angular.module('islaApp')
     .directive('islaComment', islaComment);
@@ -13,23 +13,19 @@
       transclude: true,
       templateUrl: 'scripts/components/room/comment.directive.html',
       controller: commentController,
-      controllerAs: 'vm'
+      controllerAs: 'comment'
     };
-
-    commentController.$inject = ['$scope','$cookies','roomService'];
-    function commentController($scope, $cookies, roomService){
-      /*jshint validthis: true */
+    function commentController($scope, $cookies, roomService) {
       var vm = this;
       vm.likeComment = likeComment;
       vm.allowLike = allowLike;
 
-      function likeComment(){
+      function likeComment() {
         roomService.likeComment($scope.commentId);
       }
-      function allowLike(){
-        var contains = roomService.comments[$scope.commentId]
-                                    .likes.indexOf($cookies.get('hazelcast.sessionId')) >= 0;
-        return !contains;
+      function allowLike() {
+        return !(roomService.comments[$scope.commentId]
+          .likes.indexOf($cookies.get('hazelcast.sessionId')) >= 0);
       }
     }
     return directive;

@@ -1,19 +1,19 @@
 'use strict';
 
 angular.module('islaApp')
-  .config(function ($stateProvider) {
+  .config(function($stateProvider) {
     $stateProvider
       .state('home', {
         parent: 'contained',
         url: '/',
         views: {
-          'content': {
+          content: {
             templateUrl: 'scripts/app/home/home.html'
           }
         },
         resolve: {
-          mainTranslatePartialLoader: ['$translate', function ($translate) {
-            //when translations will be added.. $translatePartialLoader.addPart('home');
+          mainTranslatePartialLoader: ['$translate', function($translate) {
+            // when translations will be added.. $translatePartialLoader.addPart('home');
             return $translate.refresh();
           }]
         }

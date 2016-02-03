@@ -1,18 +1,22 @@
-/*jshint bitwise: false*/
 'use strict';
 
 angular.module('islaApp')
-  .service('Base64', function () {
+  .factory('Base64', function() {
     var keyStr = 'ABCDEFGHIJKLMNOP' +
       'QRSTUVWXYZabcdef' +
       'ghijklmnopqrstuv' +
       'wxyz0123456789+/' +
       '=';
-    this.encode = function (input) {
-      var output = '',
-        chr1, chr2, chr3 = '',
-        enc1, enc2, enc3, enc4 = '',
-        i = 0;
+    this.encode = function(input) {
+      var output = '';
+      var chr1;
+      var chr2;
+      var chr3 = '';
+      var enc1;
+      var enc2;
+      var enc3;
+      var enc4 = '';
+      var i = 0;
 
       while (i < input.length) {
         chr1 = input.charCodeAt(i++);
@@ -42,11 +46,16 @@ angular.module('islaApp')
       return output;
     };
 
-    this.decode = function (input) {
-      var output = '',
-        chr1, chr2, chr3 = '',
-        enc1, enc2, enc3, enc4 = '',
-        i = 0;
+    this.decode = function(input) {
+      var output = '';
+      var chr1;
+      var chr2;
+      var chr3 = '';
+      var enc1;
+      var enc2;
+      var enc3;
+      var enc4 = '';
+      var i = 0;
 
       // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
       input = input.replace(/[^A-Za-z0-9\+\/\=]/g, '');
@@ -61,13 +70,13 @@ angular.module('islaApp')
         chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
         chr3 = ((enc3 & 3) << 6) | enc4;
 
-        output = output + String.fromCharCode(chr1);
+        output += String.fromCharCode(chr1);
 
         if (enc3 !== 64) {
-          output = output + String.fromCharCode(chr2);
+          output += String.fromCharCode(chr2);
         }
         if (enc4 !== 64) {
-          output = output + String.fromCharCode(chr3);
+          output += String.fromCharCode(chr3);
         }
 
         chr1 = chr2 = chr3 = '';
@@ -75,22 +84,22 @@ angular.module('islaApp')
       }
     };
   })
-  .factory('StorageService', function ($window) {
+  .factory('StorageService', function($window) {
     return {
 
-      get: function (key) {
-        return JSON.parse($window.localStorage.getItem(key));
+      get: function(key) {
+        return angular.fromJson($window.localStorage.getItem(key));
       },
 
-      save: function (key, data) {
-        $window.localStorage.setItem(key, JSON.stringify(data));
+      save: function(key, data) {
+        $window.localStorage.setItem(key, angular.toJson(data));
       },
 
-      remove: function (key) {
+      remove: function(key) {
         $window.localStorage.removeItem(key);
       },
 
-      clearAll : function () {
+      clearAll: function() {
         $window.localStorage.clear();
       }
     };

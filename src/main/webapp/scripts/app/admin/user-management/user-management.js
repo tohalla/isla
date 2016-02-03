@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('islaApp')
-  .config(function ($stateProvider) {
+  .config(function($stateProvider) {
     $stateProvider
       .state('user-management', {
         parent: 'admin',
@@ -12,15 +12,19 @@ angular.module('islaApp')
         },
         views: {
           'content@': {
-            templateUrl: 'scripts/app/admin/user-management/user-management.html',
+            templateUrl:
+              'scripts/app/admin/user-management/user-management.html',
             controller: 'UserManagementController'
           }
         },
         resolve: {
-          translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+          translatePartialLoader: function(
+            $translate,
+            $translatePartialLoader
+          ) {
             $translatePartialLoader.addPart('user.management');
             return $translate.refresh();
-          }]
+          }
         }
       })
       .state('user-management-detail', {
@@ -32,15 +36,19 @@ angular.module('islaApp')
         },
         views: {
           'content@': {
-            templateUrl: 'scripts/app/admin/user-management/user-management-detail.html',
+            templateUrl:
+              'scripts/app/admin/user-management/user-management-detail.html',
             controller: 'UserManagementDetailController'
           }
         },
         resolve: {
-          translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+          translatePartialLoader: function(
+            $translate,
+            $translatePartialLoader
+          ) {
             $translatePartialLoader.addPart('user.management');
             return $translate.refresh();
-          }]
+          }
         }
       });
   });

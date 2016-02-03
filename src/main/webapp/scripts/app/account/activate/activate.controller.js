@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('islaApp')
-  .controller('ActivationController', function ($scope, $stateParams, Auth) {
-    Auth.activateAccount({key: $stateParams.key}).then(function () {
-      $scope.error = null;
-      $scope.success = 'OK';
-    }).catch(function () {
-      $scope.success = null;
-      $scope.error = 'ERROR';
+  .controller('ActivationController', function($scope, $stateParams, Auth) {
+    var vm = this;
+    Auth.activateAccount({key: $stateParams.key}).then(function() {
+      vm.error = null;
+      vm.success = 'OK';
+    }).catch(function() {
+      vm.success = null;
+      vm.error = 'ERROR';
     });
   });
 

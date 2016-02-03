@@ -1,8 +1,17 @@
 'use strict';
-angular.module('islaApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalprecht.translate',
-               'ui.bootstrap', // for modal dialogs
-    'ngResource', 'ui.router', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'infinite-scroll'])
-    .run(islaApp).config(islaConfig);
+angular.module('islaApp', [
+  'LocalStorageModule',
+  'tmh.dynamicLocale',
+  'pascalprecht.translate',
+  'ngResource',
+  'ui.router',
+  'ngCookies',
+  'ngAria',
+  'ngCacheBuster',
+  'ngFileUpload',
+  'infinite-scroll'
+])
+  .run(islaApp).config(islaConfig);
 
 islaApp.$inject = [
   '$rootScope',
@@ -18,71 +27,115 @@ islaApp.$inject = [
   'VERSION'
 ];
 
-function islaApp($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal) {
-  $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
-    $rootScope.toState = toState;
-    $rootScope.toStateParams = toStateParams;
+function islaApp(
+  $rootScope,
+  $location,
+  $window,
+  $http,
+  $state,
+  $translate,
+  Language,
+  Auth,
+  Principal
+) {
+  var stateChangeStart = $rootScope.$on('$stateChangeStart',
+    function(
+      event,
+      toState,
+      toStateParams
+    ) {
+      $rootScope.toState = toState;
+      $rootScope.toStateParams = toStateParams;
 
-    if (Principal.isIdentityResolved()) {
+      if (Principal.isIdentityResolved()) {
         Auth.authorize();
-    }
+      }
 
-    // Update the language
-    Language.getCurrent().then(function (language) {
+      Language.getCurrent().then(function(language) {
         $translate.use(language);
-    });
-  });
-
-  $rootScope.$on('$stateChangeSuccess',  function(event, toState, toParams, fromState, fromParams) {
-    var titleKey = 'global.title' ;
-
-    $rootScope.previousStateName = fromState.name;
-    $rootScope.previousStateParams = fromParams;
-
-    // Set the page title key to the one configured in state or use default one
-    if (toState.data.pageTitle) {
-      titleKey = toState.data.pageTitle;
+      });
     }
+  );
 
-    $translate(titleKey).then(function (title) {
-      // Change window title with translated one
-      $window.document.title = title;
-    });
+  var stateChangeSuccess = $rootScope.$on('$stateChangeSuccess',
+    function(
+      event,
+      toState,
+      toParams,
+      fromState,
+      fromParams
+    ) {
+      var titleKey = 'global.title';
+
+      $rootScope.previousStateName = fromState.name;
+      $rootScope.previousStateParams = fromParams;
+
+      // Set the page title key to the one configured in state or use default one
+      if (toState.data.pageTitle) {
+        titleKey = toState.data.pageTitle;
+      }
+
+      $translate(titleKey).then(function(title) {
+        // Change window title with translated one
+        $window.document.title = title;
+      });
+    }
+  );
+
+  $rootScope.$on('$destroy', function() {
+    stateChangeSuccess.$destroy();
+    stateChangeStart.$destroy();
   });
 
   $rootScope.back = function() {
-    // If previous state is 'activate' or do not exist go to 'home'
-    if ($rootScope.previousStateName === 'activate' || $state.get($rootScope.previousStateName) === null) {
+    if (
+      $rootScope.previousStateName === 'activate' ||
+      $state.get($rootScope.previousStateName) === null
+    ) {
       $state.go('home');
     } else {
       $state.go($rootScope.previousStateName, $rootScope.previousStateParams);
     }
   };
 }
-function islaConfig($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider) {
-
-  //enable CSRF
+function islaConfig(
+  $stateProvider,
+  $urlRouterProvider,
+  $httpProvider,
+  $locationProvider,
+  $translateProvider,
+  tmhDynamicLocaleProvider,
+  httpRequestInterceptorCacheBusterProvider
+) {
+  // enable CSRF
   $httpProvider.defaults.xsrfCookieName = 'CSRF-TOKEN';
   $httpProvider.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 
-  //Cache everything except rest api requests
-  httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
+  // Cache everything except rest api requests
+  httpRequestInterceptorCacheBusterProvider.setMatchlist(
+    [/.*api.*/, /.*protected.*/],
+    true
+  );
 
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('site', {
-    'abstract': true,
+    abstract: true,
     data: {
       authorities: []
     },
     resolve: {
       authorize: ['Auth',
-        function (Auth) {
+        function(Auth) {
           return Auth.authorize();
         }
       ],
-      translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-        $translatePartialLoader.addPart('global');
-      }]
+      translatePartialLoader: [
+        '$translate',
+        '$translatePartialLoader',
+        function($translate, $translatePartialLoader) {
+          $translatePartialLoader.addPart('global');
+        }
+      ]
     }
   });
 
@@ -100,8 +153,9 @@ function islaConfig($stateProvider, $urlRouterProvider, $httpProvider, $location
   $translateProvider.useSanitizeValueStrategy('escaped');
   $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
 
-  tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
+  tmhDynamicLocaleProvider.localeLocationPattern(
+    'bower_components/angular-i18n/angular-locale_{{locale}}.js'
+  );
   tmhDynamicLocaleProvider.useCookieStorage();
   tmhDynamicLocaleProvider.storageKey('NG_TRANSLATE_LANG_KEY');
-
 }

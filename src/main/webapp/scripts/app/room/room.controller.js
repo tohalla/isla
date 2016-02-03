@@ -1,4 +1,4 @@
-(function(){
+(function() {
   'use strict';
   angular.module('islaApp')
     .controller('RoomController', RoomController);
@@ -15,15 +15,16 @@
     $cookies,
     $http,
     roomService
-  ){
+  ) {
     var vm = this;
 
     $scope.$watch(
-      function(){
+      function() {
         return roomService.comments;
       },
-      function(){
-      vm.comments = roomService.comments;
-    });
+      function() {
+        vm.comments = roomService.comments;
+      }
+    );
   }
-}());
+})();

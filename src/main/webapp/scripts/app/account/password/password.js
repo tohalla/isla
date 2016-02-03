@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('islaApp')
-  .config(function ($stateProvider) {
+  .config(function($stateProvider) {
     $stateProvider
       .state('password', {
         parent: 'account',
@@ -11,16 +11,19 @@ angular.module('islaApp')
           pageTitle: 'global.menu.account.password'
         },
         views: {
-          'content': {
+          content: {
             templateUrl: 'scripts/app/account/password/password.html',
             controller: 'PasswordController'
           }
         },
         resolve: {
-          translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+          translatePartialLoader: function(
+            $translate,
+            $translatePartialLoader
+          ) {
             $translatePartialLoader.addPart('password');
             return $translate.refresh();
-          }]
+          }
         }
       });
   });
