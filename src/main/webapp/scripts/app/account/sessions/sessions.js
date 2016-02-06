@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('islaApp')
-  .config(function ($stateProvider) {
+  .config(function($stateProvider) {
     $stateProvider
       .state('sessions', {
         parent: 'account',
@@ -11,16 +11,17 @@ angular.module('islaApp')
           pageTitle: 'global.menu.account.sessions'
         },
         views: {
-          'content': {
+          content: {
             templateUrl: 'scripts/app/account/sessions/sessions.html',
             controller: 'SessionsController'
           }
         },
         resolve: {
-          translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-            $translatePartialLoader.addPart('sessions');
-            return $translate.refresh();
-          }]
+          translatePartialLoader:
+            function($translate, $translatePartialLoader) {
+              $translatePartialLoader.addPart('sessions');
+              return $translate.refresh();
+            }
         }
       });
   });

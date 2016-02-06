@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('islaApp')
-  .controller('LogsController', function ($scope, LogsService) {
+  .controller('LogsController', function($scope, LogsService) {
     $scope.loggers = LogsService.findAll();
 
-    $scope.changeLevel = function (name, level) {
-      LogsService.changeLevel({name: name, level: level}, function () {
+    $scope.changeLevel = function(name, level) {
+      LogsService.changeLevel({name: name, level: level}, function() {
         $scope.loggers = LogsService.findAll();
       });
     };

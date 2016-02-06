@@ -12,7 +12,7 @@ angular.module('islaApp')
       success: success,
       error: error,
       info: info,
-      warning
+      warning: warning
     };
     var alertId = 0;
     var alerts = [];

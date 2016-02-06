@@ -1,5 +1,5 @@
 angular.module('islaApp')
-  .config(function ($stateProvider) {
+  .config(function($stateProvider) {
     'use strict';
     $stateProvider
       .state('tracker', {
@@ -16,16 +16,17 @@ angular.module('islaApp')
           }
         },
         resolve: {
-          mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-            $translatePartialLoader.addPart('tracker');
-            return $translate.refresh();
-          }]
+          mainTranslatePartialLoader:
+            function($translate, $translatePartialLoader) {
+              $translatePartialLoader.addPart('tracker');
+              return $translate.refresh();
+            }
         },
         onEnter: function(Tracker) {
           Tracker.subscribe();
         },
         onExit: function(Tracker) {
           Tracker.unsubscribe();
-        },
+        }
       });
   });

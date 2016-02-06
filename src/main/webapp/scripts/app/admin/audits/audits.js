@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('islaApp')
-.config(function ($stateProvider) {
+.config(function($stateProvider) {
   $stateProvider
     .state('audits', {
       parent: 'admin',
@@ -17,10 +17,11 @@ angular.module('islaApp')
         }
       },
       resolve: {
-        translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-          $translatePartialLoader.addPart('audits');
-          return $translate.refresh();
-        }]
+        translatePartialLoader:
+          function($translate, $translatePartialLoader) {
+            $translatePartialLoader.addPart('audits');
+            return $translate.refresh();
+          }
       }
     });
   });
