@@ -7,13 +7,14 @@
   function islaLectureForm() {
     var directive = {
       scope: {
-        course: '@course'
+        course: '@course',
+        handleAddition: '&'
       },
       restrict: 'E',
       templateUrl:
         'scripts/components/entities/lecture/lecture-form.directive.html',
       controller: LectureFormController,
-      controllerAs: 'vm',
+      controllerAs: 'lectureForm',
       bindToController: true
     };
 
@@ -40,6 +41,7 @@
         vm.lecture.course = course;
         Lecture.save(vm.lecture, function() {
           clear();
+          vm.handleAddition();
         });
       });
     }

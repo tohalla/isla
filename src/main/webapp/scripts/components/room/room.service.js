@@ -107,7 +107,7 @@
     }
     function likeComment(commentId) {
       stompClient
-        .send('/topic/comment/' + service.lectureId + '/' + commentId,
+        .send('/topic/comment/' + service.lectureId + '/' + commentId + '/like',
         {});
     }
     function disconnect() {
@@ -117,6 +117,7 @@
       }
     }
     function initialize(lectureId) {
+      service.comments = {};
       return $q(function(resolve, reject) {
         service.lectureId = lectureId;
         // should also check if lecture is open
@@ -139,8 +140,8 @@
       });
     }
     function loadComments() {
+      service.comments = {};
       Lecture.getComments({lectureId: service.lectureId}, function(result) {
-        service.comments = {};
         angular.forEach(result, function(item) {
           service.comments[item.id] = item;
         });

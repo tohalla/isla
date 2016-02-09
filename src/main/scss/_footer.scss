@@ -1,14 +1,13 @@
 .footer{
   background: $footer-background;
   height: $footer-height;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   color: $gray;
   text-align: center;
-  line-height: $footer-height;
+  line-height: $footer-height;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.footer-push{
+  height: $footer-height;
 }

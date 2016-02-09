@@ -75,7 +75,8 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
             }
 
             @Override
-            public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
+            public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response,
+                    WebSocketHandler wsHandler, Exception exception) {
 
             }
         };

@@ -6,7 +6,9 @@
 
   function islaCourseForm() {
     var directive = {
-      scope: {},
+      scope: {
+        handleAddition: '&'
+      },
       restrict: 'E',
       templateUrl: 'scripts/components/entities/course/course-form.directive.html',
       controller: CourseFormController,
@@ -16,7 +18,6 @@
 
     return directive;
   }
-  CourseFormController.$inject = ['Course'];
   function CourseFormController(Course) {
     var vm = this;
     vm.save = save;
@@ -28,12 +29,13 @@
     function save() {
       Course.save(vm.course, function() {
         clear();
+        vm.handleAddition();
       });
     }
 
     function clear() {
       for (var prop in vm.course) {
-        if (vm.lecture.hasOwnProperty(prop)) {
+        if (vm.course.hasOwnProperty(prop)) {
           vm.course[prop] = '';
         }
       }

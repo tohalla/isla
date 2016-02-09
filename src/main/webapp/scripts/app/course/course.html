@@ -31,11 +31,15 @@
     <isla-lecture-form
       ng-show="course.openLecture"
       ng-if="course.ableToAdd"
-      course="{{course.courseData.id}}">
+      course="{{course.courseData.id}}"
+      handle-addition="course.update()"
+    >
     </isla-lecture-form>
-
-    <div class="lecture-feed" ng-repeat-start="lecture in course.courseData.lectures"></div>
-      <a href ui-sref="room({lectureId: lecture.id})" title="{{course.courseName}}">{{lecture}}</a>
-    <div ng-repeat-end></div>
+    <div class="lecture-feed">
+      <div ng-repeat-start="lecture in course.courseData.lectures"></div>
+        <a href ui-sref="room({lectureId: lecture.id})" title="{{course.courseName}}">{{lecture}}</a>
+      <a href ng-click="course.update()" class="material-icons refresh-list">refresh</a>
+      <div ng-repeat-end></div>
+    </div>
   </div>
 </div>

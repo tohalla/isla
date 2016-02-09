@@ -1,10 +1,6 @@
 <h3 translate="islaApp.lecture.createLabel">Create lecture</h3>
 
-<div class="alert alert-danger" ng-show="authenticationError" translate="login.messages.error.authentication">
-  <strong>Authentication failed!</strong> Please check your credentials and try again.
-</div>
-
-<form role="form" ng-submit="vm.save()">
+<form role="form" ng-submit="lectureForm.save()">
   <div class="form-vertical-group">
     <div class="form-group">
       <label for="description" translate="islaApp.lecture.description">Description</label>
@@ -13,7 +9,7 @@
              name="description"
              id="description"
              placeholder="{{'islaApp.lecture.description' | translate}}"
-             ng-model="vm.lecture.description"
+             ng-model="lectureForm.lecture.description"
              required>
     </div>
     <div class="form-group">

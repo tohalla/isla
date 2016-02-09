@@ -27,12 +27,12 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "COMMENT")
-@Document(indexName="comment")
+@Document(indexName = "comment")
 public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @JsonSerialize(using = CustomDateTimeSerializer.class)
     @JsonDeserialize(using = CustomDateTimeDeserializer.class)
@@ -40,7 +40,7 @@ public class Comment implements Serializable {
     private DateTime createdAt;
 
     @NotNull
-    @Size(min = 2, max = 512)        
+    @Size(min = 2, max = 512)
     @Column(name = "content", length = 512, nullable = false)
     private String content;
 
@@ -50,10 +50,10 @@ public class Comment implements Serializable {
     @ManyToOne
     @JsonIgnore
     private Lecture lecture;
-    
-    @ElementCollection(fetch=FetchType.EAGER)
-    @CollectionTable(name="COMMENT_SCORE", joinColumns=@JoinColumn(name="comment_id"))
-    @Column(name="user_sid")
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "COMMENT_SCORE", joinColumns = @JoinColumn(name = "comment_id") )
+    @Column(name = "user_sid")
     private Set<String> likes = new HashSet<String>();
 
     public Long getId() {
@@ -63,7 +63,7 @@ public class Comment implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public DateTime getCreatedAt() {
         return createdAt;
     }
@@ -95,13 +95,13 @@ public class Comment implements Serializable {
     public void setLecture(Lecture lecture) {
         this.lecture = lecture;
     }
-    
-    public Set<String> getLikes(){
-    	return likes;
+
+    public Set<String> getLikes() {
+        return likes;
     }
-    
-    public void setLikes(Set<String> likes){
-    	this.likes = likes;
+
+    public void setLikes(Set<String> likes) {
+        this.likes = likes;
     }
 
     @Override
@@ -115,7 +115,8 @@ public class Comment implements Serializable {
 
         Comment comment = (Comment) o;
 
-        if ( ! Objects.equals(id, comment.id)) return false;
+        if (!Objects.equals(id, comment.id))
+            return false;
 
         return true;
     }
@@ -127,17 +128,14 @@ public class Comment implements Serializable {
 
     @Override
     public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", createdAt='" + createdAt + "'" +
-                ", content='" + content + "'" +
-                '}';
+        return "Comment{" + "id=" + id + ", createdAt='" + createdAt + "'" + ", content='" + content
+                + "'" + '}';
     }
 
-	public boolean addLike(String userSid) {
-		if(likes.contains(userSid))
-			return false;
-		likes.add(userSid);
-		return true;
-	}
+    public boolean addLike(String userSid) {
+        if (likes.contains(userSid))
+            return false;
+        likes.add(userSid);
+        return true;
+    }
 }

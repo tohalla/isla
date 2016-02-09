@@ -4,11 +4,6 @@
   angular.module('islaApp')
     .factory('Lecture', Lecture);
 
-  Lecture.$inject = [
-    '$resource',
-    'DateUtils'
-  ];
-
   function Lecture($resource, DateUtils) {
     return $resource('/api/lectures/:id', {id: '@id'}, {
       query: {method: 'GET', isArray: true},

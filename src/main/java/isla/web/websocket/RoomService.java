@@ -37,24 +37,34 @@ public class RoomService {
     SimpMessageSendingOperations messagingTemplate;
 
     @MessageMapping("/topic/comment/{lecture}")
-    public void sendComment(@Payload CommentDTO commentDTO, @DestinationVariable("lecture") long lecture) {
+    public void sendComment(@Payload CommentDTO commentDTO,
+            @DestinationVariable("lecture") long lecture) {
         Comment comment = new Comment();
         comment.setContent(commentDTO.getContent());
         comment.setCreatedAt(DateTime.now());
         comment.setLecture(lectureRepository.getOne(lecture));
 
         log.debug("Sending comment tracking data {}", commentDTO);
-        messagingTemplate.convertAndSend("/topic/room/" + lecture, new CommentDTO(commentRepository.save(comment)));
+        messagingTemplate.convertAndSend("/topic/room/" + lecture,
+                new CommentDTO(commentRepository.save(comment)));
     }
-    
-    @MessageMapping("/topic/comment/{lecture}/{comment}")
-    public void likeComment(@DestinationVariable("lecture") long lecture, @DestinationVariable("comment") long commentId,  StompHeaderAccessor stompHeaderAccessor ) {
-    	String userSid = stompHeaderAccessor.getSessionAttributes().get(SESSION_ID).toString();
-    	Comment comment = commentService.addLike(commentId, userSid);
-    	if(comment != null)
-			messagingTemplate.convertAndSend(
-				"/topic/room/" + lecture + "/likes",
-				new LikeDTO(comment.getId(), userSid)
-			);
+
+    @MessageMapping("/topic/comment/{lecture}/{comment}/{action}")
+    public void likeComment(@DestinationVariable("lecture") long lecture,
+            @DestinationVariable("comment") long commentId,
+            @DestinationVariable("action") String action, StompHeaderAccessor stompHeaderAccessor) {
+        String userSid = stompHeaderAccessor.getSessionAttributes().get(SESSION_ID).toString();
+        switch (action) {
+            case "like":
+                Comment comment = commentService.addLike(commentId, userSid);
+                if (comment != null)
+                    messagingTemplate.convertAndSend("/topic/room/" + lecture + "/likes",
+                            new LikeDTO(comment.getId(), userSid));
+                break;
+            case "delete":
+                break;
+            case "markAsRead":
+                break;
+        }
     }
 }
