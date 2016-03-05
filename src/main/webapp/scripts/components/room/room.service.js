@@ -50,7 +50,7 @@
     }
     function subscribe() {
       subscribeComments();
-      subscribeCommentLikes();
+      subscribeCommentActions();
     }
     function subscribeComments() {
       var deferred = $q.defer();
@@ -72,9 +72,9 @@
         /* ,TODO: error*/
       }
     }
-    function subscribeCommentLikes() {
+    function subscribeCommentActions() {
       var deferred = $q.defer();
-      stompClient.subscribe('/topic/room/' + service.lectureId + '/likes',
+      stompClient.subscribe('/topic/room/' + service.lectureId + '/actions',
         function(data) {
           deferred.resolve();
           refer(angular.fromJson(data.body));

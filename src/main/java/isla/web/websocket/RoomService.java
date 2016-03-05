@@ -4,7 +4,7 @@ import isla.domain.Comment;
 import isla.repository.CommentRepository;
 import isla.repository.LectureRepository;
 import isla.web.websocket.dto.CommentDTO;
-import isla.web.websocket.dto.LikeDTO;
+import isla.web.websocket.dto.CommentActionDTO;
 import isla.service.CommentService;
 
 import org.joda.time.DateTime;
@@ -58,8 +58,8 @@ public class RoomService {
             case "like":
                 Comment comment = commentService.addLike(commentId, userSid);
                 if (comment != null)
-                    messagingTemplate.convertAndSend("/topic/room/" + lecture + "/likes",
-                            new LikeDTO(comment.getId(), userSid));
+                    messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
+                            new CommentActionDTO(comment.getId(), userSid));
                 break;
             case "delete":
                 break;
