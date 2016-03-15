@@ -1,4 +1,4 @@
- package isla.web.rest;
+package isla.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import isla.domain.Comment;
@@ -45,16 +45,17 @@ public class CommentResource {
     private CommentSearchRepository commentSearchRepository;
 
     /**
-     * POST  /comments -> Create a new comment.
+     * POST /comments -> Create a new comment.
      */
-    @RequestMapping(value = "/comments",
-            method = RequestMethod.POST,
+    @RequestMapping(value = "/comments", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Comment> createComment(@Valid @RequestBody Comment comment) throws URISyntaxException {
+    public ResponseEntity<Comment> createComment(@Valid @RequestBody Comment comment)
+            throws URISyntaxException {
         log.debug("REST request to save Comment : {}", comment);
         if (comment.getId() != null) {
-            return ResponseEntity.badRequest().header("Failure", "A new comment cannot already have an ID").body(null);
+            return ResponseEntity.badRequest()
+                    .header("Failure", "A new comment cannot already have an ID").body(null);
         }
         Comment result = commentRepository.save(comment);
         commentSearchRepository.save(result);
@@ -64,14 +65,14 @@ public class CommentResource {
     }
 
     /**
-     * PUT  /comments -> Updates an existing comment.
+     * PUT /comments -> Updates an existing comment.
      */
-    @RequestMapping(value = "/comments",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/comments", method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Secured({AuthoritiesConstants.TEACHER, AuthoritiesConstants.ADMIN})
-    public ResponseEntity<Comment> updateComment(@Valid @RequestBody Comment comment) throws URISyntaxException {
+    public ResponseEntity<Comment> updateComment(@Valid @RequestBody Comment comment)
+            throws URISyntaxException {
         log.debug("REST request to update Comment : {}", comment);
         if (comment.getId() == null) {
             return createComment(comment);
@@ -84,40 +85,35 @@ public class CommentResource {
     }
 
     /**
-     * GET  /comments -> get all the comments.
+     * GET /comments -> get all the comments.
      */
-    @RequestMapping(value = "/comments",
-            method = RequestMethod.GET,
+    @RequestMapping(value = "/comments", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<List<Comment>> getAllComments(Pageable pageable)
-        throws URISyntaxException {
+            throws URISyntaxException {
         Page<Comment> page = commentRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/comments");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
-     * GET  /comments/:id -> get the "id" comment.
+     * GET /comments/:id -> get the "id" comment.
      */
-    @RequestMapping(value = "/comments/{id}",
-            method = RequestMethod.GET,
+    @RequestMapping(value = "/comments/{id}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Comment> getComment(@PathVariable Long id) {
         log.debug("REST request to get Comment : {}", id);
         return Optional.ofNullable(commentRepository.findOne(id))
-            .map(comment -> new ResponseEntity<>(
-                comment,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .map(comment -> new ResponseEntity<>(comment, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
-     * DELETE  /comments/:id -> delete the "id" comment.
+     * DELETE /comments/:id -> delete the "id" comment.
      */
-    @RequestMapping(value = "/comments/{id}",
-            method = RequestMethod.DELETE,
+    @RequestMapping(value = "/comments/{id}", method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Secured({AuthoritiesConstants.TEACHER, AuthoritiesConstants.ADMIN})
@@ -125,20 +121,19 @@ public class CommentResource {
         log.debug("REST request to delete Comment : {}", id);
         commentRepository.delete(id);
         commentSearchRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("comment", id.toString())).build();
+        return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityDeletionAlert("comment", id.toString())).build();
     }
-    
+
     /**
-     * SEARCH  /_search/comments/:query -> search for the comment corresponding
-     * to the query.
+     * SEARCH /_search/comments/:query -> search for the comment corresponding to the query.
      */
-    @RequestMapping(value = "/_search/comments/{query}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/_search/comments/{query}", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public List<Comment> searchComments(@PathVariable String query) {
         return StreamSupport
-            .stream(commentSearchRepository.search(queryString(query)).spliterator(), false)
-            .collect(Collectors.toList());
+                .stream(commentSearchRepository.search(queryString(query)).spliterator(), false)
+                .collect(Collectors.toList());
     }
 }

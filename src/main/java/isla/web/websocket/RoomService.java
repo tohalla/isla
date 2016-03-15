@@ -3,6 +3,7 @@ package isla.web.websocket;
 import isla.domain.Comment;
 import isla.repository.CommentRepository;
 import isla.repository.LectureRepository;
+import isla.security.SecurityUtils;
 import isla.web.websocket.dto.CommentDTO;
 import isla.web.websocket.dto.CommentActionDTO;
 import isla.service.CommentService;
@@ -54,16 +55,25 @@ public class RoomService {
             @DestinationVariable("comment") long commentId,
             @DestinationVariable("action") String action, StompHeaderAccessor stompHeaderAccessor) {
         String userSid = stompHeaderAccessor.getSessionAttributes().get(SESSION_ID).toString();
+        Comment comment;
         switch (action.toUpperCase()) {
             case "LIKE":
-                Comment comment = commentService.addLike(commentId, userSid);
+                comment = commentService.addLike(commentId, userSid);
                 if (comment != null)
                     messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
                             new CommentActionDTO(comment.getId(), userSid, action));
                 break;
             case "DELETE":
+                comment = commentService.markAsDeleted(commentId);
+                if (comment != null)
+                    messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
+                            new CommentActionDTO(comment.getId(), userSid, action));
                 break;
             case "MARKASREAD":
+                comment = commentService.markAsRead(commentId);
+                if (comment != null)
+                    messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
+                            new CommentActionDTO(comment.getId(), userSid, action));
                 break;
         }
     }

@@ -15,7 +15,7 @@ public interface CommentRepository extends JpaRepository<Comment,Long> {
     List<Comment> findByPostedByIsCurrentUser();
     
     @Query("SELECT comment FROM Comment comment WHERE " +
-            "comment.lecture.id=:lectureId")
+            "comment.lecture.id=:lectureId AND (deleted IS NULL OR DELETED=false)")
     List<Comment> findByPostedByLectureId(@Param("lectureId") Long lectureId);
 
 }

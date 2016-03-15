@@ -1,8 +1,9 @@
 <isla-comment-form></isla-comment-form>
 <div class="comment-feed">
   <div ng-repeat-start="comment in room.comments | orderObject:[
-    {attribute:'createdAt', type:'time'},
-    {attribute:'likes', type:'array'}
+    {attribute:'read'},
+    {attribute:'likes'},
+    {attribute:'createdAt', type:'time'}
   ]">
   </div>
     <isla-comment comment-id="{{::comment.id}}" score="{{comment.likes.length}}">

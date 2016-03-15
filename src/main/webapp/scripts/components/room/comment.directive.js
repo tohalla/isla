@@ -19,20 +19,34 @@
       var vm = this;
       vm.likeComment = likeComment;
       vm.allowLike = allowLike;
-      vm.allowDelete = allowDelete;
+      vm.deleteComment = deleteComment;
+      vm.markCommentAsRead = markCommentAsRead;
+      vm.allowModeratorActions = allowModeratorActions;
+      vm.isRead = isRead;
 
       function likeComment() {
         roomService.likeComment($scope.commentId);
       }
 
-      function allowLike() {
-        return !(roomService.comments[$scope.commentId]
-          .likes.indexOf($cookies.get('hazelcast.sessionId')) >= 0);
+      function deleteComment() {
+        roomService.deleteComment($scope.commentId);
       }
 
-      function allowDelete() {
+      function markCommentAsRead() {
+        roomService.markCommentAsRead($scope.commentId);
+      }
+
+      function isRead() {
+        return roomService.comments[$scope.commentId].read;
+      }
+
+      function allowLike() {
         return !(roomService.comments[$scope.commentId]
-          .likes.indexOf($cookies.get('hazelcast.sessionId')) >= 0);
+          .likes.indexOf($cookies.get('hazelcast.sessionId')) >= 0) && !roomService.comments[$scope.commentId].read;
+      }
+
+      function allowModeratorActions() {
+        return roomService.moderator;
       }
     }
     return directive;

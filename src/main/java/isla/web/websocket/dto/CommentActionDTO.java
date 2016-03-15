@@ -25,14 +25,18 @@ public class CommentActionDTO {
         this.commentId = commentId;
     }
 
-    public void setCommentAction(String action) {
+    public void setAction(String action) {
         this.action = action;
+    }
+
+    public String getAction() {
+        return action;
     }
 
     @Override
     public String toString() {
-        return "CommentDTO{" + "commentId='" + commentId + '\'' + ",userSid='" + userSid + '\'' + ",action='" + action + '\'' 
-                + '}';
+        return "CommentDTO{" + "commentId='" + commentId + '\'' + ",userSid='" + userSid + '\''
+                + ",action='" + action + '\'' + '}';
     }
 
     public String getUserSid() {

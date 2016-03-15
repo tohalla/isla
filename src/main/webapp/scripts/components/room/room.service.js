@@ -12,11 +12,10 @@
     $window,
     Lecture,
     Course,
-    Principal
+    Account
   ) {
     var stompClient = null;
     var commentSubscriber = null;
-    var moderators = [];
     var isModerator = false;
 
     var service = {
@@ -29,7 +28,8 @@
       addComment: addComment,
       loadComments: loadComments,
       likeComment: likeComment,
-      moderators: moderators,
+      markCommentAsRead: markCommentAsRead,
+      deleteComment: deleteComment,
       isModerator: isModerator,
       comments: {}
     };
@@ -92,7 +92,19 @@
 
       function refer(data) {
         deferred.promise.then(function() {
-          service.comments[data.commentId].likes.push(data.userSid);
+          var action = data.action.toUpperCase();
+          switch (action) {
+            case 'LIKE':
+              service.comments[data.commentId].likes.push(data.userSid);
+              break;
+            case 'DELETE':
+              delete service.comments[data.commentId];
+              break;
+            case 'MARKASREAD':
+              service.comments[data.commentId].read = true;
+              break;
+            default:
+          }
         });
       }
     }
@@ -116,6 +128,16 @@
         .send('/topic/comment/' + service.lectureId + '/' + commentId + '/like',
         {});
     }
+    function deleteComment(commentId) {
+      stompClient
+        .send('/topic/comment/' + service.lectureId + '/' + commentId + '/delete',
+        {});
+    }
+    function markCommentAsRead(commentId) {
+      stompClient
+        .send('/topic/comment/' + service.lectureId + '/' + commentId + '/markasread',
+        {});
+    }
     function disconnect() {
       if (stompClient !== null) {
         stompClient.disconnect();
@@ -129,9 +151,13 @@
         // should also check if lecture is open
         if (service.lectureId !== null && service.lectureId >= 0) {
           Lecture.get({id: lectureId}, function(lecture) {
-            moderators = Course.getModerators({courseId: lecture.course.id});
-            console.log(Principal._identity)
-            resolve('subscribed');
+            var account = Account.get();
+            Course.getModerators({courseId: lecture.course.id},
+              function(moderators) {
+                service.moderator = account ?
+                  moderators.indexOf(account.id) >= 0 : false;
+                resolve('subscribed');
+              });
           },
           function() {
             reject({

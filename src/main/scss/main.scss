@@ -69,7 +69,7 @@ select{
   align-items: center;
   justify-content: space-between;
 
-  label, a, .btn {
+  label, a, .btn, b {
     & + *{
       margin-left: 40px;
     }

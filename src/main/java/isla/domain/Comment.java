@@ -51,8 +51,14 @@ public class Comment implements Serializable {
     @JsonIgnore
     private Lecture lecture;
 
+    @Column(name = "read")
+    private boolean read;
+
+    @Column(name = "deleted")
+    private boolean deleted;
+
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "COMMENT_SCORE", joinColumns = @JoinColumn(name = "comment_id") )
+    @CollectionTable(name = "COMMENT_SCORE", joinColumns = @JoinColumn(name = "comment_id"))
     @Column(name = "user_sid")
     private Set<String> likes = new HashSet<String>();
 
@@ -104,6 +110,22 @@ public class Comment implements Serializable {
         this.likes = likes;
     }
 
+    public boolean getRead() {
+        return read;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -129,7 +151,7 @@ public class Comment implements Serializable {
     @Override
     public String toString() {
         return "Comment{" + "id=" + id + ", createdAt='" + createdAt + "'" + ", content='" + content
-                + "'" + '}';
+                + ", read='" + read + "'" + ", deleted='" + deleted + "'" + '}';
     }
 
     public boolean addLike(String userSid) {
@@ -137,5 +159,21 @@ public class Comment implements Serializable {
             return false;
         likes.add(userSid);
         return true;
+    }
+
+    public boolean markAsRead(User user) {
+        if (lecture.getCourse().getModerators().contains(user)) {
+            setRead(true);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean markAsDeleted(User user) {
+        if (lecture.getCourse().getModerators().contains(user)) {
+            setDeleted(true);
+            return true;
+        }
+        return false;
     }
 }

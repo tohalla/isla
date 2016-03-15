@@ -5,37 +5,44 @@
 
   function orderObject() {
     return function(items, params) {
-      var returnValue = [];
+      var sorted = [];
       angular.forEach(items, function(item) {
-        returnValue.push(item);
+        sorted.push(item);
       });
 
-      return returnValue.sort(function(a, b) {
-        var order;
-        angular.forEach(params, function(param) {
-          param.attribute = angular.isDefined(param.attribute) ?
-            param.attribute : 'id';
-          param.reverse = angular.isDefined(param.reverse) ?
-            param.reverse : false;
-          if (param.type === 'time') {
-            if (a[param.attribute] !== b[param.attribute]) {
+      return sorted.sort(function(a, b) {
+        var order = 0;
+        for (var i = 0; i < params.length; i++) {
+          if (order !== 0) {
+            break;
+          }
+          if (a[params[i].attribute] === b[params[i].attribute]) {
+            continue;
+          }
+          params[i].attribute = angular.isDefined(params[i].attribute) ?
+            params[i].attribute : 'id';
+          params[i].reverse = angular.isDefined(params[i].reverse) ?
+            params[i].reverse : false;
+          if (params[i].type === 'time') {
+            if (a[params[i].attribute] !== b[params[i].attribute]) {
               order =
-                new Date(a[param.attribute]) < new Date(b[param.attribute]) ?
+                new Date(a[params[i].attribute]) < new Date(b[params[i].attribute]) ?
                   1 : -1;
             }
-          } else if (param.type === 'array') {
-            if (a[param.attribute].length !== b[param.attribute].length) {
-              order = a[param.attribute].length < b[param.attribute].length ?
+          } else if (typeof a[params[i].attribute] === 'boolean') {
+            order = 1;
+          } else if (angular.isArray(a[params[i].attribute])) {
+            if (a[params[i].attribute].length !== b[params[i].attribute].length) {
+              order = a[params[i].attribute].length < b[params[i].attribute].length ?
                 1 : -1;
             }
           } else {
-            order = a[param.attribute] < b[param.attribute] ? 1 : -1;
+            order = a[params[i].attribute] < b[params[i].attribute] ? 1 : -1;
           }
           if (angular.isDefined(order)) {
-            order = param.reverse ? -order : order;
-            return false;
+            order = params[i].reverse ? -order : order;
           }
-        });
+        }
         return order;
       });
     };

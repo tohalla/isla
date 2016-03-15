@@ -105,7 +105,7 @@ public class LectureResource {
         return lectureRepository.findAll();
     }
     /**
-     * GET  /lectures/:id/comments -> get all the comments of lecture.
+     * GET  /lectures/:id/comments -> get all the comments of lecture (not marked as deleted).
      */
     @RequestMapping(value = "/lectures/{id}/comments",
             method = RequestMethod.GET,
