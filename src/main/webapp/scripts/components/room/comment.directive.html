@@ -5,5 +5,6 @@
   <div class="comment-items">
     {{score}}
     <button title="{{'room.actions.like' | translate}}" ng-if="comment.allowLike()" ng-click="comment.likeComment()" class="comment-item like"></button>
+    <button title="{{'room.actions.delete' | translate}}" ng-if="comment.allowDelete()" ng-click="comment.likeComment()" class="comment-item delete"></button>
   </div>
 </div>

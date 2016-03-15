@@ -19,6 +19,9 @@ public class UserDTO {
     public static final int PASSWORD_MIN_LENGTH = 5;
     public static final int PASSWORD_MAX_LENGTH = 100;
 
+    @NotNull
+    private long id;
+
     @Pattern(regexp = "^[a-z0-9]*$")
     @NotNull
     @Size(min = 1, max = 50)
@@ -45,19 +48,17 @@ public class UserDTO {
 
     private Set<String> authorities;
 
-    public UserDTO() {
-    }
+    public UserDTO() {}
 
     public UserDTO(User user) {
-        this(user.getLogin(), null, user.getFirstName(), user.getLastName(),
-            user.getEmail(), user.getActivated(), user.getLangKey(),
-            user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()));
+        this(user.getId(), user.getLogin(), null, user.getFirstName(), user.getLastName(),
+                user.getEmail(), user.getActivated(), user.getLangKey(),
+                user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet()));
     }
 
-    public UserDTO(String login, String password, String firstName, String lastName,
+    public UserDTO(long id, String login, String password, String firstName, String lastName,
             String email, boolean activated, String langKey, Set<String> authorities) {
-
+        this.id = id;
         this.login = login;
         this.password = password;
         this.firstName = firstName;
@@ -67,7 +68,11 @@ public class UserDTO {
         this.langKey = langKey;
         this.authorities = authorities;
     }
-
+    
+    public long getId(){
+        return id;
+    }
+    
     public String getPassword() {
         return password;
     }
@@ -102,15 +107,9 @@ public class UserDTO {
 
     @Override
     public String toString() {
-        return "UserDTO{" +
-        "login='" + login + '\'' +
-        ", password='" + password + '\'' +
-        ", firstName='" + firstName + '\'' +
-        ", lastName='" + lastName + '\'' +
-        ", email='" + email + '\'' +
-        ", activated=" + activated +
-        ", langKey='" + langKey + '\'' +
-        ", authorities=" + authorities +
-        '}';
+        return "UserDTO{" + "id='" + id + '\'' + ", login='" + login + '\'' + ", password='"
+                + password + '\'' + ", firstName='" + firstName + '\'' + ", lastName='" + lastName
+                + '\'' + ", email='" + email + '\'' + ", activated=" + activated + ", langKey='"
+                + langKey + '\'' + ", authorities=" + authorities + '}';
     }
 }

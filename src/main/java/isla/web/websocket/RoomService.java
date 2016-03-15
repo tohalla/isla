@@ -54,16 +54,16 @@ public class RoomService {
             @DestinationVariable("comment") long commentId,
             @DestinationVariable("action") String action, StompHeaderAccessor stompHeaderAccessor) {
         String userSid = stompHeaderAccessor.getSessionAttributes().get(SESSION_ID).toString();
-        switch (action) {
-            case "like":
+        switch (action.toUpperCase()) {
+            case "LIKE":
                 Comment comment = commentService.addLike(commentId, userSid);
                 if (comment != null)
                     messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
-                            new CommentActionDTO(comment.getId(), userSid));
+                            new CommentActionDTO(comment.getId(), userSid, action));
                 break;
-            case "delete":
+            case "DELETE":
                 break;
-            case "markAsRead":
+            case "MARKASREAD":
                 break;
         }
     }

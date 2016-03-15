@@ -10,10 +10,14 @@
     $http,
     $q,
     $window,
-    Lecture
+    Lecture,
+    Course,
+    Principal
   ) {
     var stompClient = null;
     var commentSubscriber = null;
+    var moderators = [];
+    var isModerator = false;
 
     var service = {
       connect: connect,
@@ -25,6 +29,8 @@
       addComment: addComment,
       loadComments: loadComments,
       likeComment: likeComment,
+      moderators: moderators,
+      isModerator: isModerator,
       comments: {}
     };
 
@@ -122,7 +128,9 @@
         service.lectureId = lectureId;
         // should also check if lecture is open
         if (service.lectureId !== null && service.lectureId >= 0) {
-          Lecture.get({id: lectureId}, function() {
+          Lecture.get({id: lectureId}, function(lecture) {
+            moderators = Course.getModerators({courseId: lecture.course.id});
+            console.log(Principal._identity)
             resolve('subscribed');
           },
           function() {

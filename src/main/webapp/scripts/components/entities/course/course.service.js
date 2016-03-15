@@ -18,6 +18,12 @@
         isArray: true,
         params: {courseId: '@courseId'},
         url: '/api/courses/:courseId/lectures'
+      },
+      getModerators: {
+        merhod: 'GET',
+        isArray: true,
+        params: {courseId: '@courseId'},
+        url: '/api/courses/:courseId/moderators'
       }
     });
   }

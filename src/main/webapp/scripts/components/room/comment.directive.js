@@ -19,11 +19,18 @@
       var vm = this;
       vm.likeComment = likeComment;
       vm.allowLike = allowLike;
+      vm.allowDelete = allowDelete;
 
       function likeComment() {
         roomService.likeComment($scope.commentId);
       }
+
       function allowLike() {
+        return !(roomService.comments[$scope.commentId]
+          .likes.indexOf($cookies.get('hazelcast.sessionId')) >= 0);
+      }
+
+      function allowDelete() {
         return !(roomService.comments[$scope.commentId]
           .likes.indexOf($cookies.get('hazelcast.sessionId')) >= 0);
       }

@@ -1,6 +1,8 @@
 package isla.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -20,22 +22,29 @@ import java.util.Objects;
 @Entity
 @Table(name = "COURSE")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName="course")
+@Document(indexName = "course")
 public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @NotNull
     @Size(min = 2, max = 255)
     @Column(name = "course_name")
     private String courseName;
-    
+
     @Size(max = 4000)
     @Column(name = "course_description")
     private String courseDescription;
-    
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @JoinTable(name = "course_moderators",
+            joinColumns = {@JoinColumn(name = "course_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+    private Set<User> moderators = new HashSet<>();
+
     @OneToMany(mappedBy = "course")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -64,14 +73,18 @@ public class Course implements Serializable {
     public void setCourseDescription(String courseDescription) {
         this.courseDescription = courseDescription;
     }
-    
+
     public void setLectures(Set<Lecture> lectures) {
-		this.lectures = lectures;
-	}
-    
+        this.lectures = lectures;
+    }
+
     public Set<Lecture> getLectures() {
-		return lectures;
-	}
+        return lectures;
+    }
+
+    public Set<User> getModerators() {
+        return moderators;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -84,7 +97,8 @@ public class Course implements Serializable {
 
         Course course = (Course) o;
 
-        if ( ! Objects.equals(id, course.id)) return false;
+        if (!Objects.equals(id, course.id))
+            return false;
 
         return true;
     }
@@ -96,10 +110,7 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", course_name='" + courseName + "'" +
-                ", course_description='" + courseDescription + "'" +
-                '}';
+        return "Course{" + "id=" + id + ", course_name='" + courseName + "'"
+                + ", course_description='" + courseDescription + "'" + '}';
     }
 }

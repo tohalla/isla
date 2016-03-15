@@ -11,6 +11,8 @@
     <include file="classpath:config/liquibase/changelog/2015113132136_add_load_default_data_to_lectures.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20151202201650_added_entity_Course.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20151202220000_added_course_id_to_Lecture.xml" relativeToChangelogFile="false"/>
-    
+    <include file="classpath:config/liquibase/changelog/20160206201505_insert_read_and_deleted_fields_to_comment.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160215102652_add_course_moderators_table.xml" relativeToChangelogFile="false"/>
+
     <!-- JHipster will add liquibase changelogs here -->
 </databaseChangeLog>

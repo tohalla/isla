@@ -17,11 +17,6 @@ public class CommentActionDTO {
         this.action = action;
     }
 
-    public CommentActionDTO(long commentId, String userSid) {
-        this(commentId, userSid, "LIKE");
-    }
-
-
     public long getCommentId() {
         return commentId;
     }
@@ -36,7 +31,7 @@ public class CommentActionDTO {
 
     @Override
     public String toString() {
-        return "CommentDTO{" + "commentId='" + commentId + '\'' + ",userSid='" + userSid + '\''
+        return "CommentDTO{" + "commentId='" + commentId + '\'' + ",userSid='" + userSid + '\'' + ",action='" + action + '\'' 
                 + '}';
     }
 

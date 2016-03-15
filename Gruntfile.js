@@ -518,13 +518,13 @@ module.exports = function(grunt) {
     'created changelog file for liquibase',
     function(name) {
       var time = new Date();
-      var timePrefix = String(
-        time.getFullYear() +
-        time.getMonth() +
-        time.getDate() +
-        time.getHours() +
-        time.getMinutes() +
-        time.getSeconds()
+      var timePrefix = String.prototype.concat(
+        time.getFullYear(),
+        ('0' + time.getMonth()).slice(-2),
+        ('0' + time.getDate()).slice(-2),
+        ('0' + time.getHours()).slice(-2),
+        ('0' + time.getMinutes()).slice(-2),
+        ('0' + time.getSeconds()).slice(-2)
       );
       var open = require('open');
       var filel =
