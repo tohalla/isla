@@ -24,6 +24,8 @@ var useminAutoprefixer = {
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
+
+  grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-ng-constant');
 
   grunt.initConfig({
@@ -159,41 +161,6 @@ module.exports = function(grunt) {
         }]
       },
       server: '.tmp'
-    },
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      all: [
-        'Gruntfile.js',
-        'src/main/webapp/scripts/app.js',
-        'src/main/webapp/scripts/app/**/*.js',
-        'src/main/webapp/scripts/components/**/*.js'
-      ]
-    },
-    coffee: {
-      options: {
-        sourceMap: true,
-        sourceRoot: ''
-      },
-      dist: {
-        files: [{
-          expand: true,
-          cwd: 'src/main/webapp/scripts',
-          src: ['scripts/app/**/*.coffee', 'scripts/components/**/*.coffee'],
-          dest: '.tmp/scripts',
-          ext: '.js'
-        }]
-      },
-      test: {
-        files: [{
-          expand: true,
-          cwd: 'test/spec',
-          src: '**/*.coffee',
-          dest: '.tmp/spec',
-          ext: '.js'
-        }]
-      }
     },
     concat: {
     // not used since Uglify task does concat,
@@ -382,6 +349,11 @@ module.exports = function(grunt) {
       }
     },
     ngAnnotate: {
+      options: {
+        singleQuotes: true,
+        remove: true,
+        add: true
+      },
       dist: {
         files: [{
           expand: true,
