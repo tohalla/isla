@@ -9,11 +9,9 @@ spring:
         active: prod
     datasource:
         dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
-        url: 
-        databaseName: isla
-        serverName: localhost
+        url: jdbc:postgresql://localhost:5432/isla
         username: isla
-        password: 
+        password:
 
     jpa:
         database-platform: isla.domain.util.FixedPostgreSQL82Dialect
