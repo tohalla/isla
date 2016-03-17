@@ -382,6 +382,11 @@ module.exports = function(grunt) {
       }
     },
     ngAnnotate: {
+      options: {
+        singleQuotes: true,
+        remove: true,
+        add: true
+      },
       dist: {
         files: [{
           expand: true,
@@ -433,6 +438,8 @@ module.exports = function(grunt) {
       }
     }
   });
+
+  grunt.loadNpmTasks('grunt-ng-annotate');
 
   grunt.registerTask('serve', [
     'clean:server',
