@@ -1,0 +1,57 @@
+<nav class="navbar navbar-default" role="navigation">
+  <a class="navbar-brand" href="#/" translate="global.title">
+    Isla
+  </a>
+  <ul>
+    <li ui-sref-active="active">
+      <a ui-sref="home" translate="global.menu.home">
+        Home
+      </a>
+    </li>
+    <li ui-sref-active="active">
+      <a ui-sref="courses">
+        Courses
+      </a>
+    </li>
+  </ul>
+
+  <ul ng-show="!vm.isAuthenticated()">
+    <li ui-sref-active="active">
+      <a ui-sref="login" translate="global.menu.account.login">
+        Authenticate
+      </a>
+    </li>
+  </ul>
+
+  <button
+    ng-show="vm.isAuthenticated()"
+    class="btn-account"
+    ng-click="vm.accountMenu = !vm.accountMenu"
+    title="{{'global.menu.account.main' | translate}}">
+    Placeholder for image
+  </button>
+</nav>
+<nav ng-show="vm.accountMenu && vm.isAuthenticated" class="navbar navbar-sub" role="navigation">
+  <ul>
+    <li ui-sref-active="active">
+      <a ui-sref="sessions" translate="global.menu.account.sessions">
+        Sessions
+      </a>
+    </li>
+    <li ui-sref-active="active">
+      <a ui-sref="settings" translate="global.menu.account.settings">
+        Settings
+      </a>
+    </li>
+    <li ui-sref-active="active">
+      <a href="/console">
+        H2(Development)
+      </a>
+    </li>
+    <li ui-sref-active="active">
+      <a ui-sref="logout" translate="global.menu.account.logout">
+        Log out
+      </a>
+    </li>
+  </ul>
+</nav>

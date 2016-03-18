@@ -1,4 +1,5 @@
 'use strict';
+/*@ngNoInject*/
 angular.module('islaApp', [
   'LocalStorageModule',
   'tmh.dynamicLocale',
@@ -22,9 +23,7 @@ islaApp.$inject = [
   '$translate',
   'Language',
   'Auth',
-  'Principal',
-  'ENV',
-  'VERSION'
+  'Principal'
 ];
 
 function islaApp(
