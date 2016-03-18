@@ -16,8 +16,7 @@
       [
         "*.css",
         "*.java",
-        "*.log",
-        "*.gradle"
+        "*.log"
       ],
       "path": "."
     }

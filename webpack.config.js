@@ -9,7 +9,7 @@ const pkg = require('./package.json');
 
 const PATHS = {
   entry: path.join(__dirname, 'src', 'main', 'webapp', 'App.jsx'),
-  dist: path.join(__dirname, 'build', 'webapp')
+  dist: path.join(__dirname, 'src', 'main', 'webapp', 'dist')
 };
 
 const common = {

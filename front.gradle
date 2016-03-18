@@ -1,0 +1,8 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+apply plugin: 'com.moowork.node'
+
+task build(type: NpmTask) {
+    args = ['run', 'build:prod']
+}
+
+build.dependsOn(npmInstall)

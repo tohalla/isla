@@ -1,2 +1,0 @@
-import org.apache.tools.ant.taskdefs.condition.Os
-apply plugin: 'com.moowork.node'
