@@ -13,7 +13,7 @@
     "searchEngine": "elasticsearch",
     "useSass": true,
     "buildTool": "gradle",
-    "frontendBuilder": "grunt",
+    "frontendBuilder": "webpack",
     "javaVersion": "8",
     "enableTranslation": true,
     "rememberMeKey": "e0ebee7692e188c8087c2b93a31db09cfa9ac4ee"
