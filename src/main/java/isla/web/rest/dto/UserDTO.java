@@ -19,7 +19,6 @@ public class UserDTO {
     public static final int PASSWORD_MIN_LENGTH = 5;
     public static final int PASSWORD_MAX_LENGTH = 100;
 
-    @NotNull
     private long id;
 
     @Pattern(regexp = "^[a-z0-9]*$")
@@ -57,6 +56,19 @@ public class UserDTO {
     }
 
     public UserDTO(long id, String login, String password, String firstName, String lastName,
+            String email, boolean activated, String langKey, Set<String> authorities) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.activated = activated;
+        this.langKey = langKey;
+        this.authorities = authorities;
+    }
+    // temp
+    public UserDTO(String login, String password, String firstName, String lastName,
             String email, boolean activated, String langKey, Set<String> authorities) {
         this.id = id;
         this.login = login;

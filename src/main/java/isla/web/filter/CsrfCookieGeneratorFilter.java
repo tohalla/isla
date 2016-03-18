@@ -22,6 +22,7 @@ public class CsrfCookieGeneratorFilter extends OncePerRequestFilter {
 
         // Send the cookie only if the token has changed
         String actualToken = request.getHeader("X-CSRF-TOKEN");
+        
         if (actualToken == null || !actualToken.equals(csrfToken.getToken())) {
             // Session cookie that will be used by AngularJS
             String pCookieName = "CSRF-TOKEN";

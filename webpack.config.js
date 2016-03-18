@@ -8,7 +8,7 @@ const path = require('path');
 const pkg = require('./package.json');
 
 const PATHS = {
-  entry: path.join(__dirname, 'src', 'main', 'webapp', 'App.jsx'),
+  entry: path.join(__dirname, 'src', 'main', 'webapp', 'index'),
   dist: path.join(__dirname, 'src', 'main', 'webapp', 'dist')
 };
 
@@ -30,6 +30,10 @@ const common = {
           'react-hot',
           'babel-loader'
         ]
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url-loader?limit=100000'
       },
       {
         test: /\.s?css$/,
@@ -64,15 +68,7 @@ const development = merge(Object.assign(common,
         inject: 'body'
       })
     ]
-  }), {
-    entry: {
-      vendor: Object.keys(pkg.dependencies).filter(
-        p => {
-          return p !== 'alt-utils';
-        }
-      )
-    }
-  }
+  })
 );
 
 const production = merge(Object.assign(common,

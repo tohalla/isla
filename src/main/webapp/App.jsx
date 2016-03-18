@@ -1,5 +1,5 @@
 import React from 'react';
-import DevTools from './DevTools.component';
+import DevTools from './DevTools';
 
 const App = class extends React.Component {
   render() {

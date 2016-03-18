@@ -8,9 +8,6 @@ module.exports = {
   env: {
     browser: true
   },
-  globals: {
-    path: true
-  },
   ecmaFeatures: {
     arrowFunctions: true,
     forOf: true,

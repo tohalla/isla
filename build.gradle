@@ -31,7 +31,7 @@ bootRun {
     addResources = false
 }
 
-apply from: 'yeoman.gradle'
+apply from: 'front.gradle'
 apply from: 'sonar.gradle'
 
 apply from: 'liquibase.gradle'
@@ -46,11 +46,6 @@ if (project.hasProperty('prod')) {
 } else {
   apply from: 'profile_dev.gradle'
 }
-
-group = 'isla'
-version = '0.0.0'
-
-description = ''
 
 configurations {
     providedRuntime
