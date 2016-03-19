@@ -1,6 +1,7 @@
 package isla.security;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationTargetUrlRequestHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import java.io.IOException;
  * Spring Security logout handler, specialized for Ajax requests.
  */
 @Component
-public class AjaxLogoutSuccessHandler extends AbstractAuthenticationTargetUrlRequestHandler
+public class JwtLogoutSuccessHandler extends AbstractAuthenticationTargetUrlRequestHandler
         implements LogoutSuccessHandler {
 
     @Override
@@ -22,5 +23,6 @@ public class AjaxLogoutSuccessHandler extends AbstractAuthenticationTargetUrlReq
                                 Authentication authentication)
             throws IOException, ServletException {
         response.setStatus(HttpServletResponse.SC_OK);
+        SecurityContextHolder.getContext().setAuthentication(null);
     }
 }

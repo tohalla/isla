@@ -26,16 +26,21 @@ export const login = credentials => {
         if (!response.ok) {
           return Promise.reject('authentication error');
         }
-        return fetch(`http://${config.api.host}:${config.api.port}/api/account`)
-          .then(response => {
-            console.log(response);
-            return response.text();
-          })
-          .then(response => {
-            console.log(response);
-          });
-        // localStorage.setItem('token', json.token);
-        // dispatch(receiveLogin(json.user));
+        return response.json();
+      })
+      .then(json => {
+        localStorage.setItem('token', `Bearer ${json.token}`);
+        return fetch(`http://${config.api.host}:${config.api.port}/api/account`, {
+          headers: {
+            Authorization: localStorage.token
+          }
+        });
+      })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        dispatch(receiveLogin(json));
       })
       .catch(err => dispatch(loginError(err)));
   };

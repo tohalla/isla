@@ -15,7 +15,7 @@ export class Authentication extends React.Component {
         {this.props.auth.get('isAuthenticated') ?
           <div className="form-vertical-group">
             <span>
-              {this.props.auth.getIn(['user', 'username'])}
+              {this.props.auth.getIn(['user', 'login'])}
             </span>
             <button
                 className="material-icons icon-light icon-32"

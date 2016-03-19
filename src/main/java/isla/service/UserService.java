@@ -1,10 +1,8 @@
 package isla.service;
 
 import isla.domain.Authority;
-import isla.domain.PersistentToken;
 import isla.domain.User;
 import isla.repository.AuthorityRepository;
-import isla.repository.PersistentTokenRepository;
 import isla.repository.UserRepository;
 import isla.repository.search.UserSearchRepository;
 import isla.security.SecurityUtils;
@@ -41,9 +39,6 @@ public class UserService {
 
     @Inject
     private UserSearchRepository userSearchRepository;
-
-    @Inject
-    private PersistentTokenRepository persistentTokenRepository;
 
     @Inject
     private AuthorityRepository authorityRepository;
@@ -158,25 +153,6 @@ public class UserService {
         User user = userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).get();
         user.getAuthorities().size(); // eagerly load the association
         return user;
-    }
-
-    /**
-     * Persistent Token are used for providing automatic authentication, they should be automatically deleted after
-     * 30 days.
-     * <p/>
-     * <p>
-     * This is scheduled to get fired everyday, at midnight.
-     * </p>
-     */
-    @Scheduled(cron = "0 0 0 * * ?")
-    public void removeOldPersistentTokens() {
-        LocalDate now = new LocalDate();
-        persistentTokenRepository.findByTokenDateBefore(now.minusMonths(1)).stream().forEach(token ->{
-            log.debug("Deleting token {}", token.getSeries());
-            User user = token.getUser();
-            user.getPersistentTokens().remove(token);
-            persistentTokenRepository.delete(token);
-        });
     }
 
     /**

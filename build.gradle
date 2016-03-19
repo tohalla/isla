@@ -157,6 +157,7 @@ dependencies {
     testCompile group: 'org.hamcrest', name: 'hamcrest-library'
     testCompile group: 'io.gatling.highcharts', name: 'gatling-charts-highcharts', version: gatling_version
 
+    compile 'io.jsonwebtoken:jjwt:0.6.0'
 
 }
 

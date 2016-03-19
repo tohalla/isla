@@ -1,29 +1,25 @@
 package isla.config;
 
+import isla.repository.UserRepository;
 import isla.security.*;
-import isla.web.filter.CsrfCookieGeneratorFilter;
+import isla.web.filter.JwtFilter;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import org.springframework.data.repository.query.spi.EvaluationContextExtension;
-import org.springframework.data.repository.query.spi.EvaluationContextExtensionSupport;
-import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 
-import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.inject.Inject;
 
@@ -36,22 +32,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private Environment env;
 
     @Inject
-    private AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler;
+    private JwtAuthenticationSuccessHandler jwtAuthenticationSuccessHandler;
 
     @Inject
-    private AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler;
+    private JwtAuthenticationFailureHandler jwtAuthenticationFailureHandler;
 
     @Inject
-    private AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler;
-
-    @Inject
-    private Http401UnauthorizedEntryPoint authenticationEntryPoint;
+    private JwtLogoutSuccessHandler jwtLogoutSuccessHandler;
 
     @Inject
     private UserDetailsService userDetailsService;
-
+    
     @Inject
-    private RememberMeServices rememberMeServices;
+    private UserRepository userRepository;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -83,26 +76,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .csrf()
             .ignoringAntMatchers(env.acceptsProfiles(Constants.SPRING_PROFILE_PRODUCTION) ? "/websocket/**" : "/**")
         .and()
-            .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
-            .exceptionHandling()
-            .authenticationEntryPoint(authenticationEntryPoint)
-        .and()
-            .rememberMe()
-            .rememberMeServices(rememberMeServices)
-            .rememberMeParameter("remember-me")
-            .key(env.getProperty("jhipster.security.rememberme.key"))
-        .and()
             .formLogin()
             .loginProcessingUrl("/api/authentication")
-            .successHandler(ajaxAuthenticationSuccessHandler)
-            .failureHandler(ajaxAuthenticationFailureHandler)
+            .successHandler(jwtAuthenticationSuccessHandler)
+            .failureHandler(jwtAuthenticationFailureHandler)
             .usernameParameter("j_username")
             .passwordParameter("j_password")
             .permitAll()
         .and()
             .logout()
             .logoutUrl("/api/logout")
-            .logoutSuccessHandler(ajaxLogoutSuccessHandler)
+            .logoutSuccessHandler(jwtLogoutSuccessHandler)
             .deleteCookies("JSESSIONID", "hazelcast.sessionId")
             .permitAll()
         .and()
@@ -116,14 +100,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/account/reset_password/init").permitAll()
             .antMatchers("/api/account/reset_password/finish").permitAll()
-            .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/audits/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/lectures/**").permitAll()
             .antMatchers("/api/comments/**").permitAll() 
             .antMatchers("/api/courses/**").permitAll() 
-            .antMatchers("/api/**").authenticated()
-            .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/v2/api-docs/**").permitAll()
+            .antMatchers("/configuration/security").permitAll()
+            .antMatchers("/configuration/ui").permitAll()
             .antMatchers("/websocket/**").permitAll()
+            .antMatchers("/api/audits/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/metrics/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/health/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
@@ -136,12 +121,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/env/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/mappings/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/v2/api-docs/**").permitAll()
-            .antMatchers("/configuration/security").permitAll()
-            .antMatchers("/configuration/ui").permitAll()
             .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/protected/**").authenticated() ;
-
+            .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .anyRequest()
+            .authenticated()
+        .and()
+            .addFilterBefore(new JwtFilter(userRepository), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
