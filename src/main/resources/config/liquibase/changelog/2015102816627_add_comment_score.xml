@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="2015102816627" author="touko">
+    <createTable tableName="COMMENT_SCORE">
+      <column name="comment_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="user_sid" type="varchar(64)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addPrimaryKey columnNames="comment_id, user_sid"
+                   constraintName="pk_like"
+                   tableName="COMMENT_SCORE"/>
+
+    <addForeignKeyConstraint baseColumnNames="comment_id"
+                             baseTableName="COMMENT_SCORE"
+                             constraintName="fk_comment_liked_by_id"
+                             referencedColumnNames="id"
+                             referencedTableName="COMMENT"/>
+	</changeSet>
+</databaseChangeLog>
