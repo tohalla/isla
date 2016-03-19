@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import config from '../config';
-import cookie from 'cookie';
+
 import {
   requestLogin,
   receiveLogin,
@@ -23,16 +23,19 @@ export const login = credentials => {
       body
     })
       .then(response => {
-        if (response.status === 400) {
+        if (!response.ok) {
           return Promise.reject('authentication error');
         }
-        console.log(response);
-        return response.json();
-      })
-      .then(json => {
-        console.log(json);
-        localStorage.setItem('token', json.token);
-        dispatch(receiveLogin(json.user));
+        return fetch(`http://${config.api.host}:${config.api.port}/api/account`)
+          .then(response => {
+            console.log(response);
+            return response.text();
+          })
+          .then(response => {
+            console.log(response);
+          });
+        // localStorage.setItem('token', json.token);
+        // dispatch(receiveLogin(json.user));
       })
       .catch(err => dispatch(loginError(err)));
   };

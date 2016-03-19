@@ -1,6 +1,6 @@
 export default {
   api: {
     host: 'localhost',
-    port: 3000
+    port: process.env.NODE_ENV === 'production' ? 8080 : 3000
   }
 };

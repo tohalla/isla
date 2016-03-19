@@ -79,14 +79,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        if (env.acceptsProfiles(Constants.SPRING_PROFILE_PRODUCTION)) {
+            http
+                .csrf()
+                .ignoringAntMatchers("/websocket/**")
+            .and()
+                .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint);
+        } else {
+            http
+                .csrf()
+                .disable();
+        }
+
         http
-            .csrf()
-            .ignoringAntMatchers("/websocket/**")
-        .and()
-            .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
-            .exceptionHandling()
-            .authenticationEntryPoint(authenticationEntryPoint)
-        .and()
             .rememberMe()
             .rememberMeServices(rememberMeServices)
             .rememberMeParameter("remember-me")

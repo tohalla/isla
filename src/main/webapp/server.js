@@ -1,35 +1,25 @@
-var express = require('express');
 var webpack = require('webpack');
-var request = require('request');
+var WebpackDevServer = require('webpack-dev-server');
 var path = require('path');
+
 var config = require(path.join('..', '..', '..', 'webpack.config'));
 
-var app = express();
-var compiler = webpack(config);
-
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath
-}));
-
-app.use(require('webpack-hot-middleware')(compiler));
-
-app.use('/api', (req, res) => {
-  req.pipe(request('http://localhost:8080/api' + req.url)
-    .on('error', e => {
-      console.warn(e.message);
-    }))
-    .pipe(res);
-});
-app.use('*', (req, res) => {
-  req.pipe(request('http://localhost:3000/index.html')).pipe(res);
-});
-
-app.listen(3000, 'localhost', err => {
-  if (err) {
-    console.log(err);
-    return;
+new WebpackDevServer(webpack(config), {
+  publicPath: config.output.publicPath,
+  hot: true,
+  proxy: {
+    '*': {
+      secure: false,
+      ws: true,
+      target: 'http://127.0.0.1:8080'
+    }
   }
+})
+  .listen(3000, 'localhost', err => {
+    if (err) {
+      return console.log(err);
+    }
+    console.log('Listening at http://localhost:3000/');
+  }
+);
 
-  console.log('Listening at http://localhost:3000');
-});
