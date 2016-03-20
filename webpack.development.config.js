@@ -37,6 +37,10 @@ module.exports = {
         loader: 'url-loader?limit=100000'
       },
       {
+        test: /\.json$/,
+        loader: 'json-loader'
+      },
+      {
         test: /\.s?css$/,
         loader: ExtractTextPlugin.extract('css!sass!postcss')
       }

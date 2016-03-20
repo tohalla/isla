@@ -8,6 +8,26 @@ import {
   receiveLogout
 } from './auth';
 
+export const authenticate = () => {
+  return dispatch => {
+    if (!localStorage.token) {
+      return Promise.reject('authentication error');
+    }
+    return fetch(`http://${config.api.host}:${config.api.port}/api/account`, {
+      headers: {
+        Authorization: localStorage.token
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        dispatch(receiveLogin(json));
+      })
+      .catch(err => dispatch(loginError(err)));
+  };
+};
+
 export const login = credentials => {
   return dispatch => {
     dispatch(requestLogin());
@@ -30,32 +50,9 @@ export const login = credentials => {
       })
       .then(json => {
         localStorage.setItem('token', `Bearer ${json.token}`);
-        return fetch(`http://${config.api.host}:${config.api.port}/api/account`, {
-          headers: {
-            Authorization: localStorage.token
-          }
-        });
-      })
-      .then(response => {
-        return response.json();
-      })
-      .then(json => {
-        dispatch(receiveLogin(json));
+        dispatch(authenticate());
       })
       .catch(err => dispatch(loginError(err)));
-  };
-};
-
-export const getUser = () => {
-  return dispatch => {
-    fetch(`http://${config.api.host}:${config.api.port}/api/authentication`, {
-      headers: {
-        Accept: 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(json => dispatch(receiveLogin(json)))
-      .catch(err => console.log(err));
   };
 };
 

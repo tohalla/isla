@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {LoginContainer} from './Login.component';
+import Login from './Login.component';
 import {logout} from './auth.service';
 
 const mapStateToProps = state => ({
@@ -24,14 +24,14 @@ export class Authentication extends React.Component {
               {'exit_to_app'}
             </button>
           </div> :
-          <LoginContainer />
+          <Login />
         }
       </div>
     );
   }
 }
 
-export const AuthenticationContainer = connect(
+export default connect(
   mapStateToProps,
   {logout}
 )(Authentication);

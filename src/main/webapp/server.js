@@ -7,8 +7,9 @@ var config = require(path.join('..', '..', '..', 'webpack.config'));
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
   hot: true,
+  historyApiFallback: true,
   proxy: {
-    '*': {
+    '/api/*': {
       secure: false,
       ws: true,
       target: 'http://127.0.0.1:8080'

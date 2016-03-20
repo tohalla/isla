@@ -1,0 +1,13 @@
+{
+  "login": {
+    "title": "Log in",
+    "login": "Log in"
+  },
+  "register": {
+    "title": "Register",
+    "register": "Register account"
+  },
+  "username": "Username",
+  "password": "Password",
+  "email": "Email"
+}

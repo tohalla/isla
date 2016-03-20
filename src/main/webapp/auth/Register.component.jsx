@@ -1,12 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
 import counterpart from 'counterpart';
 
 import {login} from './auth.service';
 import WithLabel from '../util/WithLabel.component';
 
-class Login extends React.Component {
+class Register extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.login = this.login.bind(this);
@@ -39,12 +38,24 @@ class Login extends React.Component {
                 <input
                     id="username"
                     onChange={this.handleUsernameChange}
-                    placeholder={counterpart.translate('account.username')}
+                    placeholder="Email address"
                     type="text"
                     value={this.state.username}
                 />
               }
               label={counterpart.translate('account.username')}
+          />
+          <WithLabel
+              item={
+                <input
+                    id="username"
+                    onChange={this.handleUsernameChange}
+                    placeholder={counterpart.translate('account.email')}
+                    type="email"
+                    value={this.state.username}
+                />
+              }
+              label={counterpart.translate('account.email')}
           />
           <WithLabel
               item={
@@ -58,17 +69,13 @@ class Login extends React.Component {
               }
               label={counterpart.translate('account.password')}
           />
-          <div className="form-group">
-            <Link to={'/register'}>
-              {counterpart.translate('account.register.register')}
-            </Link>
-            <button
-                onClick={this.login}
-                type="submit"
-            >
-              {counterpart.translate('account.login.login')}
-            </button>
-          </div>
+          <button
+              className="right"
+              onClick={this.login}
+              type="submit"
+          >
+            {counterpart.translate('account.register.register')}
+          </button>
         </div>
       </form>
     );
@@ -78,4 +85,4 @@ class Login extends React.Component {
 export default connect(
   null,
   {login}
-)(Login);
+)(Register);

@@ -1,12 +1,11 @@
 import React from 'react';
-
-import {AuthenticationContainer} from '../auth/Authentication.component';
+import {Link} from 'react-router';
 
 export default class TopBar extends React.Component {
   render() {
     return (
       <nav>
-        <AuthenticationContainer />
+        <Link to={'/authenticate'}>{"Authenticate"}</Link>
       </nav>
     );
   }
