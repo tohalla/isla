@@ -24,8 +24,9 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   output: {
-    path: PATHS.dist,
-    filename: '[name].js'
+    path: path.join(PATHS.dist, 'assets'),
+    filename: '[name].js',
+    publicPath: 'assets/'
   },
   module: {
     loaders: [
@@ -60,7 +61,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
-    new ExtractTextPlugin('./assets/style/style.css', {
+    new ExtractTextPlugin('style/style.css', {
       allChunks: true
     }),
     new webpack.optimize.OccurenceOrderPlugin(true),
@@ -76,7 +77,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './src/main/webapp/templates/default.html',
-      inject: 'body'
+      inject: 'body',
+      filename: '../index.html'
     })
   ]
 };

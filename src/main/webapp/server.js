@@ -16,7 +16,7 @@ new WebpackDevServer(webpack(config), {
     }
   }
 })
-  .listen(3000, 'localhost', err => {
+  .listen(3000, '127.0.0.1', err => {
     if (err) {
       return console.log(err);
     }

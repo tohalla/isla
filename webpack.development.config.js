@@ -19,7 +19,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   output: {
-    path: PATHS.dist,
+    path: path.join(PATHS.dist),
     filename: '[name].js'
   },
   module: {
@@ -53,7 +53,7 @@ module.exports = {
   ],
   devtool: 'eval',
   devServer: {
-    contentBase: './dist',
+    contentBase: './src/main/webapp/dist',
     hot: true
   },
   plugins: [
@@ -61,12 +61,13 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     }),
-    new ExtractTextPlugin('./assets/style/style.css', {
+    new ExtractTextPlugin('style/style.css', {
       allChunks: true
     }),
     new HtmlWebpackPlugin({
       template: './src/main/webapp/templates/default.html',
-      inject: 'body'
+      inject: 'body',
+      filename: './index.html'
     })
   ]
 };

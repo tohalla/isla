@@ -74,8 +74,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .csrf()
-            .ignoringAntMatchers(env.acceptsProfiles(Constants.SPRING_PROFILE_PRODUCTION) ? "/websocket/**" : "/**")
-        .and()
+            .disable();
+        http
             .formLogin()
             .loginProcessingUrl("/api/authentication")
             .successHandler(jwtAuthenticationSuccessHandler)
