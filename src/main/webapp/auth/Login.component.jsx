@@ -2,9 +2,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import counterpart from 'counterpart';
+import {push} from 'react-router-redux';
 
 import {login} from './auth.service';
 import WithLabel from '../util/WithLabel.component';
+
+const mapStateToProps = state =>
+ ({loggedInAs: state.getIn(['auth', 'user', 'login'])});
 
 class Login extends React.Component {
   constructor(props, context) {
@@ -16,6 +20,13 @@ class Login extends React.Component {
       username: '',
       password: ''
     };
+  }
+  shouldComponentUpdate(nextProps) {
+    if (typeof nextProps.loggedInAs === 'undefined') {
+      return true;
+    }
+    nextProps.push('/');
+    return false;
   }
   login(event) {
     event.preventDefault();
@@ -76,6 +87,6 @@ class Login extends React.Component {
 }
 
 export default connect(
-  null,
-  {login}
+  mapStateToProps,
+  {login, push}
 )(Login);
