@@ -1,4 +1,4 @@
-.navbar{
+nav{
   ul{
     list-style: none;
     display: inline-block;
@@ -15,7 +15,7 @@
       display: inline-block;
   }
 
-  &.navbar-sub{
+  &.nav-sub{
     background: $aluminum;
     border-bottom: 1px solid $gray;
     font-size: 80%;
@@ -33,7 +33,7 @@
     }
   }
 
-  &.navbar-default{
+  &.nav-default{
     background: $nav-background;
     color: $nav-text-color;
 
@@ -41,7 +41,7 @@
       padding: $nav-link-padding-vertical $nav-link-padding-horizontal;
     }
 
-    a:not(.navbar-brand){
+    a:not(.nav-brand){
       color: $nav-link-color;
       background: $nav-link-background;
       text-decoration: none;
@@ -58,7 +58,7 @@
       text-decoration: underline;
     }
   }
-  &.navbar-plain{
+  &.nav-plain{
     position: absolute;
     padding-left: 5%;
     top: 0;
@@ -70,11 +70,10 @@
   }
 }
 
-.navbar-brand{
+.nav-brand{
   padding: $nav-link-padding-vertical $nav-link-padding-horizontal;
   margin-right: 80px;
   color: $nav-brand-color;
   text-decoration: none;
 }
 
-//edit later for mobile..

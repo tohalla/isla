@@ -1,6 +1,6 @@
 import {createStore, applyMiddleware, compose} from 'redux';
 import reducers from './reducers';
-import DevTools from './DevTools';
+import DevTools from './Devtools';
 import {authenticate} from './auth/auth.service';
 
 import thunk from 'redux-thunk';

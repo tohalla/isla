@@ -5,10 +5,15 @@ import TopBar from '../nav/TopBar.component';
 export default class Default extends React.Component {
   render() {
     return (
-      <div>
-        <TopBar />
-        <div className="content">
-          {this.props.children}
+      <div className="stretch">
+        <div className="wrapper">
+          <TopBar />
+          <div>
+            {this.props.children}
+          </div>
+          <div className="footer-push"></div>
+        </div>
+        <div className="footer">
         </div>
       </div>
     );

@@ -6,7 +6,7 @@ import {Router, Route, browserHistory} from 'react-router';
 import App from './App';
 import Default from './view/Default';
 import store from './store';
-import Authentication from './auth/Authentication.component';
+import Login from './auth/Login.component';
 import Register from './auth/Register.component';
 
 ReactDOM.render((
@@ -14,7 +14,7 @@ ReactDOM.render((
     <Router history={browserHistory}>
       <Route component={App}>
         <Route component={Default} path="/">
-          <Route component={Authentication} path="authenticate" />
+          <Route component={Login} path="authenticate" />
           <Route component={Register} path="register" />
         </Route>
       </Route>
