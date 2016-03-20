@@ -4,6 +4,7 @@
   "description": "Description for isla",
   "private": false,
   "scripts": {
+    "migration:new": "./scripts/migration.sh",
     "build": "NODE_ENV=production webpack  --progress --colors",
     "build:prod": "NODE_ENV=production webpack  --progress --colors",
     "prebuild:prod": "rm -rf node_modules && npm install",
