@@ -3,7 +3,6 @@ package isla.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import isla.domain.Comment;
 import isla.repository.CommentRepository;
-import isla.repository.search.CommentSearchRepository;
 import isla.security.AuthoritiesConstants;
 import isla.web.rest.util.HeaderUtil;
 import isla.web.rest.util.PaginationUtil;
@@ -24,10 +23,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Comment.
@@ -40,9 +35,6 @@ public class CommentResource {
 
     @Inject
     private CommentRepository commentRepository;
-
-    @Inject
-    private CommentSearchRepository commentSearchRepository;
 
     /**
      * POST /comments -> Create a new comment.
@@ -58,7 +50,6 @@ public class CommentResource {
                     .header("Failure", "A new comment cannot already have an ID").body(null);
         }
         Comment result = commentRepository.save(comment);
-        commentSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/comments/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("comment", result.getId().toString()))
                 .body(result);
@@ -78,7 +69,6 @@ public class CommentResource {
             return createComment(comment);
         }
         Comment result = commentRepository.save(comment);
-        commentSearchRepository.save(comment);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("comment", comment.getId().toString()))
                 .body(result);
@@ -120,20 +110,8 @@ public class CommentResource {
     public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
         log.debug("REST request to delete Comment : {}", id);
         commentRepository.delete(id);
-        commentSearchRepository.delete(id);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityDeletionAlert("comment", id.toString())).build();
     }
 
-    /**
-     * SEARCH /_search/comments/:query -> search for the comment corresponding to the query.
-     */
-    @RequestMapping(value = "/_search/comments/{query}", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<Comment> searchComments(@PathVariable String query) {
-        return StreamSupport
-                .stream(commentSearchRepository.search(queryString(query)).spliterator(), false)
-                .collect(Collectors.toList());
-    }
 }

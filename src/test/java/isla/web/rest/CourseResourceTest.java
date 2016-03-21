@@ -38,7 +38,6 @@ import isla.domain.Course;
 import isla.domain.Lecture;
 import isla.repository.CourseRepository;
 import isla.repository.LectureRepository;
-import isla.repository.search.CourseSearchRepository;
 
 
 /**
@@ -61,9 +60,6 @@ public class CourseResourceTest {
     private CourseRepository courseRepository;
 
     @Inject
-    private CourseSearchRepository courseSearchRepository;
-
-    @Inject
     private LectureRepository lectureRepository;
 
     @Inject
@@ -81,7 +77,6 @@ public class CourseResourceTest {
         MockitoAnnotations.initMocks(this);
         CourseResource courseResource = new CourseResource();
         ReflectionTestUtils.setField(courseResource, "courseRepository", courseRepository);
-        ReflectionTestUtils.setField(courseResource, "courseSearchRepository", courseSearchRepository);
         ReflectionTestUtils.setField(courseResource, "lectureRepository", lectureRepository);
         this.restCourseMockMvc = MockMvcBuilders.standaloneSetup(courseResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)

@@ -1,7 +1,5 @@
 package isla.web.rest;
 
-import static org.elasticsearch.index.query.QueryBuilders.queryString;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -31,7 +29,6 @@ import isla.domain.Comment;
 import isla.domain.Lecture;
 import isla.repository.CommentRepository;
 import isla.repository.LectureRepository;
-import isla.repository.search.LectureSearchRepository;
 import isla.security.AuthoritiesConstants;
 import isla.web.rest.util.HeaderUtil;
 
@@ -50,9 +47,6 @@ public class LectureResource {
     @Inject 
     private CommentRepository commentRepository;
     
-    @Inject
-    private LectureSearchRepository lectureSearchRepository;
-    
     /**
      * POST  /lectures -> Create a new lecture.
      */
@@ -67,7 +61,6 @@ public class LectureResource {
             return ResponseEntity.badRequest().header("Failure", "A new lecture cannot already have an ID").body(null);
         }
         Lecture result = lectureRepository.save(lecture);
-        lectureSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/lectures/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("lecture", result.getId().toString()))
                 .body(result);
@@ -87,7 +80,6 @@ public class LectureResource {
             return createLecture(lecture);
         }
         Lecture result = lectureRepository.save(lecture);
-        lectureSearchRepository.save(lecture);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("lecture", lecture.getId().toString()))
                 .body(result);
@@ -142,21 +134,7 @@ public class LectureResource {
     public ResponseEntity<Void> deleteLecture(@PathVariable Long id) {
         log.debug("REST request to delete Lecture : {}", id);
         lectureRepository.delete(id);
-        lectureSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("lecture", id.toString())).build();
     }
 
-    /**
-     * SEARCH  /_search/lectures/:query -> search for the lecture corresponding
-     * to the query.
-     */
-    @RequestMapping(value = "/_search/lectures/{query}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<Lecture> searchLectures(@PathVariable String query) {
-        return StreamSupport
-            .stream(lectureSearchRepository.search(queryString(query)).spliterator(), false)
-            .collect(Collectors.toList());
-    }
 }

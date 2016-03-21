@@ -1,8 +1,5 @@
 server:
     port: 8080
-    compression:
-        enabled: true
-        mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
 
 liquibase:
     context: prod
@@ -31,14 +28,6 @@ spring:
             hibernate.generate_statistics: false
             hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
 
-    data:
-        elasticsearch:
-            cluster-name: elasticsearch
-            cluster-nodes: localhost:9200
-        properties:
-            path:
-              logs: target/elasticsearch/log
-              data: target/elasticsearch/data
     thymeleaf:
         mode: XHTML
         cache: true

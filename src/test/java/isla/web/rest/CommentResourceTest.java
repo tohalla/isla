@@ -3,7 +3,6 @@ package isla.web.rest;
 import isla.Application;
 import isla.domain.Comment;
 import isla.repository.CommentRepository;
-import isla.repository.search.CommentSearchRepository;
 import isla.service.CommentService;
 
 import org.junit.Before;
@@ -58,9 +57,6 @@ public class CommentResourceTest {
 
     @Inject
     private CommentRepository commentRepository;
-
-    @Inject
-    private CommentSearchRepository commentSearchRepository;
     
     @Inject 
     private CommentService commentService;
@@ -80,7 +76,6 @@ public class CommentResourceTest {
         MockitoAnnotations.initMocks(this);
         CommentResource commentResource = new CommentResource();
         ReflectionTestUtils.setField(commentResource, "commentRepository", commentRepository);
-        ReflectionTestUtils.setField(commentResource, "commentSearchRepository", commentSearchRepository);
         this.restCommentMockMvc = MockMvcBuilders.standaloneSetup(commentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();

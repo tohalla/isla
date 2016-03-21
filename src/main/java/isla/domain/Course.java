@@ -2,10 +2,8 @@ package isla.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,7 +20,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "COURSE")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "course")
 public class Course implements Serializable {
 
     @Id

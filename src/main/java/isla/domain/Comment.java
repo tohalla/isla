@@ -6,14 +6,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import isla.domain.util.CustomDateTimeDeserializer;
 import isla.domain.util.CustomDateTimeSerializer;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -27,7 +21,6 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "COMMENT")
-@Document(indexName = "comment")
 public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -168,7 +161,7 @@ public class Comment implements Serializable {
         }
         return false;
     }
-    
+
     public boolean markAsDeleted(User user) {
         if (lecture.getCourse().getModerators().contains(user)) {
             setDeleted(true);

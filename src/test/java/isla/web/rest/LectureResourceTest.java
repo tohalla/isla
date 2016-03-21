@@ -3,7 +3,6 @@ package isla.web.rest;
 import isla.Application;
 import isla.domain.Lecture;
 import isla.repository.LectureRepository;
-import isla.repository.search.LectureSearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -67,9 +66,6 @@ public class LectureResourceTest {
     private LectureRepository lectureRepository;
 
     @Inject
-    private LectureSearchRepository lectureSearchRepository;
-
-    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
@@ -84,7 +80,6 @@ public class LectureResourceTest {
         MockitoAnnotations.initMocks(this);
         LectureResource lectureResource = new LectureResource();
         ReflectionTestUtils.setField(lectureResource, "lectureRepository", lectureRepository);
-        ReflectionTestUtils.setField(lectureResource, "lectureSearchRepository", lectureSearchRepository);
         this.restLectureMockMvc = MockMvcBuilders.standaloneSetup(lectureResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
