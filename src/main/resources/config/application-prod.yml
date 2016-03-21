@@ -1,5 +1,8 @@
 server:
     port: 8080
+    compression:
+        enabled: true
+        mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
 
 liquibase:
     context: prod
@@ -30,8 +33,12 @@ spring:
 
     data:
         elasticsearch:
-            cluster-name:
+            cluster-name: elasticsearch
             cluster-nodes: localhost:9200
+        properties:
+            path:
+              logs: target/elasticsearch/log
+              data: target/elasticsearch/data
     thymeleaf:
         mode: XHTML
         cache: true
