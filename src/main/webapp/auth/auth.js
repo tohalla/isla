@@ -22,8 +22,8 @@ export default createReducer(fromJS({}), {
   [LOGIN_FAILURE]: (state, action) => {
     return action.auth;
   },
-  [REGISTER_SUCCESS]: (state, action) => {
-    return action.auth;
+  [REGISTER_SUCCESS]: () => {
+    return fromJS({});
   },
   [REGISTER_FAILURE]: (state, action) => {
     return action.auth;

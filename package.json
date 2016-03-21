@@ -5,9 +5,11 @@
   "private": false,
   "scripts": {
     "migration:new": "./scripts/migration.sh",
+    "postmigration:new": "npm run changelog",
     "build": "NODE_ENV=production webpack  --progress --colors",
     "build:prod": "NODE_ENV=production webpack  --progress --colors",
     "prebuild:prod": "rm -rf node_modules && npm install",
+    "changelog": "node scripts/update_migrations.js",
     "watch": "node src/main/webapp/server.js",
     "lint": "eslint *"
   },

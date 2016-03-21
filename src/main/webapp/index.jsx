@@ -11,9 +11,7 @@ import CourseList from './course/CourseList.component';
 import Register from './auth/Register.component';
 import history from './history';
 
-import {fetchCourses} from './course/course';
 import {fetchLectures} from './lecture/lecture';
-store.dispatch(fetchCourses());
 store.dispatch(fetchLectures());
 
 ReactDOM.render((
