@@ -1,21 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {Router, Route, useRouterHistory} from 'react-router';
-import {syncHistoryWithStore} from 'react-router-redux';
-import {createHashHistory} from 'history';
+import {Router, Route} from 'react-router';
 
 import App from './App';
 import Default from './view/Default';
 import store from './store';
 import Login from './auth/Login.component';
 import Register from './auth/Register.component';
+import history from './history';
 
-const history = syncHistoryWithStore(
-  useRouterHistory(createHashHistory)({queryKey: false}),
-  store,
-  {selectLocationState: state => state.get('routing').toJS()}
-);
+import {fetchCourses} from './course/course';
+import {fetchLectures} from './lecture/lecture';
+store.dispatch(fetchCourses());
+store.dispatch(fetchLectures());
 
 ReactDOM.render((
   <Provider store={store}>

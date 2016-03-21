@@ -18,12 +18,8 @@ export const authenticate = () => {
         Authorization: localStorage.token
       }
     })
-      .then(response => {
-        return response.json();
-      })
-      .then(json => {
-        dispatch(receiveLogin(json));
-      })
+      .then(response => response.json())
+      .then(json => dispatch(receiveLogin(json)))
       .catch(err => dispatch(loginError(err)));
   };
 };
@@ -58,7 +54,10 @@ export const login = credentials => {
 
 export const logout = () => {
   return dispatch => {
-    localStorage.removeItem('token');
-    dispatch(receiveLogout());
+    fetch(`http://${config.api.host}:${config.api.port}/api/logout`)
+      .then(() => {
+        localStorage.removeItem('token');
+        dispatch(receiveLogout());
+      });
   };
 };

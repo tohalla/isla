@@ -2,13 +2,14 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import counterpart from 'counterpart';
-import {push} from 'react-router-redux';
+import history from '../history';
 
 import {login} from './auth.service';
 import WithLabel from '../util/WithLabel.component';
 
-const mapStateToProps = state =>
- ({loggedInAs: state.getIn(['auth', 'user', 'login'])});
+const mapStateToProps = state => (
+  {isAuthenticated: state.getIn(['auth', 'isAuthenticated'])
+});
 
 class Login extends React.Component {
   constructor(props, context) {
@@ -21,12 +22,10 @@ class Login extends React.Component {
       password: ''
     };
   }
-  shouldComponentUpdate(nextProps) {
-    if (typeof nextProps.loggedInAs === 'undefined') {
-      return true;
+  componentWillMount() {
+    if (this.props.isAuthenticated) {
+      history.push('/');
     }
-    nextProps.push('/');
-    return false;
   }
   login(event) {
     event.preventDefault();
@@ -34,6 +33,7 @@ class Login extends React.Component {
       username: this.state.username,
       password: this.state.password
     });
+    history.push('/');
   }
   handleUsernameChange(event) {
     this.setState({username: event.target.value});
@@ -88,5 +88,5 @@ class Login extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {login, push}
+  {login}
 )(Login);

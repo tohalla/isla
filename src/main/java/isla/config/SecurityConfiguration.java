@@ -61,11 +61,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-            .antMatchers("/scripts/**/*.{js,html}")
-            .antMatchers("/bower_components/**")
             .antMatchers("/i18n/**")
             .antMatchers("/assets/**")
-            .antMatchers("/swagger-ui/index.html")
             .antMatchers("/test/**")
             .antMatchers("/console/**");
     }
@@ -77,6 +74,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .disable();
         http
             .formLogin()
+            .loginPage("/#/authenticate")
             .loginProcessingUrl("/api/authentication")
             .successHandler(jwtAuthenticationSuccessHandler)
             .failureHandler(jwtAuthenticationFailureHandler)
@@ -95,7 +93,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .disable()
         .and()
             .authorizeRequests()
-            .antMatchers("/*").permitAll()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/authenticate").permitAll()
@@ -124,8 +121,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/mappings/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .anyRequest()
-            .authenticated()
+            .antMatchers("/api/**").authenticated()
         .and()
             .addFilterBefore(new JwtFilter(userRepository), UsernamePasswordAuthenticationFilter.class);
     }

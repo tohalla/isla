@@ -1,22 +1,21 @@
 import {createStore, applyMiddleware, compose} from 'redux';
-import {routerMiddleware} from 'react-router-redux';
+import thunk from 'redux-thunk';
 
 import reducers from './reducers';
 import DevTools from './Devtools';
 import {authenticate} from './auth/auth.service';
-
-import thunk from 'redux-thunk';
+import api from './middleware/api';
 
 const production = () => {
   const finalCreateStore = compose(
-    applyMiddleware(thunk, routerMiddleware)
+    applyMiddleware(thunk, api)
   )(createStore);
   return finalCreateStore(reducers);
 };
 
 const development = () => {
   const finalCreateStore = compose(
-    applyMiddleware(thunk, routerMiddleware),
+    applyMiddleware(thunk, api),
     DevTools.instrument()
   )(createStore);
   const store = finalCreateStore(reducers);
