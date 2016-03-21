@@ -7,11 +7,11 @@ import {CALL_API} from '../constants';
 const API_ROOT = `http://${config.api.host}:${config.api.port}/api/`;
 const methods = ['GET', 'POST', 'PUT', 'DELETE'];
 
-const callApi = (endpoint, options = {}) => {
+const callApi = (endpoint, config = {}) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ?
     API_ROOT + endpoint : endpoint;
 
-  const {body, method = 'GET', headers} = options;
+  const {body, method = 'GET', headers} = config;
 
   if (methods.indexOf(method.toUpperCase()) === -1) {
     throw new Error(
@@ -37,8 +37,15 @@ const callApi = (endpoint, options = {}) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
-
+      if (typeof config.onSuccess !== 'undefined') {
+        config.onSuccess();
+      }
       return Object.assign({}, camelizeKeys(json));
+    })
+    .catch(() => {
+      if (typeof config.onFailure !== 'undefined') {
+        config.onFailure();
+      }
     });
 };
 
@@ -48,7 +55,7 @@ export default store => dispatch => action => {
     return dispatch(action);
   }
 
-  let {endpoint, options} = callAPI;
+  let {endpoint, config} = callAPI;
   const {types} = callAPI;
 
   if (typeof endpoint === 'function') {
@@ -74,7 +81,7 @@ export default store => dispatch => action => {
   const [requestType, successType, failureType] = types;
   dispatch(actionWith({type: requestType}));
 
-  return callApi(endpoint, options).then(
+  return callApi(endpoint, config).then(
     response => dispatch(actionWith({
       response,
       type: successType
