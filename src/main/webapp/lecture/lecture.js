@@ -20,11 +20,12 @@ export default createReducer(fromJS({}), {
   }
 });
 
-export const fetchLectures = () => {
+export const fetchLectures = course => {
   return {
     [CALL_API]: {
       types: [LECTURES_REQUEST, LECTURES_SET, LECTURES_FAILURE],
-      endpoint: 'lectures'
+      endpoint: typeof course === 'undefined' ?
+        'lectures' : `courses/${course}/lectures`
     }
   };
 };

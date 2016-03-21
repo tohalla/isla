@@ -44,7 +44,6 @@ export const requestLogin = () => {
 };
 
 export const receiveLogin = user => {
-  console.log(user);
   return {
     type: LOGIN_SUCCESS,
     auth: fromJS({

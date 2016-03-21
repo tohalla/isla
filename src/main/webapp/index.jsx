@@ -8,6 +8,7 @@ import Default from './view/Default';
 import store from './store';
 import Login from './auth/Login.component';
 import CourseList from './course/CourseList.component';
+import LectureList from './lecture/LectureList.component';
 import Register from './auth/Register.component';
 import history from './history';
 
@@ -21,6 +22,7 @@ ReactDOM.render((
         <Route component={Default} path="/">
           <Route component={Login} path="authenticate" />
           <Route component={CourseList} path="courses" />
+          <Route component={LectureList} path="courses/:id" />
           <Route component={Register} path="register" />
         </Route>
       </Route>

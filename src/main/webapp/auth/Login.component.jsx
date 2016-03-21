@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import counterpart from 'counterpart';
-import history from '../history';
 
 import {login} from './auth.service';
 import WithLabel from '../util/WithLabel.component';
@@ -12,6 +11,9 @@ const mapStateToProps = state => (
 });
 
 class Login extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
   constructor(props, context) {
     super(props, context);
     this.login = this.login.bind(this);
@@ -24,7 +26,7 @@ class Login extends React.Component {
   }
   componentWillMount() {
     if (this.props.isAuthenticated) {
-      history.push('/');
+      this.context.router.push('/');
     }
   }
   shouldComponentUpdate(newProps, newState) {
@@ -36,7 +38,7 @@ class Login extends React.Component {
       login: this.state.login,
       password: this.state.password
     });
-    history.push('/');
+    this.context.router.push('/');
   }
   handleLoginChange(event) {
     this.setState({login: event.target.value});
@@ -46,7 +48,7 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <div className="form-vertical-group">
+      <form className="form-vertical-group">
         <WithLabel
             item={
               <input
@@ -82,7 +84,7 @@ class Login extends React.Component {
             {counterpart.translate('account.authenticate.authenticate')}
           </button>
         </div>
-      </div>
+      </form>
     );
   }
 }

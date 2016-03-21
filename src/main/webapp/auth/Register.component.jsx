@@ -9,6 +9,9 @@ import Locales from '../i18n/Locales.component';
 import {validateEmail} from '../util/misc';
 
 class Register extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
   constructor(props, context) {
     super(props, context);
     this.register = this.register.bind(this);
@@ -35,6 +38,11 @@ class Register extends React.Component {
         password: []
       }
     };
+  }
+  componentWillMount() {
+    if (this.props.isAuthenticated) {
+      this.context.router.push('/');
+    }
   }
   shouldComponentUpdate(newProps, newState) {
     return !(this.state === newState && this.props.value === newProps.value);
@@ -89,7 +97,7 @@ class Register extends React.Component {
   }
   render() {
     return (
-      <div className="form-vertical-group">
+      <form className="form-vertical-group">
         <WithLabel
             item={
               <input
@@ -170,7 +178,7 @@ class Register extends React.Component {
         >
           {counterpart.translate('account.register.register')}
         </button>
-      </div>
+      </form>
     );
   }
 }

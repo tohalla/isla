@@ -11,7 +11,8 @@
         ".gradle",
         ".settings",
         "bin",
-        "tmp"
+        "tmp",
+        "dist"
       ],
       "file_exclude_patterns":
       [
