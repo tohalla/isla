@@ -18,8 +18,8 @@ class TopBar extends React.Component {
             {counterpart.translate("general.navText")}
           </Link>
           <ul className="menu-items">
-            <li><Link to={'/authenticate'}>
-              {counterpart.translate("navigation.browseLectures")}
+            <li><Link to={'/courses'}>
+              {counterpart.translate("navigation.browseCourses")}
             </Link></li>
             <li><Link to={'/authenticate'}>
               {counterpart.translate("navigation.authenticate")}

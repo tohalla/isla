@@ -3,9 +3,9 @@ import {fromJS} from 'immutable';
 import {LOCATION_CHANGE} from 'react-router-redux';
 
 import auth from './auth/auth';
-import course from './course/course';
-import comment from './comment/comment';
-import lecture from './lecture/lecture';
+import courses from './course/course';
+import comments from './comment/comment';
+import lectures from './lecture/lecture';
 
 const routerReducer = createReducer(fromJS({locationBeforeTransitions: null}), {
   [LOCATION_CHANGE]: (state, action) => {
@@ -16,7 +16,7 @@ const routerReducer = createReducer(fromJS({locationBeforeTransitions: null}), {
 });
 
 const entities = combineReducers({
-  comment, course, lecture
+  comments, courses, lectures
 });
 
 export default combineReducers({

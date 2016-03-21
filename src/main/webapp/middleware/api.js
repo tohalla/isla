@@ -11,7 +11,11 @@ const callApi = (endpoint, config = {}) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ?
     API_ROOT + endpoint : endpoint;
 
-  const {body, method = 'GET', headers} = config;
+  let {body, method = 'GET', headers} = config;
+
+  if (typeof body === 'object') {
+    body = JSON.stringify(body);
+  }
 
   if (methods.indexOf(method.toUpperCase()) === -1) {
     throw new Error(
@@ -42,7 +46,8 @@ const callApi = (endpoint, config = {}) => {
       }
       return Object.assign({}, camelizeKeys(json));
     })
-    .catch(() => {
+    .catch(err => {
+      console.log(err);
       if (typeof config.onFailure !== 'undefined') {
         config.onFailure();
       }

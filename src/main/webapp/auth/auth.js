@@ -2,6 +2,10 @@ import {createReducer} from 'redux-immutablejs';
 import {fromJS} from 'immutable';
 
 import {
+  CALL_API,
+  REGISTER_SUCCESS,
+  REGISTER_REQUEST,
+  REGISTER_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
@@ -18,15 +22,20 @@ export default createReducer(fromJS({}), {
   [LOGIN_FAILURE]: (state, action) => {
     return action.auth;
   },
+  [REGISTER_SUCCESS]: (state, action) => {
+    return action.auth;
+  },
+  [REGISTER_FAILURE]: (state, action) => {
+    return action.auth;
+  },
   [LOGOUT_SUCCESS]: () => {
     return fromJS({});
   }
 });
 
-export const requestLogin = credentials => {
+export const requestLogin = () => {
   return {
     type: LOGIN_REQUEST,
-    credentials,
     auth: fromJS({
       isFetching: true,
       isAuthenticated: false
@@ -35,6 +44,7 @@ export const requestLogin = credentials => {
 };
 
 export const receiveLogin = user => {
+  console.log(user);
   return {
     type: LOGIN_SUCCESS,
     auth: fromJS({
@@ -58,3 +68,17 @@ export const loginError = () => {
 export const receiveLogout = () => {
   return {type: LOGOUT_SUCCESS};
 };
+
+export const register = user => {
+  return {
+    [CALL_API]: {
+      types: [REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE],
+      endpoint: 'register',
+      config: {
+        body: user,
+        method: 'POST'
+      }
+    }
+  };
+};
+

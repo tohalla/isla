@@ -48,13 +48,13 @@ public class AccountResource {
      */
     @RequestMapping(value = "/register",
             method = RequestMethod.POST,
-            produces = MediaType.TEXT_PLAIN_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<?> registerAccount(@Valid @RequestBody UserDTO userDTO, HttpServletRequest request) {
         return userRepository.findOneByLogin(userDTO.getLogin())
-            .map(user -> new ResponseEntity<>("login already in use", HttpStatus.BAD_REQUEST))
+            .map(user -> new ResponseEntity<>("{\"error\":\"loginAlreadyRegistered\"}", HttpStatus.BAD_REQUEST))
             .orElseGet(() -> userRepository.findOneByEmail(userDTO.getEmail())
-                .map(user -> new ResponseEntity<>("e-mail address already in use", HttpStatus.BAD_REQUEST))
+                .map(user -> new ResponseEntity<>("{\"error\":\"emailAlreadyRegistered\"}", HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> {
                     User user = userService.createUserInformation(userDTO.getLogin(), userDTO.getPassword(),
                     userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail().toLowerCase(),
@@ -66,7 +66,7 @@ public class AccountResource {
                     request.getServerPort();               // "80"
 
                     mailService.sendActivationEmail(user, baseUrl);
-                    return new ResponseEntity<>(HttpStatus.CREATED);
+                    return new ResponseEntity<>("{}", HttpStatus.CREATED);
                 })
         );
     }

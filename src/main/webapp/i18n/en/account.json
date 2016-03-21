@@ -1,13 +1,24 @@
 {
-  "login": {
+  "authenticate": {
     "title": "Log in",
-    "login": "Log in"
+    "authenticate": "Log in"
   },
   "register": {
     "title": "Register",
     "register": "Register account"
   },
-  "username": "Username",
+  "errors": {
+    "email": {
+      "invalid": "Entered value must be a valid email address."
+    },
+    "password": {
+      "invalidLength": "Password length must be between 5 and 50 characters.",
+      "dontMatch": "Passwords don't match."
+    }
+  },
+  "login": "Username",
   "password": "Password",
-  "email": "Email"
+  "retypePassword": "Retype password",
+  "email": "Email",
+  "selectDefaultLanguage": "Select default language"
 }

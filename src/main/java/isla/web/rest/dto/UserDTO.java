@@ -70,7 +70,6 @@ public class UserDTO {
     // temp
     public UserDTO(String login, String password, String firstName, String lastName,
             String email, boolean activated, String langKey, Set<String> authorities) {
-        this.id = id;
         this.login = login;
         this.password = password;
         this.firstName = firstName;

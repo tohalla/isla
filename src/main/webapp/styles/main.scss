@@ -10,6 +10,7 @@
 
 *{
   font-family: $default-font-family;
+  box-sizing: border-box;
 }
 
 html, body, .stretch{
@@ -70,7 +71,7 @@ select{
 
   label, span, a, .btn, b {
     & + *{
-      margin-left: 40px;
+      margin-left: 70px;
     }
   }
 }
@@ -81,9 +82,23 @@ select{
 .right{
   float: right;
 }
+.fixed{
+  position: fixed;
+}
 .help-block{
-  margin: 2px $default-indentation-size 2px 0;
+  padding: $default-indentation-size/2 $default-indentation-size;
   background: $default-highlight-color;
+  width: 100%;
+  clear: both;
+  float: left;
+}
+.help-title{
+  font-weight: bold;
+  float: left;
+}
+.help-item{
+  margin: 2px $default-indentation-size 2px 0;
+  width: 100%;
   word-wrap: break-word;
   clear: both;
   float: left;

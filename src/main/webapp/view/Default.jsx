@@ -8,7 +8,7 @@ export default class Default extends React.Component {
       <div className="stretch">
         <div className="wrapper">
           <TopBar />
-          <div>
+          <div className="container">
             {this.props.children}
           </div>
           <div className="footer-push"></div>

@@ -15,6 +15,7 @@ export const authenticate = () => {
     }
     return fetch(`http://${config.api.host}:${config.api.port}/api/account`, {
       headers: {
+        Accept: 'application/json',
         Authorization: localStorage.token
       }
     })
@@ -27,7 +28,7 @@ export const authenticate = () => {
 export const login = credentials => {
   return dispatch => {
     dispatch(requestLogin());
-    let body = 'j_username=' + encodeURIComponent(credentials.username) +
+    let body = 'j_username=' + encodeURIComponent(credentials.login) +
       '&j_password=' + encodeURIComponent(credentials.password) +
       '&remember-me=false&submit=Login';
     return fetch(`http://${config.api.host}:${config.api.port}/api/authentication`, {
@@ -61,3 +62,4 @@ export const logout = () => {
       });
   };
 };
+
