@@ -60,6 +60,7 @@ public class LectureResource {
         if (lecture.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new lecture cannot already have an ID").body(null);
         }
+        lecture.setCreatedAt();
         Lecture result = lectureRepository.save(lecture);
         return ResponseEntity.created(new URI("/api/lectures/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("lecture", result.getId().toString()))

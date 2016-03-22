@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {List} from 'immutable';
 
 import {fetchCourses, addCourse} from './course';
 import CourseListItem from './CourseListItem.component';
@@ -11,6 +12,9 @@ const mapStateToProps = state => (
 });
 
 class CourseList extends React.Component {
+  static contextTypes = {
+    auth: React.PropTypes.object.isRequired
+  }
   componentWillMount() {
     this.props.fetchCourses();
   }
@@ -18,18 +22,25 @@ class CourseList extends React.Component {
     return !(this.props.courses === newProps.courses);
   }
   render() {
-    const courses = [];
-    this.props.courses.forEach((course, index) => {
-      courses.push(<CourseListItem course={course.toJS()} key={index} />);
-    });
-    return (
-      <div className="course-list">
-        <RequireAuthoritory
-            item={<CourseForm onSubmit={this.props.addCourse} />}
-        />
-        {courses}
-      </div>
-    );
+    if (this.props.courses instanceof List) {
+      const courses = [];
+      this.props.courses.forEach((course, index) => {
+        courses.push(<CourseListItem course={course.toJS()} key={index} />);
+      });
+      const authorities = this.context.auth.user ?
+        this.context.auth.user.authorities : null;
+      return (
+        <div className="course-list">
+          <RequireAuthoritory
+              authorities={authorities}
+              authority="ROLE_ADMIN"
+              item={<CourseForm onSubmit={this.props.addCourse} />}
+          />
+          {courses}
+        </div>
+      );
+    }
+    return null;
   }
 }
 

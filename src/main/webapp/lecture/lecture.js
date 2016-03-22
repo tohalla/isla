@@ -16,7 +16,6 @@ export default createReducer(fromJS({}), {
     return action.response;
   },
   [LECTURE_ADD_SUCCESS]: (state, action) => {
-    console.log(action);
     return state.push(action.response);
   }
 });
@@ -34,7 +33,7 @@ export const addLecture = lecture => {
   return {
     [CALL_API]: {
       types: [LECTURE_ADD_REQUEST, LECTURE_ADD_SUCCESS, LECTURE_ADD_FAILURE],
-      endpoint: 'courses',
+      endpoint: 'lectures',
       config: {
         body: lecture,
         method: 'POST'

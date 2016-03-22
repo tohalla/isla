@@ -42,39 +42,37 @@ export default class CourseForm extends React.Component {
   }
   render() {
     return (
-      <div className="course-form">
-        <form className="form-vertical-group">
-          <WithLabel
-              item={
-                <input
-                    onChange={this.handleCourseNameChange}
-                    placeholder={counterpart.translate('course.courseCreation.name')}
-                    type="text"
-                    value={this.state.course.courseName}
-                />
-              }
-              label={counterpart.translate('course.courseCreation.name')}
-          />
-          <WithLabel
-              item={
-                <textarea
-                    onChange={this.handleCourseDescriptionChange}
-                    placeholder={counterpart.translate('course.courseCreation.description')}
-                    type="password"
-                    value={this.state.course.courseDescription}
-                />
-              }
-              label={counterpart.translate('course.courseCreation.description')}
-          />
-          <button
-              className="right"
-              onClick={this.onSubmit}
-              type="submit"
-          >
-            {counterpart.translate('course.courseCreation.create')}
-          </button>
-        </form>
-      </div>
+      <form className="form-vertical-group course-form">
+        <WithLabel
+            item={
+              <input
+                  onChange={this.handleCourseNameChange}
+                  placeholder={counterpart.translate('course.courseCreation.name')}
+                  type="text"
+                  value={this.state.course.courseName}
+              />
+            }
+            label={counterpart.translate('course.courseCreation.name')}
+        />
+        <WithLabel
+            item={
+              <textarea
+                  onChange={this.handleCourseDescriptionChange}
+                  placeholder={counterpart.translate('course.courseCreation.description')}
+                  type="text"
+                  value={this.state.course.courseDescription}
+              />
+            }
+            label={counterpart.translate('course.courseCreation.description')}
+        />
+        <button
+            className="right"
+            onClick={this.onSubmit}
+            type="submit"
+        >
+          {counterpart.translate('course.courseCreation.create')}
+        </button>
+      </form>
     );
   }
 }

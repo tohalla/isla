@@ -58,7 +58,15 @@ select{
   margin: 10px 0;
   width: 100%;
 }
-
+.timestamp{
+  padding-left: 15px;
+  color: $gray;
+  font-style: italic;
+  font-size: 90%;
+  &::before{
+    content: '- ';
+  }
+}
 .form-group{
   padding: 2px;
   display: flex;
@@ -70,9 +78,9 @@ select{
   label, span, a, button, b {
     padding: 6px;
     align-self: baseline;
-    min-width: 120px;
+    min-width: 220px;
     & + *{
-      margin-left: 70px;
+      margin-left: 20px;
     }
   }
 }

@@ -16,16 +16,15 @@ export default createReducer(fromJS([]), {
     return action.response;
   },
   [COURSE_ADD_SUCCESS]: (state, action) => {
-    console.log(action);
     return state.push(action.response);
   }
 });
 
-export const fetchCourses = () => {
+export const fetchCourses = id => {
   return {
     [CALL_API]: {
       types: [COURSES_REQUEST, COURSES_SET, COURSES_FAILURE],
-      endpoint: 'courses'
+      endpoint: 'courses' + (id ? `/${id}` : '')
     }
   };
 };
