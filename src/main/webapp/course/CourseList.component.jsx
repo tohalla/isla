@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {fetchCourses} from './course';
-import Course from './Course.component';
-import NewCourse from './NewCourse.component';
+import {fetchCourses, addCourse} from './course';
+import CourseListItem from './CourseListItem.component';
+import CourseForm from './CourseForm.component';
+import RequireAuthoritory from '../util/RequireAuthority.component';
 
 const mapStateToProps = state => (
   {courses: state.getIn(['entities', 'courses'])
@@ -19,11 +20,13 @@ class CourseList extends React.Component {
   render() {
     const courses = [];
     this.props.courses.forEach((course, index) => {
-      courses.push(<Course course={course.toJS()} key={index} />);
+      courses.push(<CourseListItem course={course.toJS()} key={index} />);
     });
     return (
-      <div>
-        <NewCourse />
+      <div className="course-list">
+        <RequireAuthoritory
+            item={<CourseForm onSubmit={this.props.addCourse} />}
+        />
         {courses}
       </div>
     );
@@ -32,5 +35,5 @@ class CourseList extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {fetchCourses}
+  {fetchCourses, addCourse}
 )(CourseList);

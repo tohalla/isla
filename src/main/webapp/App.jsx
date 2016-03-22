@@ -2,13 +2,26 @@ import React from 'react';
 import DevTools from './Devtools';
 import {fetchAccount} from './auth/auth';
 import store from './store';
+import {connect} from 'react-redux';
 
 // if jwt found..
 if (localStorage.token) {
   store.dispatch(fetchAccount());
 }
 
-const App = class extends React.Component {
+const mapStateToProps = state => ({
+  auth: state.get('auth')
+});
+
+class App extends React.Component {
+  static childContextTypes = {
+    auth: React.PropTypes.object.isRequired
+  }
+  getChildContext() {
+    return {
+      auth: this.props.auth.toJS()
+    };
+  }
   render() {
     return (
       <div className="stretch">
@@ -17,12 +30,16 @@ const App = class extends React.Component {
       </div>
     );
   }
-};
+}
 
-export default App;
+export default connect(
+  mapStateToProps,
+  {}
+)(App);
 
 // translations
 require('./i18n/translations');
 // styles
 require('normalize.css/normalize.css');
 require('./styles/main.scss');
+

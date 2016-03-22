@@ -9,8 +9,11 @@ const mapStateToProps = state => (
 });
 
 class LectureList extends React.Component {
+  static propTypes = {
+    course: React.PropTypes.number.isRequired
+  }
   componentWillMount() {
-    this.props.fetchLectures(this.props.routeParams.id);
+    this.props.fetchLectures(this.props.course);
   }
   shouldComponentUpdate(newProps) {
     return !(this.props.lectures === newProps.lectures);
@@ -21,7 +24,7 @@ class LectureList extends React.Component {
       lectures.push(<Lecture key={index} lecture={lecture.toJS()} />);
     });
     return (
-      <div>
+      <div className="lecture-list">
         {lectures}
       </div>
     );

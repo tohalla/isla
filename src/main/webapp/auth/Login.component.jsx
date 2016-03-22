@@ -6,13 +6,10 @@ import counterpart from 'counterpart';
 import {login} from './auth';
 import WithLabel from '../util/WithLabel.component';
 
-const mapStateToProps = state => (
-  {isAuthenticated: state.getIn(['auth', 'isAuthenticated'])
-});
-
 class Login extends React.Component {
   static contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
+    auth: React.PropTypes.object.isRequired
   }
   constructor(props, context) {
     super(props, context);
@@ -25,12 +22,16 @@ class Login extends React.Component {
     };
   }
   componentWillMount() {
-    if (this.props.isAuthenticated) {
+    if (this.context.auth.isAuthenticated) {
       this.context.router.push('/');
     }
   }
-  shouldComponentUpdate(newProps, newState) {
-    return !(this.state === newState && this.props.value === newProps.value);
+  shouldComponentUpdate(newProps, newState, newContext) {
+    return !(
+      this.state === newState &&
+      this.props.value === newProps.value &&
+      JSON.stringify(this.context) === JSON.stringify(newContext)
+    );
   }
   login(event) {
     event.preventDefault();
@@ -48,11 +49,10 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <form className="form-vertical-group">
+      <form className="form-vertical-group form-login">
         <WithLabel
             item={
               <input
-                  id="login"
                   onChange={this.handleLoginChange}
                   placeholder={counterpart.translate('account.login')}
                   type="text"
@@ -64,7 +64,6 @@ class Login extends React.Component {
         <WithLabel
             item={
               <input
-                  id="password"
                   onChange={this.handlePasswordChange}
                   placeholder={counterpart.translate('account.password')}
                   type="password"
@@ -90,6 +89,6 @@ class Login extends React.Component {
 }
 
 export default connect(
-  mapStateToProps,
+  null,
   {login}
 )(Login);

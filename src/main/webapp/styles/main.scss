@@ -68,6 +68,7 @@ select{
   justify-content: space-between;
 
   label, span, a, button, b {
+    padding: 6px;
     align-self: baseline;
     min-width: 120px;
     & + *{
@@ -81,6 +82,11 @@ select{
   max-width: 800px;
   width: 100%;
 }
+
+.form-login{
+  max-width: 400px;
+}
+
 .right{
   float: right;
 }

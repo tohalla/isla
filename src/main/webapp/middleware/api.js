@@ -93,7 +93,7 @@ export default store => dispatch => action => {
     })
     .catch(error => {
       if (typeof config.onFailure !== 'undefined') {
-        config.onFailure(error);
+        config.onFailure(dispatch, error);
       }
       return dispatch(actionWith({
         type: failureType,

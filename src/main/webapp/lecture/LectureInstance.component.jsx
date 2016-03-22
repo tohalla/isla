@@ -8,7 +8,7 @@ const mapStateToProps = state => (
 
 class LectureInstance extends React.Component {
   static propTypes: {
-    lecture: React.propTypes.integer
+    lecture: React.propTypes.number.isRequired
   };
   componentWillMount() {
     this.props.fetchComments(this.props.lecture || this.props.params.id);

@@ -76,8 +76,8 @@ export const fetchAccount = () => {
   };
 };
 
-export const login = credentials => {
-  return {
+export const login = credentials => dispatch => {
+  dispatch({
     [CALL_API]: {
       types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
       endpoint: 'authentication',
@@ -92,11 +92,11 @@ export const login = credentials => {
         },
         onSuccess: data => {
           localStorage.setItem('token', `Bearer ${data.token}`);
-          fetchAccount();
+          dispatch(fetchAccount());
         }
       }
     }
-  };
+  });
 };
 
 export const register = user => {

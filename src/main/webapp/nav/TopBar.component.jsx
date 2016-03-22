@@ -5,11 +5,10 @@ import counterpart from 'counterpart';
 
 import {logout} from '../auth/auth';
 
-const mapStateToProps = state => ({
-  auth: state.get('auth')
-});
-
 class TopBar extends React.Component {
+  static propTypes = {
+    auth: React.PropTypes.object.isRequired
+  }
   render() {
     return (
       <nav className="nav-default">
@@ -21,27 +20,33 @@ class TopBar extends React.Component {
             <li><Link to={'/courses'}>
               {counterpart.translate("navigation.browseCourses")}
             </Link></li>
-            <li><Link to={'/authenticate'}>
-              {counterpart.translate("navigation.authenticate")}
-            </Link></li>
           </ul>
         </span>
-        {this.props.auth.get('isAuthenticated') ?
-          <span className="account-menu">
-            <button
-                className="material-icons icon-light icon-32"
-                onClick={this.props.logout}
-            >
-              {'exit_to_app'}
-            </button>
-          </span> : null
-        }
+        <span className="user-menu">
+          {this.props.auth.isAuthenticated ?
+            <ul className="menu-items">
+              <li>
+                <button
+                    className="material-icons icon-light icon-32"
+                    onClick={this.props.logout}
+                >
+                  {'exit_to_app'}
+                </button>
+              </li>
+            </ul> :
+              <ul className="menu-items">
+                <li><Link to={'/authenticate'}>
+                  {counterpart.translate("navigation.authenticate")}
+                </Link></li>
+              </ul>
+          }
+        </span>
       </nav>
     );
   }
 }
 
 export default connect(
-  mapStateToProps,
+  null,
   {logout}
 )(TopBar);

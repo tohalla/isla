@@ -10,7 +10,8 @@ import {validateEmail} from '../util/misc';
 
 class Register extends React.Component {
   static contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
+    auth: React.PropTypes.object.isRequired
   }
   constructor(props, context) {
     super(props, context);
@@ -40,7 +41,7 @@ class Register extends React.Component {
     };
   }
   componentWillMount() {
-    if (this.props.isAuthenticated) {
+    if (this.context.auth.isAuthenticated) {
       this.context.router.push('/');
     }
   }
