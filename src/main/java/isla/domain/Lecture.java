@@ -29,6 +29,7 @@ public class Lecture implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @NotNull
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @JsonSerialize(using = CustomDateTimeSerializer.class)
     @JsonDeserialize(using = CustomDateTimeDeserializer.class)
@@ -47,7 +48,6 @@ public class Lecture implements Serializable {
     @Column(name = "closes_at")
     private DateTime closesAt;
 
-    @NotNull
     @Size(max = 512)        
     @Column(name = "description", length = 512, nullable = false)
     private String description;

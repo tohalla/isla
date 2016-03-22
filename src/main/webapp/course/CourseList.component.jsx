@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import {fetchCourses} from './course';
 import Course from './Course.component';
+import NewCourse from './NewCourse.component';
 
 const mapStateToProps = state => (
   {courses: state.getIn(['entities', 'courses'])
@@ -22,6 +23,7 @@ class CourseList extends React.Component {
     });
     return (
       <div>
+        <NewCourse />
         {courses}
       </div>
     );

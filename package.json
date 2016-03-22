@@ -12,7 +12,7 @@
     "changelog": "node scripts/update_migrations.js",
     "watch": "node src/main/webapp/server.js",
     "lint": "eslint *",
-    "test": "tape -r babel-register src/test/webapp/**/*.js"
+    "test": "tape -r babel-register src/test/webapp/**/*.js | tap-spec"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.3",

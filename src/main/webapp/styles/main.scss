@@ -38,13 +38,11 @@ body {
   color: #333;
 }
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
-}
-
-input{
+input, textarea{
   padding: 6px;
   outline: none;
+  width: 100%;
+  border: 1px solid $default-border-color;
 }
 
 select{
@@ -69,7 +67,9 @@ select{
   align-items: center;
   justify-content: space-between;
 
-  label, span, a, .btn, b {
+  label, span, a, button, b {
+    align-self: baseline;
+    min-width: 120px;
     & + *{
       margin-left: 70px;
     }
@@ -78,6 +78,8 @@ select{
 
 .form-vertical-group{
   display:inline-block;
+  max-width: 800px;
+  width: 100%;
 }
 .right{
   float: right;

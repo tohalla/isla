@@ -1,5 +1,6 @@
 import {camelizeKeys} from 'humps';
 import fetch from 'isomorphic-fetch';
+import {fromJS} from 'immutable';
 
 import config from '../config';
 import {CALL_API} from '../constants';
@@ -41,7 +42,7 @@ const callApi = (endpoint, config) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
-      return Object.assign({}, camelizeKeys(json));
+      return Array.isArray(json) ? json : Object.assign({}, camelizeKeys(json));
     })
     .catch(err => {
       console.log(err);
@@ -86,7 +87,7 @@ export default store => dispatch => action => {
         config.onSuccess(response);
       }
       return dispatch(actionWith({
-        response,
+        response: fromJS(response),
         type: successType
       }));
     })

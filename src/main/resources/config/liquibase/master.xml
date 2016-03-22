@@ -13,5 +13,6 @@
       <include file="classpath:config/liquibase/changelog/20160215102652_add_course_moderators_table.xml" relativeToChangelogFile="false"/>
       <include file="classpath:config/liquibase/changelog/20160321235557_add_course_seed.xml" relativeToChangelogFile="false"/>
       <include file="classpath:config/liquibase/changelog/20160322003245_add_comment_score.xml" relativeToChangelogFile="false"/>
+      <include file="classpath:config/liquibase/changelog/20160322113106_update_course_to_allow_null_description_and_add_timestamp.xml" relativeToChangelogFile="false"/>
 
   </databaseChangeLog>

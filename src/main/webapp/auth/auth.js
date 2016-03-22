@@ -28,12 +28,6 @@ export default createReducer(
         isAuthenticated: false
       });
     },
-    [LOGIN_SUCCESS]: () => {
-      return fromJS({
-        isFetching: false,
-        isAuthenticated: true
-      });
-    },
     [LOGIN_FAILURE]: () => {
       return fromJS({
         isFetching: false,
@@ -57,12 +51,6 @@ export default createReducer(
         isFetching: false,
         isAuthenticated: false
       });
-    },
-    [REGISTER_SUCCESS]: () => {
-      return fromJS({});
-    },
-    [REGISTER_FAILURE]: (state, action) => {
-      return action.auth;
     },
     [LOGOUT_SUCCESS]: () => {
       return fromJS({

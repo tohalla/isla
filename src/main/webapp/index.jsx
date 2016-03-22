@@ -15,7 +15,6 @@ import Register from './auth/Register.component';
 import history from './history';
 
 import {fetchLectures} from './lecture/lecture';
-store.dispatch(fetchLectures());
 
 ReactDOM.render((
   <Provider store={store}>

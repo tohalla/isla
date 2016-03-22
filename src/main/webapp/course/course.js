@@ -5,18 +5,19 @@ import {
   COURSES_SET,
   COURSES_REQUEST,
   COURSES_FAILURE,
+  COURSE_ADD_SUCCESS,
+  COURSE_ADD_REQUEST,
+  COURSE_ADD_FAILURE,
   CALL_API
 } from '../constants';
 
-export default createReducer(fromJS({}), {
-  [COURSES_REQUEST]: state => {
-    return state;
-  },
+export default createReducer(fromJS([]), {
   [COURSES_SET]: (state, action) => {
-    return state.merge(action.response);
+    return action.response;
   },
-  [COURSES_FAILURE]: state => {
-    return state;
+  [COURSE_ADD_SUCCESS]: (state, action) => {
+    console.log(action);
+    return state.push(action.response);
   }
 });
 
@@ -25,6 +26,19 @@ export const fetchCourses = () => {
     [CALL_API]: {
       types: [COURSES_REQUEST, COURSES_SET, COURSES_FAILURE],
       endpoint: 'courses'
+    }
+  };
+};
+
+export const addCourse = course => {
+  return {
+    [CALL_API]: {
+      types: [COURSE_ADD_REQUEST, COURSE_ADD_SUCCESS, COURSE_ADD_FAILURE],
+      endpoint: 'courses',
+      config: {
+        body: course,
+        method: 'POST'
+      }
     }
   };
 };
