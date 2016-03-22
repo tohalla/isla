@@ -7,7 +7,7 @@ import {CALL_API} from '../constants';
 const API_ROOT = `http://${config.api.host}:${config.api.port}/api/`;
 const methods = ['GET', 'POST', 'PUT', 'DELETE'];
 
-const callApi = (endpoint, config = {}) => {
+const callApi = (endpoint, config) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ?
     API_ROOT + endpoint : endpoint;
 
@@ -41,16 +41,10 @@ const callApi = (endpoint, config = {}) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
-      if (typeof config.onSuccess !== 'undefined') {
-        config.onSuccess();
-      }
       return Object.assign({}, camelizeKeys(json));
     })
     .catch(err => {
       console.log(err);
-      if (typeof config.onFailure !== 'undefined') {
-        config.onFailure();
-      }
     });
 };
 
@@ -60,7 +54,7 @@ export default store => dispatch => action => {
     return dispatch(action);
   }
 
-  let {endpoint, config} = callAPI;
+  let {endpoint, config = {}} = callAPI;
   const {types} = callAPI;
 
   if (typeof endpoint === 'function') {
@@ -86,14 +80,23 @@ export default store => dispatch => action => {
   const [requestType, successType, failureType] = types;
   dispatch(actionWith({type: requestType}));
 
-  return callApi(endpoint, config).then(
-    response => dispatch(actionWith({
-      response,
-      type: successType
-    })),
-    error => dispatch(actionWith({
-      type: failureType,
-      error: error.message || 'error'
-    }))
-  );
+  return callApi(endpoint, config)
+    .then(response => {
+      if (typeof config.onSuccess !== 'undefined') {
+        config.onSuccess(response);
+      }
+      return dispatch(actionWith({
+        response,
+        type: successType
+      }));
+    })
+    .catch(error => {
+      if (typeof config.onFailure !== 'undefined') {
+        config.onFailure(error);
+      }
+      return dispatch(actionWith({
+        type: failureType,
+        error: error.message || 'error'
+      }));
+    });
 };

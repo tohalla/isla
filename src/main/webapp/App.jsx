@@ -1,5 +1,12 @@
 import React from 'react';
 import DevTools from './Devtools';
+import {fetchAccount} from './auth/auth';
+import store from './store';
+
+// if jwt found..
+if (localStorage.token) {
+  store.dispatch(fetchAccount());
+}
 
 const App = class extends React.Component {
   render() {

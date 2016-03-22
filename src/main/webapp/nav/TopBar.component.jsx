@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import counterpart from 'counterpart';
 
-import {logout} from '../auth/auth.service';
+import {logout} from '../auth/auth';
 
 const mapStateToProps = state => ({
   auth: state.get('auth')

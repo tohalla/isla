@@ -9,7 +9,7 @@ export default class Lecture extends React.Component {
     const {id, description} = this.props.lecture;
     return (
       <div>
-        <Link to={`/lectures/${id}`}>{description}</Link>
+        <Link to={`/instance/${id}`}>{description}</Link>
       </div>
     );
   }

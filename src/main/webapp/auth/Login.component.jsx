@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import counterpart from 'counterpart';
 
-import {login} from './auth.service';
+import {login} from './auth';
 import WithLabel from '../util/WithLabel.component';
 
 const mapStateToProps = state => (

@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 
 import reducers from './reducers';
 import DevTools from './Devtools';
-import {authenticate} from './auth/auth.service';
 import api from './middleware/api';
 
 const production = () => {
@@ -29,10 +28,5 @@ const development = () => {
 
 const store = process.env.NODE_ENV === 'production' ?
   production() : development();
-
-// if jwt found..
-if (localStorage.token) {
-  store.dispatch(authenticate());
-}
 
 export default store;

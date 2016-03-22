@@ -1,5 +1,6 @@
 {
   "authenticate": "Authenticate",
   "browseLectures": "Lectures",
-  "browseCourses": "Courses"
+  "browseCourses": "Courses",
+  "goBack": "Return"
 }

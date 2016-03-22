@@ -10,7 +10,7 @@ const mapStateToProps = state => (
 
 class LectureList extends React.Component {
   static propTypes: {
-    course: React.propTypes.object
+    course: React.propTypes.integer
   };
   componentWillMount() {
     this.props.fetchLectures(this.props.course || this.props.params.id);
