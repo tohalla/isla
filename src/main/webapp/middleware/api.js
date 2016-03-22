@@ -79,7 +79,10 @@ export default store => dispatch => action => {
   };
 
   const [requestType, successType, failureType] = types;
-  dispatch(actionWith({type: requestType}));
+  dispatch(actionWith({
+    type: requestType,
+    response: fromJS({isFetching: true})
+  }));
 
   return callApi(endpoint, config)
     .then(response => {

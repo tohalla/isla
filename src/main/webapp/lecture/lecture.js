@@ -12,19 +12,18 @@ import {
 } from '../constants';
 
 export default createReducer(fromJS({}), {
-  [LECTURES_SET]: (state, action) => {
-    return action.response;
-  },
-  [LECTURE_ADD_SUCCESS]: (state, action) => {
-    return state.push(action.response);
-  }
+  [LECTURES_REQUEST]: (state, action) => action.response,
+  [LECTURES_SET]: (state, action) => action.response,
+  [LECTURE_ADD_SUCCESS]: (state, action) => state.push(action.response)
 });
 
-export const fetchLectures = course => {
+export const fetchLectures = props => {
+  const endpoint = props.course ?
+    `courses/${props.course}/lectures` : `lectures/${props.lecture}/`;
   return {
     [CALL_API]: {
       types: [LECTURES_REQUEST, LECTURES_SET, LECTURES_FAILURE],
-      endpoint: `courses/${course}/lectures`
+      endpoint
     }
   };
 };

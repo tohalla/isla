@@ -67,8 +67,9 @@ public class Comment implements Serializable {
         return createdAt;
     }
 
-    public void setCreatedAt(DateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCreatedAt() {
+        if (this.createdAt == null)
+            this.createdAt = new DateTime();
     }
 
     public String getContent() {

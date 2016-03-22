@@ -42,7 +42,7 @@ public class RoomService {
             @DestinationVariable("lecture") long lecture) {
         Comment comment = new Comment();
         comment.setContent(commentDTO.getContent());
-        comment.setCreatedAt(DateTime.now());
+        comment.setCreatedAt();
         comment.setLecture(lectureRepository.getOne(lecture));
 
         log.debug("Sending comment tracking data {}", commentDTO);

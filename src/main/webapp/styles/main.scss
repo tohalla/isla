@@ -42,12 +42,16 @@ input, textarea{
   padding: 6px;
   outline: none;
   width: 100%;
+  border-radius: 0;
   border: 1px solid $default-border-color;
+  -webkit-appearance: none;
 }
 
 select{
   margin: 6px 0;
   outline: none;
+  border-radius: 0;
+  border: 1px solid $default-border-color;
 }
 
 .container{
@@ -57,6 +61,12 @@ select{
 .row{
   margin: 10px 0;
   width: 100%;
+}
+.lecture-description{
+  margin-left: 30px;
+  color: $gray;
+  font-style: italic;
+  font-size: 85%;
 }
 .timestamp{
   padding-left: 15px;
@@ -78,7 +88,9 @@ select{
   label, span, a, button, b {
     padding: 6px;
     align-self: baseline;
-    min-width: 220px;
+    &:not(button){
+      min-width: 220px;
+    }
     & + *{
       margin-left: 20px;
     }
@@ -92,7 +104,10 @@ select{
 }
 
 .form-login{
-  max-width: 400px;
+  max-width: 420px;
+}
+.form-register{
+  max-width: 420px;
 }
 
 .right{

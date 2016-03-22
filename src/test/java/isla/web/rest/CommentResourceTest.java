@@ -84,7 +84,7 @@ public class CommentResourceTest {
     @Before
     public void initTest() {
         comment = new Comment();
-        comment.setCreatedAt(DEFAULT_CREATED_AT);
+        comment.setCreatedAt();
         comment.setContent(DEFAULT_CONTENT);
     }
 
@@ -178,7 +178,6 @@ public class CommentResourceTest {
 		int databaseSizeBeforeUpdate = commentRepository.findAll().size();
 
         // Update the comment
-        comment.setCreatedAt(UPDATED_CREATED_AT);
         comment.setContent(UPDATED_CONTENT);
         
 
@@ -191,7 +190,6 @@ public class CommentResourceTest {
         List<Comment> comments = commentRepository.findAll();
         assertThat(comments).hasSize(databaseSizeBeforeUpdate);
         Comment testComment = comments.get(comments.size() - 1);
-        assertThat(testComment.getCreatedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_CREATED_AT);
         assertThat(testComment.getContent()).isEqualTo(UPDATED_CONTENT);
     }
 

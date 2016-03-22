@@ -10,9 +10,11 @@ export default class Lecture extends React.Component {
     const {id, description, createdAt} = this.props.lecture;
     return (
       <div>
-        <Link to={`/instance/${id}`}>{description}</Link>
-        <span className="timestamp">
+        <Link to={`/instance/${id}`}>
           {moment(createdAt).format('DD.MM.YYYY - HH:mm')}
+        </Link>
+        <span className="lecture-description">
+          {description}
         </span>
       </div>
     );

@@ -58,6 +58,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1",
+    "normalize.css": "^4.0.0",
     "webpack-hot-middleware": "^2.10.0",
     "webpack-merge": "^0.8.4"
   },
@@ -71,11 +72,10 @@
     "react-router": "^2.0.1",
     "react-router-redux": "^4.0.0",
     "react-dom": "^0.14.7",
-    "normalize.css": "^4.0.0",
     "humps": "^1.0.0",
     "immutable": "^3.7.6",
     "isomorphic-fetch": "^2.2.1",
-    "history": "^2.0.1",
+    "history": "^2.0.1"
   },
   "babel": {
     "presets": [

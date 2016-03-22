@@ -98,7 +98,7 @@ class Register extends React.Component {
   }
   render() {
     return (
-      <form className="form-vertical-group">
+      <form className="form-vertical-group form-register">
         <WithLabel
             item={
               <input

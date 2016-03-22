@@ -13,6 +13,9 @@ const mapStateToProps = state => (
 });
 
 class Course extends React.Component {
+  static contextTypes = {
+    auth: React.PropTypes.object.isRequired
+  }
   componentWillMount() {
     this.props.fetchCourses(this.props.routeParams.id);
   }
@@ -23,17 +26,24 @@ class Course extends React.Component {
     );
   }
   render() {
-    if (this.props.course instanceof Map) {
+    if (
+      !this.props.course.get('isFetching') &&
+      this.props.course instanceof Map
+    ) {
       const course = this.props.course.toJS();
+      const authorities = this.context.auth.user ?
+        this.context.auth.user.authorities : null;
       return (
         <div className="course">
           <RequireAuthoritory
+              authorities={authorities}
               item={
                 <LectureForm
                     course={course}
                     onSubmit={this.props.addLecture}
                 />
               }
+              oneOf={["ROLE_ADMIN", "ROLE_TEACHER"]}
           />
           <LectureList course={course.id} />
         </div>

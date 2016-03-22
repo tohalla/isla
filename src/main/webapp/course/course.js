@@ -12,12 +12,9 @@ import {
 } from '../constants';
 
 export default createReducer(fromJS([]), {
-  [COURSES_SET]: (state, action) => {
-    return action.response;
-  },
-  [COURSE_ADD_SUCCESS]: (state, action) => {
-    return state.push(action.response);
-  }
+  [COURSES_REQUEST]: (state, action) => action.response,
+  [COURSES_SET]: (state, action) => action.response,
+  [COURSE_ADD_SUCCESS]: (state, action) => state.push(action.response)
 });
 
 export const fetchCourses = id => {

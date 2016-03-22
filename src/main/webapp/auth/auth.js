@@ -22,48 +22,28 @@ export default createReducer(
     isFetching: false,
     isAuthenticated: false
   }), {
-    [LOGIN_REQUEST]: () => {
-      return fromJS({
-        isFetching: true,
-        isAuthenticated: false
-      });
-    },
-    [LOGIN_FAILURE]: () => {
-      return fromJS({
-        isFetching: false,
-        isAuthenticated: false
-      });
-    },
-    [ACCOUNT_REQUEST]: () => {
-      return fromJS({
-        isFetching: true,
-        isAuthenticated: false
-      });
-    },
+    [LOGIN_REQUEST]: (state, action) => action.response,
+    [LOGIN_FAILURE]: () => fromJS({
+      isFetching: false,
+      isAuthenticated: false
+    }),
+    [ACCOUNT_REQUEST]: (state, action) => action.response,
     [ACCOUNT_SET]: (state, action) => {
       return fromJS({
         isFetching: false,
         isAuthenticated: true
       }).set('user', action.response);
     },
-    [ACCOUNT_FAILURE]: () => {
-      return fromJS({
-        isFetching: false,
-        isAuthenticated: false
-      });
-    },
-    [LOGOUT_SUCCESS]: () => {
-      return fromJS({
-        isFetching: false,
-        isAuthenticated: false
-      });
-    },
-    [LOGOUT_REQUEST]: state => {
-      return state.set('isFetching', true);
-    },
-    [LOGOUT_FAILURE]: state => {
-      return state.set('isFetching', false);
-    }
+    [ACCOUNT_FAILURE]: () => fromJS({
+      isFetching: false,
+      isAuthenticated: false
+    }),
+    [LOGOUT_SUCCESS]: () => fromJS({
+      isFetching: false,
+      isAuthenticated: false
+    }),
+    [LOGOUT_REQUEST]: (state, action) => action.response,
+    [LOGOUT_FAILURE]: state => state.set('isFetching', false)
   }
 );
 

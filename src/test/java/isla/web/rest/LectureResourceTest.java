@@ -88,7 +88,7 @@ public class LectureResourceTest {
     @Before
     public void initTest() {
         lecture = new Lecture();
-        lecture.setCreatedAt(DEFAULT_CREATED_AT);
+        lecture.setCreatedAt();
         lecture.setStartsAt(DEFAULT_STARTS_AT);
         lecture.setClosesAt(DEFAULT_CLOSES_AT);
         lecture.setDescription(DEFAULT_DESCRIPTION);
@@ -185,7 +185,7 @@ public class LectureResourceTest {
 		int databaseSizeBeforeUpdate = lectureRepository.findAll().size();
 
         // Update the lecture
-        lecture.setCreatedAt(UPDATED_CREATED_AT);
+        lecture.setCreatedAt();
         lecture.setStartsAt(UPDATED_STARTS_AT);
         lecture.setClosesAt(UPDATED_CLOSES_AT);
         lecture.setDescription(UPDATED_DESCRIPTION);
@@ -200,7 +200,6 @@ public class LectureResourceTest {
         List<Lecture> lectures = lectureRepository.findAll();
         assertThat(lectures).hasSize(databaseSizeBeforeUpdate);
         Lecture testLecture = lectures.get(lectures.size() - 1);
-        assertThat(testLecture.getCreatedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_CREATED_AT);
         assertThat(testLecture.getStartsAt().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_STARTS_AT);
         assertThat(testLecture.getClosesAt().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_CLOSES_AT);
         assertThat(testLecture.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
