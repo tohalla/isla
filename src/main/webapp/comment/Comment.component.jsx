@@ -7,17 +7,28 @@ export default class Comment extends React.Component {
   }
   static propTypes = {
     comment: React.PropTypes.object.isRequired,
-    onLike: React.PropTypes.func.isRequired
+    onLike: React.PropTypes.func.isRequired,
+    onRead: React.PropTypes.func.isRequired
   }
   constructor(props, context) {
     super(props, context);
     this.onLike = this.onLike.bind(this);
+    this.onRead = this.onRead.bind(this);
+    const allowLike = (typeof this.props.comment.allowLike === 'undefined' ||
+      this.props.comment.allowLike);
+    this.state = {
+      allowLike
+    };
   }
   onLike() {
+    this.setState({allowLike: false});
     this.props.onLike(this.props.comment.id);
   }
+  onRead() {
+    this.props.onRead(this.props.comment.id);
+  }
   render() {
-    const {content, read, allowLike, liked} = this.props.comment;
+    const {content, read, liked} = this.props.comment;
     const authorities = this.context.auth.user ?
       this.context.auth.user.authorities : null;
     return (
@@ -27,7 +38,7 @@ export default class Comment extends React.Component {
         </div>
         <div className="comment-items" >
           {liked}
-          {allowLike ?
+          {this.state.allowLike ?
             <button
                 className="material-icons icon-gray icon-24"
                 onClick={this.onLike}
@@ -39,12 +50,14 @@ export default class Comment extends React.Component {
               authorities={authorities}
               item={
                 <span className="moderator-actions">
-                  <button
-                      className="material-icons icon-gray icon-24"
-                      onClick={this.props.logout}
-                  >
-                    {'check'}
-                  </button>
+                  {this.props.comment.read ? null :
+                      <button
+                          className="material-icons icon-gray icon-24"
+                          onClick={this.onRead}
+                      >
+                        {'check'}
+                      </button>
+                  }
                   <button
                       className="material-icons icon-gray icon-24"
                       onClick={this.props.logout}

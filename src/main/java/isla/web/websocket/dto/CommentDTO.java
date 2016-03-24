@@ -24,88 +24,64 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * A DTO representing a comment.
  */
 public class CommentDTO {
-	private long id;
-	
-    @Size(min = 2, max = 512)        
+    private long id;
+
+    @Size(min = 2, max = 512)
     private String content;
 
     private boolean read;
 
-    private boolean allowLike;
-    
     private int liked;
 
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @JsonSerialize(using = CustomDateTimeSerializer.class)
     @JsonDeserialize(using = CustomDateTimeDeserializer.class)
     private DateTime createdAt;
-    
-    public CommentDTO() {
-    }
+
+    public CommentDTO() {}
 
     public CommentDTO(Comment comment) {
-        this(
-            comment.getId(),
-            comment.getContent(),
-            comment.getCreatedAt(),
-            comment.getLiked(),
-            comment.getRead(),
-            comment.getAllowLike()
-        );
-    }
-    
-    public CommentDTO(Comment comment, boolean allowLike) {
-        this(
-            comment.getId(),
-            comment.getContent(),
-            comment.getCreatedAt(),
-            comment.getLiked(),
-            comment.getRead(),
-            allowLike
-        );
+        this(comment.getId(), comment.getContent(), comment.getCreatedAt(), comment.getLiked(),
+                comment.getRead());
     }
 
-    public CommentDTO(long id, String content, DateTime createdAt,  int liked, boolean read, boolean allowLike) {
-    	this.id = id;
+    public CommentDTO(long id, String content, DateTime createdAt, int liked, boolean read) {
+        this.id = id;
         this.content = content;
         this.createdAt = createdAt;
         this.liked = liked;
         this.read = read;
-        this.allowLike = allowLike;
     }
 
-    public long getId(){
-    	return id;
+    public long getId() {
+        return id;
     }
 
-    public void setId(long id){
-    	this.id = id;
+    public void setId(long id) {
+        this.id = id;
     }
-    
-    public String getContent(){
-    	return content;
+
+    public String getContent() {
+        return content;
     }
-    
-    
-    public void setContent(String content){
-    	this.content = content;
+
+
+    public void setContent(String content) {
+        this.content = content;
     }
-    
-    public DateTime getCreatedAt(){
+
+    public DateTime getCreatedAt() {
         return this.createdAt;
     }
-    
-    public void setCreatedAt(DateTime createdAt){
+
+    public void setCreatedAt(DateTime createdAt) {
         this.createdAt = createdAt;
     }
 
     @Override
     public String toString() {
-        return "CommentDTO{" +
-        "id='" + id + '\'' +
-        ",content='" + content + '\'' +
-        ",createdAt='" + createdAt + '\'' +
-        '}';
+        return "CommentDTO{" + "id='" + id + '\'' + ",content='" + content + '\'' + ",createdAt='"
+                + createdAt + '\'' + '}';
     }
 
     public int getLiked() {
@@ -123,14 +99,5 @@ public class CommentDTO {
     public void setRead(boolean read) {
         this.read = read;
     }
-    
-    public void setAllowLike(boolean allowLike) {
-        this.allowLike = allowLike;
-    }
-
-    public boolean getAllowLike() {
-        return allowLike;
-    }
-
 
 }

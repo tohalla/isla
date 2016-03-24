@@ -24,6 +24,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import isla.domain.User;
 import isla.repository.UserRepository;
+import isla.security.AuthenticationToken;
 import isla.security.AuthoritiesConstants;
 import isla.security.UserAuthentication;
 
@@ -67,15 +68,5 @@ public class JwtFilter extends GenericFilterBean {
         chain.doFilter(req, res);
     }
     
-    private class AuthenticationToken extends AnonymousAuthenticationToken {
-        public AuthenticationToken(String token,
-                Collection<? extends GrantedAuthority> authorities) {
-            super(token, token, authorities);
-        }
-        
-        public String getName() {
-            return null;
-        }
-    }
 
 }

@@ -5,16 +5,22 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import isla.domain.util.CustomDateTimeDeserializer;
 import isla.domain.util.CustomDateTimeSerializer;
+import isla.security.AuthoritiesConstants;
+import isla.security.SecurityUtils;
+import isla.security.UserAuthentication;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -63,10 +69,10 @@ public class Comment implements Serializable {
     public int getLiked() {
         return likes.size();
     }
-    
+
     @JsonProperty("allowLike")
-    public boolean getAllowLike() { 
-        return !this.likes.contains(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    public boolean getAllowLike() {
+        return !this.likes.contains(SecurityUtils.getCurrentLogin());
     }
 
     public Long getId() {
@@ -163,25 +169,33 @@ public class Comment implements Serializable {
                 + "'" + '}';
     }
 
-    public boolean addLike(String userSid) {
-        if (likes.contains(userSid))
+    public boolean addLike(String username) {
+        if (likes.contains(username))
             return false;
-        likes.add(userSid);
+        likes.add(username);
         return true;
     }
 
-    public boolean markAsRead(User user) {
-        if (lecture.getCourse().getModerators().contains(user)) {
-            setRead(true);
-            return true;
+    public boolean markAsRead(Authentication auth) {
+        if (auth instanceof UserAuthentication) {
+            if (lecture.getCourse().getModerators()
+                    .contains(((UserAuthentication) auth).getDetails())
+                    || auth.getAuthorities().contains(AuthoritiesConstants.ADMIN)) {
+                setRead(true);
+                return true;
+            }
         }
         return false;
     }
 
-    public boolean markAsDeleted(User user) {
-        if (lecture.getCourse().getModerators().contains(user)) {
-            setDeleted(true);
-            return true;
+    public boolean markAsDeleted(Authentication auth) {
+        if (auth instanceof UserAuthentication) {
+            if (lecture.getCourse().getModerators()
+                    .contains(((UserAuthentication) auth).getDetails())
+                    || auth.getAuthorities().contains(AuthoritiesConstants.ADMIN)) {
+                setRead(true);
+                return true;
+            }
         }
         return false;
     }

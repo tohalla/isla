@@ -23,6 +23,7 @@ class LectureInstance extends React.Component {
     super(props, context);
     this.addComment = this.addComment.bind(this);
     this.handleLike = this.handleLike.bind(this);
+    this.handleRead = this.handleRead.bind(this);
     this.state = {};
   }
   componentWillMount() {
@@ -77,7 +78,7 @@ class LectureInstance extends React.Component {
     this.context.socket.then(socket => {
       socket.send(
         '/topic/comment/' + this.props.lecture.get('id'),
-        {Authorization: localStorage.token},
+        {},
         JSON.stringify(comment)
       );
     });
@@ -86,8 +87,15 @@ class LectureInstance extends React.Component {
     this.context.socket.then(socket => {
       socket.send(
         `/topic/comment/${this.props.lecture.get('id')}/${comment}/like`,
-        {Authorization: localStorage.token}, this.context.auth.user.login,
-        JSON.stringify(comment)
+        {}, this.context.auth.user.login
+      );
+    });
+  }
+  handleRead(comment) {
+    this.context.socket.then(socket => {
+      socket.send(
+        `/topic/comment/${this.props.lecture.get('id')}/${comment}/markasread`,
+        {}, this.context.auth.user.login
       );
     });
   }
@@ -100,6 +108,7 @@ class LectureInstance extends React.Component {
               comment={comment.toJS()}
               key={index}
               onLike={this.handleLike}
+              onRead={this.handleRead}
           />
         );
       });

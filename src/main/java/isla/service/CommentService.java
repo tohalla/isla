@@ -5,8 +5,12 @@ import isla.repository.CommentRepository;
 import isla.repository.UserRepository;
 import isla.security.SecurityUtils;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.security.Principal;
 
 import javax.inject.Inject;
 
@@ -23,29 +27,27 @@ public class CommentService {
     @Inject
     private UserRepository userRepository;
 
-    public Comment markAsRead(long commentId) {
+    public Comment markAsRead(long commentId, Authentication auth) {
         Comment comment = commentRepository.findOne(commentId);
-        if (comment
-                .markAsRead(userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).get()))
+        if (comment.markAsRead(auth))
             commentRepository.save(comment);
         else
             return null;
         return comment;
     }
 
-    public Comment markAsDeleted(long commentId) {
+    public Comment markAsDeleted(long commentId, Authentication auth) {
         Comment comment = commentRepository.findOne(commentId);
-        if (comment.markAsDeleted(
-                userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).get()))
+        if (comment.markAsDeleted(auth))
             commentRepository.save(comment);
         else
             return null;
         return comment;
     }
 
-    public Comment addLike(long commentId, String user) {
+    public Comment addLike(long commentId, String username) {
         Comment comment = commentRepository.findOne(commentId);
-        if (comment.addLike(user))
+        if (comment.addLike(username))
             commentRepository.save(comment);
         else
             return null;

@@ -17,7 +17,7 @@ export default createReducer(fromJS([]), {
   [COMMENT_UPDATE]: (state, action) =>
      state.map(comment =>
       comment.get('id') === action.comment.get('id') ?
-        action.comment :
+        comment.merge(action.comment) :
         comment
     )
 });

@@ -10,18 +10,6 @@ import config from './config';
 
 store.dispatch(fetchAccount());
 
-const socket = (() => {
-  const socket = Stomp.over(sock(
-    `${location.protocol}//${config.api.host}:${config.api.port}/websocket/`
-  ));
-  return new Promise((resolve, reject) => {
-    socket.connect({},
-      () => resolve(socket),
-      () => reject()
-    );
-  });
-})();
-
 const mapStateToProps = state => ({
   auth: state.get('auth')
 });
@@ -31,10 +19,27 @@ class App extends React.Component {
     auth: React.PropTypes.object.isRequired,
     socket: React.PropTypes.object
   }
+  constructor(state, context) {
+    super(state, context);
+    this.state = {
+      socket: (() => {
+        const socket = Stomp.over(sock(
+          `${location.protocol}//${config.api.host}:${config.api.port}/` +
+          `websocket?token=${localStorage.token || this.props.auth.user.login}`
+        ));
+        return new Promise((resolve, reject) => {
+          socket.connect({},
+            () => resolve(socket),
+            () => reject()
+          );
+        });
+      })()
+    };
+  }
   getChildContext() {
     return {
       auth: this.props.auth.toJS(),
-      socket
+      socket: this.state.socket
     };
   }
   render() {
