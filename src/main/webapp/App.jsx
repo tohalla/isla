@@ -4,10 +4,23 @@ import {fetchAccount} from './auth/auth';
 import store from './store';
 import {connect} from 'react-redux';
 
-// if jwt found..
-if (localStorage.token) {
-  store.dispatch(fetchAccount());
-}
+import sock from 'sockjs-client';
+import {Stomp} from 'stompjs/lib/stomp';
+import config from './config';
+
+store.dispatch(fetchAccount());
+
+const socket = (() => {
+  const socket = Stomp.over(sock(
+    `${location.protocol}//${config.api.host}:${config.api.port}/websocket/`
+  ));
+  return new Promise((resolve, reject) => {
+    socket.connect({},
+      () => resolve(socket),
+      () => reject()
+    );
+  });
+})();
 
 const mapStateToProps = state => ({
   auth: state.get('auth')
@@ -15,11 +28,13 @@ const mapStateToProps = state => ({
 
 class App extends React.Component {
   static childContextTypes = {
-    auth: React.PropTypes.object.isRequired
+    auth: React.PropTypes.object.isRequired,
+    socket: React.PropTypes.object
   }
   getChildContext() {
     return {
-      auth: this.props.auth.toJS()
+      auth: this.props.auth.toJS(),
+      socket
     };
   }
   render() {

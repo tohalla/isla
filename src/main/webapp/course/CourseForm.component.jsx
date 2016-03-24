@@ -39,6 +39,7 @@ export default class CourseForm extends React.Component {
   }
   onSubmit() {
     this.props.onSubmit(this.state.course);
+    this.setState({course: {}});
   }
   render() {
     return (

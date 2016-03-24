@@ -15,6 +15,7 @@ public class WebsocketSecurityConfiguration extends AbstractSecurityWebSocketMes
 	        .simpTypeMatchers(SimpMessageType.CONNECT, SimpMessageType.HEARTBEAT, SimpMessageType.UNSUBSCRIBE, SimpMessageType.DISCONNECT).permitAll()
 	        .simpDestMatchers("/topic/comment/**").permitAll()
             .simpSubscribeDestMatchers("/topic/room/**").permitAll()
+            .simpSubscribeDestMatchers("/user/**").permitAll()
 	        .simpDestMatchers("/topic/**").authenticated()
 	        .simpTypeMatchers(SimpMessageType.MESSAGE, SimpMessageType.SUBSCRIBE).denyAll()
 	        .anyMessage().denyAll();

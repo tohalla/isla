@@ -5,16 +5,21 @@ import {
   COMMENTS_SET,
   COMMENTS_REQUEST,
   COMMENTS_FAILURE,
-  COMMENT_ADD_SUCCESS,
-  COMMENT_ADD_REQUEST,
-  COMMENT_ADD_FAILURE,
+  COMMENT_ADD,
+  COMMENT_UPDATE,
   CALL_API
 } from '../constants';
 
 export default createReducer(fromJS([]), {
   [COMMENTS_REQUEST]: (state, action) => action.response,
   [COMMENTS_SET]: (state, action) => action.response,
-  [COMMENT_ADD_SUCCESS]: (state, action) => state.push(action.response)
+  [COMMENT_ADD]: (state, action) => state.push(action.comment),
+  [COMMENT_UPDATE]: (state, action) =>
+     state.map(comment =>
+      comment.get('id') === action.comment.get('id') ?
+        action.comment :
+        comment
+    )
 });
 
 export const fetchComments = lecture => {
@@ -26,15 +31,12 @@ export const fetchComments = lecture => {
   };
 };
 
-export const addComment = comment => {
-  return {
-    [CALL_API]: {
-      types: [COMMENT_ADD_REQUEST, COMMENT_ADD_SUCCESS, COMMENT_ADD_FAILURE],
-      endpoint: 'comments',
-      config: {
-        body: comment,
-        method: 'POST'
-      }
-    }
-  };
-};
+export const updateComment = comment => ({
+  type: COMMENT_UPDATE,
+  comment
+});
+
+export const addComment = comment => ({
+  type: COMMENT_ADD,
+  comment
+});

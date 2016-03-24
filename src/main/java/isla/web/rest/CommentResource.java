@@ -42,6 +42,7 @@ public class CommentResource {
     @RequestMapping(value = "/comments", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.ADMIN}) //allow only admin without ws
     public ResponseEntity<Comment> createComment(@Valid @RequestBody Comment comment)
             throws URISyntaxException {
         log.debug("REST request to save Comment : {}", comment);

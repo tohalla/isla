@@ -8,6 +8,9 @@ import isla.domain.util.CustomDateTimeSerializer;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -53,7 +56,18 @@ public class Comment implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "COMMENT_SCORE", joinColumns = @JoinColumn(name = "comment_id"))
     @Column(name = "user_sid")
+    @JsonIgnore
     private Set<String> likes = new HashSet<String>();
+
+    @JsonProperty("liked")
+    public int getLiked() {
+        return likes.size();
+    }
+    
+    @JsonProperty("allowLike")
+    public boolean getAllowLike() { 
+        return !this.likes.contains(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    }
 
     public Long getId() {
         return id;
@@ -145,7 +159,8 @@ public class Comment implements Serializable {
     @Override
     public String toString() {
         return "Comment{" + "id=" + id + ", createdAt='" + createdAt + "'" + ", content='" + content
-                + ", read='" + read + "'" + ", deleted='" + deleted + "'" + '}';
+                + ", liked='" + getLiked() + "'" + ", read='" + read + "'" + ", deleted='" + deleted
+                + "'" + '}';
     }
 
     public boolean addLike(String userSid) {

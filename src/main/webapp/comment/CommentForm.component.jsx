@@ -1,20 +1,15 @@
 import React from 'react';
 import counterpart from 'counterpart';
 
-export default class LectureForm extends React.Component {
+export default class CommentForm extends React.Component {
   static propTypes = {
-    lecture: React.PropTypes.object.isRequired,
     onSubmit: React.PropTypes.func.isRequired
   }
   constructor(props, context) {
     super(props, context);
     this.handleContentChange = this.handleContentChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.state = {
-      comment: {
-        content: ''
-      }
-    };
+    this.state = Object.assign({}, {comment: {}});
   }
   componentWillMount() {
     if (this.props.isAuthenticated) {
@@ -22,14 +17,13 @@ export default class LectureForm extends React.Component {
     }
   }
   handleContentChange(event) {
-    const comment = Object.assign(
+    this.setState(Object.assign(
       this.state.comment, {content: event.target.value}
-    );
-    this.setState({comment});
+    ));
   }
   onSubmit() {
-    const lecture = this.props.lecture;
-    this.props.onSubmit(Object.assign(this.state.comment, {lecture}));
+    this.props.onSubmit(this.state.comment);
+    this.setState({comment: {}});
   }
   render() {
     return (

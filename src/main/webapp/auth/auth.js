@@ -22,27 +22,18 @@ export default createReducer(
     isFetching: false,
     isAuthenticated: false
   }), {
-    [LOGIN_REQUEST]: (state, action) => action.response,
     [LOGIN_FAILURE]: () => fromJS({
       isFetching: false,
       isAuthenticated: false
     }),
-    [ACCOUNT_REQUEST]: (state, action) => action.response,
-    [ACCOUNT_SET]: (state, action) => {
-      return fromJS({
-        isFetching: false,
-        isAuthenticated: true
-      }).set('user', action.response);
-    },
+    [ACCOUNT_SET]: (state, action) => fromJS({
+      isFetching: false,
+      isAuthenticated: action.response.get('activated')
+    }).set('user', action.response),
     [ACCOUNT_FAILURE]: () => fromJS({
       isFetching: false,
       isAuthenticated: false
     }),
-    [LOGOUT_SUCCESS]: () => fromJS({
-      isFetching: false,
-      isAuthenticated: false
-    }),
-    [LOGOUT_REQUEST]: (state, action) => action.response,
     [LOGOUT_FAILURE]: state => state.set('isFetching', false)
   }
 );
@@ -51,7 +42,14 @@ export const fetchAccount = () => {
   return {
     [CALL_API]: {
       types: [ACCOUNT_REQUEST, ACCOUNT_SET, ACCOUNT_FAILURE],
-      endpoint: 'account'
+      endpoint: 'account',
+      config: {
+        onSuccess: data => {
+          if (!localStorage.token) {
+            localStorage.setItem('token', data);
+          }
+        }
+      }
     }
   };
 };
@@ -92,17 +90,18 @@ export const register = user => {
   };
 };
 
-export const logout = () => {
-  return {
+export const logout = () => dispatch => {
+  dispatch({
     [CALL_API]: {
       types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE],
       endpoint: 'logout',
       config: {
         onSuccess: () => {
           localStorage.removeItem('token');
+          dispatch(fetchAccount());
         }
       }
     }
-  };
+  });
 };
 

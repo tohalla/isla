@@ -12,6 +12,11 @@ new WebpackDevServer(webpack(config), {
       secure: false,
       ws: true,
       target: 'http://127.0.0.1:8080'
+    },
+    '/websocket/*': {
+      secure: false,
+      ws: true,
+      target: 'http://127.0.0.1:8080'
     }
   }
 })

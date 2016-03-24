@@ -3,12 +3,9 @@ package isla.web.websocket;
 import isla.domain.Comment;
 import isla.repository.CommentRepository;
 import isla.repository.LectureRepository;
-import isla.security.SecurityUtils;
 import isla.web.websocket.dto.CommentDTO;
-import isla.web.websocket.dto.CommentActionDTO;
 import isla.service.CommentService;
 
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -17,8 +14,6 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
-
-import static isla.config.WebsocketConfiguration.SESSION_ID;
 
 import javax.inject.Inject;
 
@@ -37,6 +32,19 @@ public class RoomService {
     @Inject
     SimpMessageSendingOperations messagingTemplate;
 
+//    @MessageMapping("/topic/comment/{lecture}/comments")
+//    public void sendComments(@DestinationVariable("lecture") long lecture,
+//            StompHeaderAccessor stompHeaderAccessor, Principal principal) {
+//        List<CommentDTO> commentDTOs = new ArrayList<CommentDTO>();
+//        List<Comment> comments = commentRepository.findByPostedByLectureId(lecture);
+//        for (Comment comment : comments) {
+//            commentDTOs.add(new CommentDTO(comment, comment.getLikes().contains(
+//                    stompHeaderAccessor.getSessionAttributes().get(SESSION_ID).toString())));
+//        }
+//        messagingTemplate.convertAndSendToUser(principal.getName(), "/topic/room/" + lecture,
+//                commentDTOs);
+//    }
+
     @MessageMapping("/topic/comment/{lecture}")
     public void sendComment(@Payload CommentDTO commentDTO,
             @DestinationVariable("lecture") long lecture) {
@@ -51,30 +59,23 @@ public class RoomService {
     }
 
     @MessageMapping("/topic/comment/{lecture}/{comment}/{action}")
-    public void likeComment(@DestinationVariable("lecture") long lecture,
+    public void likeComment(@Payload String user, @DestinationVariable("lecture") long lecture,
             @DestinationVariable("comment") long commentId,
             @DestinationVariable("action") String action, StompHeaderAccessor stompHeaderAccessor) {
-        String userSid = stompHeaderAccessor.getSessionAttributes().get(SESSION_ID).toString();
-        Comment comment;
+        Comment comment = null;
         switch (action.toUpperCase()) {
             case "LIKE":
-                comment = commentService.addLike(commentId, userSid);
-                if (comment != null)
-                    messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
-                            new CommentActionDTO(comment.getId(), userSid, action));
+                comment = commentService.addLike(commentId, user);
                 break;
             case "DELETE":
                 comment = commentService.markAsDeleted(commentId);
-                if (comment != null)
-                    messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
-                            new CommentActionDTO(comment.getId(), userSid, action));
                 break;
             case "MARKASREAD":
                 comment = commentService.markAsRead(commentId);
-                if (comment != null)
-                    messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
-                            new CommentActionDTO(comment.getId(), userSid, action));
                 break;
         }
+        if (comment != null)
+            messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
+                    new CommentDTO(comment, !comment.getLikes().contains(user)));
     }
 }

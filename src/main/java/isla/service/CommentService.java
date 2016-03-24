@@ -43,9 +43,9 @@ public class CommentService {
         return comment;
     }
 
-    public Comment addLike(long commentId, String userSid) {
+    public Comment addLike(long commentId, String user) {
         Comment comment = commentRepository.findOne(commentId);
-        if (comment.addLike(userSid))
+        if (comment.addLike(user))
             commentRepository.save(comment);
         else
             return null;
