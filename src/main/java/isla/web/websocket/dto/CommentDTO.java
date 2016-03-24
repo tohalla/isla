@@ -32,6 +32,8 @@ public class CommentDTO {
     private boolean read;
 
     private int liked;
+    
+    private boolean deleted;
 
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @JsonSerialize(using = CustomDateTimeSerializer.class)
@@ -42,15 +44,16 @@ public class CommentDTO {
 
     public CommentDTO(Comment comment) {
         this(comment.getId(), comment.getContent(), comment.getCreatedAt(), comment.getLiked(),
-                comment.getRead());
+                comment.getRead(), comment.getDeleted());
     }
 
-    public CommentDTO(long id, String content, DateTime createdAt, int liked, boolean read) {
+    public CommentDTO(long id, String content, DateTime createdAt, int liked, boolean read, boolean deleted) {
         this.id = id;
         this.content = content;
         this.createdAt = createdAt;
         this.liked = liked;
         this.read = read;
+        this.deleted = deleted;
     }
 
     public long getId() {
@@ -98,6 +101,13 @@ public class CommentDTO {
 
     public void setRead(boolean read) {
         this.read = read;
+    }
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean read) {
+        this.deleted = deleted;
     }
 
 }

@@ -24,6 +24,7 @@ class LectureInstance extends React.Component {
     this.addComment = this.addComment.bind(this);
     this.handleLike = this.handleLike.bind(this);
     this.handleRead = this.handleRead.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.state = {};
   }
   componentWillMount() {
@@ -87,7 +88,7 @@ class LectureInstance extends React.Component {
     this.context.socket.then(socket => {
       socket.send(
         `/topic/comment/${this.props.lecture.get('id')}/${comment}/like`,
-        {}, this.context.auth.user.login
+        {}
       );
     });
   }
@@ -95,7 +96,15 @@ class LectureInstance extends React.Component {
     this.context.socket.then(socket => {
       socket.send(
         `/topic/comment/${this.props.lecture.get('id')}/${comment}/markasread`,
-        {}, this.context.auth.user.login
+        {}
+      );
+    });
+  }
+  handleDelete(comment) {
+    this.context.socket.then(socket => {
+      socket.send(
+        `/topic/comment/${this.props.lecture.get('id')}/${comment}/delete`,
+        {}
       );
     });
   }
@@ -107,6 +116,7 @@ class LectureInstance extends React.Component {
           <Comment
               comment={comment.toJS()}
               key={index}
+              onDelete={this.handleDelete}
               onLike={this.handleLike}
               onRead={this.handleRead}
           />

@@ -7,6 +7,7 @@ export default class Comment extends React.Component {
   }
   static propTypes = {
     comment: React.PropTypes.object.isRequired,
+    onDelete: React.PropTypes.func.isRequired,
     onLike: React.PropTypes.func.isRequired,
     onRead: React.PropTypes.func.isRequired
   }
@@ -14,6 +15,7 @@ export default class Comment extends React.Component {
     super(props, context);
     this.onLike = this.onLike.bind(this);
     this.onRead = this.onRead.bind(this);
+    this.onDelete = this.onDelete.bind(this);
     const allowLike = (typeof this.props.comment.allowLike === 'undefined' ||
       this.props.comment.allowLike);
     this.state = {
@@ -23,6 +25,9 @@ export default class Comment extends React.Component {
   onLike() {
     this.setState({allowLike: false});
     this.props.onLike(this.props.comment.id);
+  }
+  onDelete() {
+    this.props.onDelete(this.props.comment.id);
   }
   onRead() {
     this.props.onRead(this.props.comment.id);
@@ -38,7 +43,7 @@ export default class Comment extends React.Component {
         </div>
         <div className="comment-items" >
           {liked}
-          {this.state.allowLike ?
+          {this.state.allowLike && !this.props.comment.read ?
             <button
                 className="material-icons icon-gray icon-24"
                 onClick={this.onLike}
@@ -60,7 +65,7 @@ export default class Comment extends React.Component {
                   }
                   <button
                       className="material-icons icon-gray icon-24"
-                      onClick={this.props.logout}
+                      onClick={this.onDelete}
                   >
                     {'clear'}
                   </button>

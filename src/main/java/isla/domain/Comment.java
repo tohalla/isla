@@ -193,7 +193,7 @@ public class Comment implements Serializable {
             if (lecture.getCourse().getModerators()
                     .contains(((UserAuthentication) auth).getDetails())
                     || auth.getAuthorities().contains(AuthoritiesConstants.ADMIN)) {
-                setRead(true);
+                setDeleted(true);
                 return true;
             }
         }

@@ -14,12 +14,15 @@ export default createReducer(fromJS([]), {
   [COMMENTS_REQUEST]: (state, action) => action.response,
   [COMMENTS_SET]: (state, action) => action.response,
   [COMMENT_ADD]: (state, action) => state.push(action.comment),
-  [COMMENT_UPDATE]: (state, action) =>
-     state.map(comment =>
+  [COMMENT_UPDATE]: (state, action) => (
+    action.comment.get('deleted') ?
+    state.filterNot(comment => comment.get('id') === action.comment.get('id')) :
+    state.map(comment =>
       comment.get('id') === action.comment.get('id') ?
         comment.merge(action.comment) :
         comment
-    )
+      )
+  )
 });
 
 export const fetchComments = lecture => {
