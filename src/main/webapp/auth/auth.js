@@ -14,7 +14,8 @@ import {
   LOGOUT_FAILURE,
   ACCOUNT_REQUEST,
   ACCOUNT_SET,
-  ACCOUNT_FAILURE
+  ACCOUNT_FAILURE,
+  ERROR_AUTH_CLEAR
 } from '../constants';
 
 export default createReducer(
@@ -22,19 +23,22 @@ export default createReducer(
     isFetching: false,
     isAuthenticated: false
   }), {
-    [LOGIN_FAILURE]: () => fromJS({
-      isFetching: false,
-      isAuthenticated: false
-    }),
+    [LOGIN_FAILURE]: (state, action) =>
+      state.merge(
+        {isFetching: false, isAuthenticated: false},
+        {error: action.response}
+      ),
     [ACCOUNT_SET]: (state, action) => fromJS({
       isFetching: false,
       isAuthenticated: action.response.get('activated')
     }).set('user', action.response),
-    [ACCOUNT_FAILURE]: () => fromJS({
-      isFetching: false,
-      isAuthenticated: false
-    }),
-    [LOGOUT_FAILURE]: state => state.set('isFetching', false)
+    [ACCOUNT_FAILURE]: (state, action) =>
+      state.merge({isFetching: false}, action.response),
+    [LOGOUT_FAILURE]: (state, action) =>
+      state.merge({isFetching: false}, action.response),
+    [REGISTER_FAILURE]: (state, action) =>
+      state.merge({isFetching: false}, action.response),
+    [ERROR_AUTH_CLEAR]: state => state.delete('error')
   }
 );
 
@@ -46,7 +50,7 @@ export const fetchAccount = () => {
       config: {
         onSuccess: data => {
           if (!localStorage.token) {
-            localStorage.setItem('token', data);
+            localStorage.setItem('token', data.login);
           }
         }
       }
@@ -54,28 +58,27 @@ export const fetchAccount = () => {
   };
 };
 
-export const login = credentials => dispatch => {
-  dispatch({
-    [CALL_API]: {
-      types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
-      endpoint: 'authentication',
-      config: {
-        body:
-          `j_username=${encodeURIComponent(credentials.login)}` +
-          `&j_password=${encodeURIComponent(credentials.password)}` +
-          `&remember-me=false&submit=Login`,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        onSuccess: data => {
-          localStorage.setItem('token', `Bearer ${data.token}`);
-          dispatch(fetchAccount());
-        }
-      }
+export const login = credentials => dispatch => dispatch({
+  [CALL_API]: {
+    types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
+    endpoint: 'authentication',
+    config: {
+      body:
+        `j_username=${encodeURIComponent(credentials.login)}` +
+        `&j_password=${encodeURIComponent(credentials.password)}` +
+        `&remember-me=false&submit=Login`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      onSuccess: data => {
+        localStorage.setItem('token', `Bearer ${data.token}`);
+        return dispatch(fetchAccount());
+      },
+      onFailure: () => Promise.reject()
     }
-  });
-};
+  }
+});
 
 export const register = user => {
   return {
@@ -84,24 +87,30 @@ export const register = user => {
       endpoint: 'register',
       config: {
         body: user,
-        method: 'POST'
+        method: 'POST',
+        onSuccess: response => response,
+        onFailure: error => Promise.reject(error)
       }
     }
   };
 };
 
-export const logout = () => dispatch => {
-  dispatch({
-    [CALL_API]: {
-      types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE],
-      endpoint: 'logout',
-      config: {
-        onSuccess: () => {
-          localStorage.removeItem('token');
-          dispatch(fetchAccount());
-        }
+export const clearAuthErrors = () => {
+  return {
+    type: [ERROR_AUTH_CLEAR]
+  };
+};
+
+export const logout = () => dispatch => dispatch({
+  [CALL_API]: {
+    types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE],
+    endpoint: 'logout',
+    config: {
+      onSuccess: () => {
+        localStorage.removeItem('token');
+        dispatch(fetchAccount());
       }
     }
-  });
-};
+  }
+});
 

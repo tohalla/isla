@@ -70,12 +70,14 @@ export default class CourseForm extends React.Component {
             }
             label={counterpart.translate('course.courseCreation.description')}
         />
-        <button
-            className="right"
-            type="submit"
-        >
-          {counterpart.translate('course.courseCreation.create')}
-        </button>
+        <div className="form-roup">
+          <button
+              className="right"
+              type="submit"
+          >
+            {counterpart.translate('course.courseCreation.create')}
+          </button>
+        </div>
       </form>
     );
   }

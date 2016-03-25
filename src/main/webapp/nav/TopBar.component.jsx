@@ -24,21 +24,27 @@ class TopBar extends React.Component {
         </span>
         <span className="user-menu">
           {this.props.auth.isAuthenticated ?
-            <ul className="menu-items">
-              <li>
-                <button
-                    className="material-icons icon-light icon-32"
-                    onClick={this.props.logout}
-                >
-                  {'exit_to_app'}
-                </button>
-              </li>
-            </ul> :
+            <span>
+              <span>
+                {counterpart.translate("general.loggedInAs", {user: this.props.auth.user.login})}
+              </span>
               <ul className="menu-items">
-                <li><Link to={'/authenticate'}>
-                  {counterpart.translate("navigation.authenticate")}
-                </Link></li>
+                <li>
+                  <button
+                      className="material-icons icon-light icon-32"
+                      onClick={this.props.logout}
+                  >
+                    {'exit_to_app'}
+                  </button>
+                </li>
               </ul>
+            </span> :
+            <ul className="menu-items">
+              <li><Link to={'/authenticate'}>
+                {counterpart.translate("navigation.authenticate")}
+              </Link></li>
+            </ul>
+
           }
         </span>
       </nav>

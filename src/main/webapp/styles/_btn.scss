@@ -8,3 +8,7 @@ button{
     background: $default-btn-hover-background;
   }
 }
+button:disabled{
+  background: $default-btn-disabled-background;
+  color: $default-btn-disabled-color;
+}

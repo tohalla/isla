@@ -52,12 +52,14 @@ export default class LectureForm extends React.Component {
             }
             label={counterpart.translate('lecture.lectureCreation.description')}
         />
-        <button
-            className="right"
-            type="submit"
-        >
-          {counterpart.translate('lecture.lectureCreation.create')}
-        </button>
+        <div className="form-roup">
+          <button
+              className="right"
+              type="submit"
+          >
+            {counterpart.translate('lecture.lectureCreation.create')}
+          </button>
+        </div>
       </form>
     );
   }

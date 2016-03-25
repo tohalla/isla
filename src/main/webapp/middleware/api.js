@@ -37,7 +37,7 @@ const callApi = (endpoint, config) => {
   )
     .then(response => response.json()
       .then(json => response.ok ? json : Promise.reject(json))
-      .catch(err => Promise.reject(err))
+      .catch(error => response.ok ? {} : Promise.reject(error))
     )
     .then(json => {
       return Array.isArray(json) ? json : Object.assign({}, camelizeKeys(json));
@@ -82,21 +82,21 @@ export default store => dispatch => action => {
 
   return callApi(endpoint, config)
     .then(response => {
-      if (typeof config.onSuccess !== 'undefined') {
-        config.onSuccess(response);
-      }
-      return dispatch(actionWith({
+      dispatch(actionWith({
         response: fromJS(response),
         type: successType
       }));
+      if (typeof config.onSuccess !== 'undefined') {
+        return config.onSuccess(response);
+      }
     })
     .catch(error => {
-      if (typeof config.onFailure !== 'undefined') {
-        config.onFailure(dispatch, error);
-      }
-      return dispatch(actionWith({
+      dispatch(actionWith({
         type: failureType,
         response: error
       }));
+      if (typeof config.onFailure !== 'undefined') {
+        return config.onFailure(error);
+      }
     });
 };

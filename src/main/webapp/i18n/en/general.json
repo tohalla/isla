@@ -1,5 +1,5 @@
 {
   "navText": "Isla",
   "createdAt": "Created at",
-  "loggedInAs": "Logged in as"
+  "loggedInAs": "Logged in as %(user)s"
 }

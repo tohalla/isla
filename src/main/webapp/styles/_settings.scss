@@ -14,6 +14,8 @@ $blue           : #2980b9;
 $lighblue       : #4aa3df;
 $midnight       : #2c3e50;
 $lightyellow    : #FFF2D0;
+$alizarin       : #e74c3c;
+$green-sea      : #16a085;
 
 $background     : $white;
 
@@ -37,6 +39,12 @@ $footer-background    : $carrara;
 $link-color         : $blue;
 $link-hover-color   : $orange;
 
+$default-vertical-padding : 15px;
+$default-horizontal-padding : 25px;
+$default-vertical-margin : 15px;
+$default-horizontal-margin : 25px;
+$default-item-spacing : 8px;
+
 $comment-vertical-padding     : 14px;
 $comment-horizontal-padding   : 16px;
 
@@ -48,8 +56,13 @@ $default-btn-background         : $lighblue;
 $default-btn-hover-background   : $blue;
 $default-btn-color              : $white;
 
+$default-btn-disabled-background         : $aluminum;
+$default-btn-disabled-color              : $silver;
+
 $default-indentation-size       : 20px;
 
 $default-border-color  : $gray;
 $default-highlight-color  : $lightyellow;
+$default-error-color      : $alizarin;
+$default-success-color    : $green-sea;
 $table-highlight-color    : $carrara;

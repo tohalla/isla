@@ -5,7 +5,8 @@
   },
   "register": {
     "title": "Register",
-    "register": "Register account"
+    "register": "Register account",
+    "completed": "Registration completed. The activation link will be emailed to you shortly."
   },
   "errors": {
     "email": {
@@ -14,7 +15,10 @@
     "password": {
       "invalidLength": "Password length must be between 5 and 50 characters.",
       "dontMatch": "Passwords don't match."
-    }
+    },
+    "loginAlreadyRegistered": "Selected username is already used by someone.",
+    "emailAlreadyRegistered": "Your email is already used by someone.",
+    "invalidLogin": "Login failed with given credentials."
   },
   "login": "Username",
   "password": "Password",

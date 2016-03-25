@@ -6,10 +6,15 @@ export default class CourseListItem extends React.Component {
     course: React.propTypes.object.isRequired
   };
   render() {
-    const {id, courseName} = this.props.course;
+    const {id, courseName, courseDescription} = this.props.course;
     return (
-      <div>
-        <Link to={`/courses/${id}`}>{courseName}</Link>
+      <div className="course-item">
+        <div className="course-title">
+          <Link to={`/courses/${id}`}>{courseName}</Link>
+        </div>
+        <div className="course-content">
+          {courseDescription}
+        </div>
       </div>
     );
   }

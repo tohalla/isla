@@ -37,5 +37,7 @@ export const ACCOUNT_REQUEST = 'ACCOUNT_REQUEST';
 export const ACCOUNT_SET = 'ACCOUNT_SET';
 export const ACCOUNT_FAILURE = 'ACCOUNT_FAILURE';
 
+export const ERROR_AUTH_CLEAR = 'ERROR_AUTH_CLEAR';
+
 export const CLEAR_SOCKETS = 'CLEAR_SOCKETS';
 export const ADD_SOCKET = 'ADD_SOCKET';

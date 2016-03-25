@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import counterpart from 'counterpart';
 
-import {register} from './auth';
+import {register, clearAuthErrors} from './auth';
 import WithLabel from '../util/WithLabel.component';
 import WithErrors from '../util/WithErrors.component';
 import Locales from '../i18n/Locales.component';
@@ -16,6 +16,7 @@ class Register extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.onSubmit = this.onSubmit.bind(this);
+    this.allowSubmit = this.allowSubmit.bind(this);
     this.handleLoginChange = this.handleLoginChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleRetypePasswordChange = this.handleRetypePasswordChange.bind(this);
@@ -25,6 +26,7 @@ class Register extends React.Component {
     this.validatePassword1 = this.validatePassword.bind(this, false);
     this.validatePassword2 = this.validatePassword.bind(this, true);
     this.state = {
+      completed: false,
       user: {
         login: '',
         password: '',
@@ -41,12 +43,17 @@ class Register extends React.Component {
     };
   }
   componentWillMount() {
+    this.props.clearAuthErrors();
     if (this.context.auth.isAuthenticated) {
       this.context.router.push('/');
     }
   }
-  shouldComponentUpdate(newProps, newState) {
-    return !(this.state === newState && this.props.value === newProps.value);
+  shouldComponentUpdate(newProps, newState, newContext) {
+    return !(
+      this.state === newState &&
+      this.props.value === newProps.value &&
+      JSON.stringify(this.context) === JSON.stringify(newContext)
+    );
   }
   handleLoginChange(event) {
     const user = Object.assign(this.state.user, {login: event.target.value});
@@ -95,14 +102,36 @@ class Register extends React.Component {
   }
   onSubmit(event) {
     event.preventDefault();
-    this.props.register(this.state.user);
+    this.props.register(this.state.user)
+      .then(() => this.setState({completed: true}))
+      .catch();
+  }
+  allowSubmit() {
+    const {errors, user} = this.state;
+    return !(errors.email.length && errors.password.length) &&
+      user.email.length && user.password.length && user.retypePassword.length &&
+      user.password.length === user.retypePassword.length && user.login.length;
   }
   render() {
+    if (this.state.completed) {
+      return (
+        <div className="form-vertical-group">
+          <div className="success-block">
+            {counterpart.translate('account.register.completed')}
+          </div>
+        </div>
+      );
+    }
     return (
       <form
           className="form-vertical-group form-register"
           onSubmit={this.onSubmit}
       >
+        {this.context.auth.error ?
+          <div className="error-block">
+            {counterpart.translate(`account.errors.${this.context.auth.error}`)}
+          </div> : null
+        }
         <WithLabel
             item={
               <input
@@ -176,12 +205,15 @@ class Register extends React.Component {
             }
             label={counterpart.translate('account.selectDefaultLanguage')}
         />
-        <button
-            className="right"
-            type="submit"
-        >
-          {counterpart.translate('account.register.register')}
-        </button>
+        <div className="form-roup">
+          <button
+              className="right"
+              disabled={!this.allowSubmit()}
+              type="submit"
+          >
+            {counterpart.translate('account.register.register')}
+          </button>
+        </div>
       </form>
     );
   }
@@ -189,5 +221,5 @@ class Register extends React.Component {
 
 export default connect(
   null,
-  {register}
+  {register, clearAuthErrors}
 )(Register);

@@ -30,13 +30,15 @@ class CourseList extends React.Component {
       const authorities = this.context.auth.user ?
         this.context.auth.user.authorities : null;
       return (
-        <div className="course-list">
+        <div>
           <RequireAuthoritory
               authorities={authorities}
               authority="ROLE_ADMIN"
               item={<CourseForm onSubmit={this.props.addCourse} />}
           />
-          {courses}
+          <div className="course-list">
+            {courses}
+          </div>
         </div>
       );
     }

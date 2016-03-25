@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import counterpart from 'counterpart';
 
-import {login} from './auth';
+import {login, clearAuthErrors} from './auth';
 import WithLabel from '../util/WithLabel.component';
 
 class Login extends React.Component {
@@ -14,6 +14,7 @@ class Login extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.onSubmit = this.onSubmit.bind(this);
+    this.allowSubmit = this.allowSubmit.bind(this);
     this.handleLoginChange = this.handleLoginChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.state = {
@@ -22,6 +23,7 @@ class Login extends React.Component {
     };
   }
   componentWillMount() {
+    this.props.clearAuthErrors();
     if (this.context.auth.isAuthenticated) {
       this.context.router.push('/');
     }
@@ -38,8 +40,9 @@ class Login extends React.Component {
     this.props.login({
       login: this.state.login,
       password: this.state.password
-    });
-    this.context.router.push('/');
+    })
+      .then(() => this.context.router.push('/'))
+      .catch();
   }
   handleLoginChange(event) {
     this.setState({login: event.target.value});
@@ -47,9 +50,17 @@ class Login extends React.Component {
   handlePasswordChange(event) {
     this.setState({password: event.target.value});
   }
+  allowSubmit() {
+    return this.state.login.length && this.state.password.length;
+  }
   render() {
     return (
       <form className="form-vertical-group form-login" onSubmit={this.onSubmit}>
+        {this.context.auth.error ?
+          <div className="error-block">
+            {counterpart.translate('account.errors.invalidLogin')}
+          </div> : null
+        }
         <WithLabel
             item={
               <input
@@ -77,6 +88,7 @@ class Login extends React.Component {
             {counterpart.translate('account.register.register')}
           </Link>
           <button
+              disabled={!this.allowSubmit()}
               type="submit"
           >
             {counterpart.translate('account.authenticate.authenticate')}
@@ -89,5 +101,5 @@ class Login extends React.Component {
 
 export default connect(
   null,
-  {login}
+  {login, clearAuthErrors}
 )(Login);

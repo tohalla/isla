@@ -8,12 +8,11 @@ import sock from 'sockjs-client';
 import {Stomp} from 'stompjs/lib/stomp';
 import config from './config';
 
-store.dispatch(fetchAccount());
+const fetchToken = store.dispatch(fetchAccount());
 
 const mapStateToProps = state => ({
   auth: state.get('auth')
 });
-
 class App extends React.Component {
   static childContextTypes = {
     auth: React.PropTypes.object.isRequired,
@@ -23,14 +22,16 @@ class App extends React.Component {
     super(state, context);
     this.state = {
       socket: (() => {
-        const socket = Stomp.over(sock(
-          `${location.protocol}//${config.api.host}:${config.api.port}/` +
-          `websocket?token=${localStorage.token || this.props.auth.user.login}`
-        ));
-        return new Promise((resolve, reject) => {
-          socket.connect({},
-            () => resolve(socket),
-            () => reject()
+        return fetchToken.then(() => {
+          const socket = Stomp.over(sock(
+            `${location.protocol}//${config.api.host}:${config.api.port}/` +
+            `websocket?token=${localStorage.token || this.props.auth.user.login}`
+          ));
+          return new Promise((resolve, reject) =>
+            socket.connect({},
+              () => resolve(socket),
+              () => reject()
+            )
           );
         });
       })()
