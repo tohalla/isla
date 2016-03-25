@@ -9,6 +9,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  ACTIVATE_REQUEST,
+  ACTIVATE_SUCCESS,
+  ACTIVATE_FAILURE,
   LOGOUT_SUCCESS,
   LOGOUT_REQUEST,
   LOGOUT_FAILURE,
@@ -41,6 +44,20 @@ export default createReducer(
     [ERROR_AUTH_CLEAR]: state => state.delete('error')
   }
 );
+
+export const activate = key => {
+  return {
+    [CALL_API]: {
+      types: [ACTIVATE_REQUEST, ACTIVATE_SUCCESS, ACTIVATE_FAILURE],
+      endpoint: 'activate',
+      config: {
+        params: {key},
+        onSuccess: data => data,
+        onFailure: error => Promise.reject(error)
+      }
+    }
+  };
+};
 
 export const fetchAccount = () => {
   return {

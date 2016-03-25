@@ -12,6 +12,7 @@ import CourseList from './course/CourseList.component';
 import LectureInstance from './lecture/LectureInstance.component';
 import Course from './course/Course.component';
 import Register from './auth/Register.component';
+import Activate from './auth/Activate.component';
 import history from './history';
 
 ReactDOM.render((
@@ -20,6 +21,7 @@ ReactDOM.render((
       <Route component={App}>
         <Route component={Default} path="/">
           <Route component={Login} path="authenticate" />
+          <Route component={Activate} path="activate" />
           <Route component={CourseList} path="courses" />
           <Route component={Course} path="courses/:id" />
           <Route component={Register} path="register" />

@@ -123,20 +123,20 @@ select{
 .fixed{
   position: fixed;
 }
-.error-block{
+.error-block, .success-block {
   padding: $default-indentation-size/2 $default-indentation-size;
-  margin-bottom: 15px;
-  background: $default-error-color;
   width: 100%;
   display: block;
   color: $white;
+  a {
+    color: $white;
+  }
+}
+.error-block{
+  background: $default-error-color;
 }
 .success-block{
-  padding: $default-indentation-size/2 $default-indentation-size;
   background: $default-success-color;
-  width: 100%;
-  display: block;
-  color: $white;
 }
 .help-block{
   padding: $default-indentation-size/2 $default-indentation-size;

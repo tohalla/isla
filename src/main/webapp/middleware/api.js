@@ -9,10 +9,20 @@ const API_ROOT = `http://${config.api.host}:${config.api.port}/api/`;
 const methods = ['GET', 'POST', 'PUT', 'DELETE'];
 
 const callApi = (endpoint, config) => {
-  const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ?
+  let fullUrl = (endpoint.indexOf(API_ROOT) === -1) ?
     API_ROOT + endpoint : endpoint;
 
-  let {body, method = 'GET', headers} = config;
+  let {body, method = 'GET', headers, params} = config;
+
+  if (params) {
+    fullUrl += '?';
+    for (let key in params) {
+      if (Object.hasOwnProperty.call(params, key)) {
+        fullUrl += `${key}=${params[key]}&`;
+      }
+    }
+    fullUrl = fullUrl.slice(0, -1);
+  }
 
   if (typeof body === 'object') {
     body = JSON.stringify(body);
@@ -27,7 +37,7 @@ const callApi = (endpoint, config) => {
 
   return fetch(fullUrl,
     {
-      body, method,
+      body, method, params,
       headers: Object.assign({
         'Authorization': localStorage.token,
         'Content-Type': 'application/json',

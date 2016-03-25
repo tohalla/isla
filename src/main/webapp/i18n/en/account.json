@@ -8,6 +8,10 @@
     "register": "Register account",
     "completed": "Registration completed. The activation link will be emailed to you shortly."
   },
+  "activate": {
+    "activated": "Your account has been activated. You may now log in.",
+    "invalidCode": "Entered activation code was invalid. Keep in mind that activation codes will invalidate in 3 days."
+  },
   "errors": {
     "email": {
       "invalid": "Entered value must be a valid email address."
