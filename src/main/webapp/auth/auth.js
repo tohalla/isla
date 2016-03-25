@@ -75,7 +75,7 @@ export const login = credentials => dispatch => dispatch({
         localStorage.setItem('token', `Bearer ${data.token}`);
         return dispatch(fetchAccount());
       },
-      onFailure: () => Promise.reject()
+      onFailure: error => Promise.reject(error)
     }
   }
 });

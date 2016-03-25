@@ -104,7 +104,7 @@ class Register extends React.Component {
     event.preventDefault();
     this.props.register(this.state.user)
       .then(() => this.setState({completed: true}))
-      .catch();
+      .catch(error => this.setState(error));
   }
   allowSubmit() {
     const {errors, user} = this.state;
@@ -127,9 +127,9 @@ class Register extends React.Component {
           className="form-vertical-group form-register"
           onSubmit={this.onSubmit}
       >
-        {this.context.auth.error ?
+        {this.state.error ?
           <div className="error-block">
-            {counterpart.translate(`account.errors.${this.context.auth.error}`)}
+            {counterpart.translate(`account.errors.${this.state.error}`)}
           </div> : null
         }
         <WithLabel

@@ -42,7 +42,7 @@ class Login extends React.Component {
       password: this.state.password
     })
       .then(() => this.context.router.push('/'))
-      .catch();
+      .catch(error => this.setState({error: 'invalidLogin'}));
   }
   handleLoginChange(event) {
     this.setState({login: event.target.value});
@@ -56,9 +56,9 @@ class Login extends React.Component {
   render() {
     return (
       <form className="form-vertical-group form-login" onSubmit={this.onSubmit}>
-        {this.context.auth.error ?
+        {this.state.error ?
           <div className="error-block">
-            {counterpart.translate('account.errors.invalidLogin')}
+            {counterpart.translate(`account.errors.${this.state.error}`)}
           </div> : null
         }
         <WithLabel
