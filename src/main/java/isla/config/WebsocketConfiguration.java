@@ -7,8 +7,6 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -72,11 +70,10 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
                     if (token.startsWith("Bearer ")) {
                         token = token.replace("Bearer", "").trim();
                         final Claims claims =
-                                Jwts.parser().setSigningKey("placeholder").parseClaimsJws(token).getBody();
+                                Jwts.parser().setSigningKey(Constants.signingKey).parseClaimsJws(token).getBody();
                         final Optional<User> user = claims.getSubject() != null
                                 ? userRepository.findOneByLogin(claims.getSubject()) : null;
                         if (user.isPresent()) {
-                            System.out.println(user.get().getLogin());
                             attributes.put("AUTHENTICATION", new UserAuthentication(user.get()));
                         }
                     } else {
@@ -84,7 +81,6 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
                         authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
                         attributes.put("AUTHENTICATION", new AuthenticationToken(token, authorities));
                     }
-                    System.out.println(attributes.get("AUTHENTICATION"));
                 }
                 return true;
             }

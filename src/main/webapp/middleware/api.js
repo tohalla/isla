@@ -35,16 +35,14 @@ const callApi = (endpoint, config) => {
       }, headers)
     }
   )
-    .then(response =>
-      response.json().then(json => ({json, response}))
+    .then(response => response.json()
+      .then(json => response.ok ? json : Promise.reject(json))
+      .catch(err => Promise.reject(err))
     )
-    .then(({json, response}) => {
-      if (!response.ok) {
-        return Promise.reject(json);
-      }
+    .then(json => {
       return Array.isArray(json) ? json : Object.assign({}, camelizeKeys(json));
     })
-    .catch(() => {}); // if response was not a json object
+    .catch(error => Promise.reject(error));
 };
 
 export default store => dispatch => action => {
@@ -98,7 +96,7 @@ export default store => dispatch => action => {
       }
       return dispatch(actionWith({
         type: failureType,
-        response: {error}
+        response: error
       }));
     });
 };

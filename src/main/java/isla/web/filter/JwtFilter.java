@@ -12,16 +12,14 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import isla.config.Constants;
 import isla.domain.User;
 import isla.repository.UserRepository;
 import isla.security.AuthenticationToken;
@@ -30,7 +28,7 @@ import isla.security.UserAuthentication;
 
 public class JwtFilter extends GenericFilterBean {
     private UserRepository userRepository;
-
+    
     public JwtFilter(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -40,12 +38,12 @@ public class JwtFilter extends GenericFilterBean {
             final FilterChain chain) throws IOException, ServletException {
 
         final HttpServletRequest request = (HttpServletRequest) req;
-
+        
         final String authHeader = request.getHeader("Authorization");
         if (!(authHeader == null || !authHeader.startsWith("Bearer "))) {
             final String token = authHeader.replace("Bearer", "");
             final Claims claims =
-                    Jwts.parser().setSigningKey("placeholder").parseClaimsJws(token).getBody();
+                    Jwts.parser().setSigningKey(Constants.signingKey).parseClaimsJws(token).getBody();
             final Optional<User> user = claims.getSubject() != null
                     ? userRepository.findOneByLogin(claims.getSubject()) : null;
             if (user.isPresent()) {

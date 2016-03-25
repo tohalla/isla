@@ -1,6 +1,7 @@
 package isla;
 
 import isla.config.Constants;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -75,7 +76,8 @@ public class Application {
             env.getProperty("server.port"),
             InetAddress.getLocalHost().getHostAddress(),
             env.getProperty("server.port"));
-
+        if (Constants.signingKey.equals("notsosecret"))
+            log.warn("JWT signing key should be declared in environment variable 'isla.signingkey'");
     }
 
     /**
