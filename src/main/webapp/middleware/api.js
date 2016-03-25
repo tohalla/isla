@@ -44,9 +44,7 @@ const callApi = (endpoint, config) => {
       }
       return Array.isArray(json) ? json : Object.assign({}, camelizeKeys(json));
     })
-    .catch(err => {
-      console.log(err);
-    });
+    .catch(() => {}); // if response was not a json object
 };
 
 export default store => dispatch => action => {
@@ -100,7 +98,7 @@ export default store => dispatch => action => {
       }
       return dispatch(actionWith({
         type: failureType,
-        error: error.message || 'error'
+        response: {error}
       }));
     });
 };

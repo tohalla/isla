@@ -15,7 +15,7 @@ class Register extends React.Component {
   }
   constructor(props, context) {
     super(props, context);
-    this.register = this.register.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.handleLoginChange = this.handleLoginChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleRetypePasswordChange = this.handleRetypePasswordChange.bind(this);
@@ -93,12 +93,16 @@ class Register extends React.Component {
     );
     this.setState({errors});
   }
-  register() {
+  onSubmit(event) {
+    event.preventDefault();
     this.props.register(this.state.user);
   }
   render() {
     return (
-      <form className="form-vertical-group form-register">
+      <form
+          className="form-vertical-group form-register"
+          onSubmit={this.onSubmit}
+      >
         <WithLabel
             item={
               <input
@@ -174,7 +178,6 @@ class Register extends React.Component {
         />
         <button
             className="right"
-            onClick={this.register}
             type="submit"
         >
           {counterpart.translate('account.register.register')}

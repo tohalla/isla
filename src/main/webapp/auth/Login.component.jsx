@@ -13,7 +13,7 @@ class Login extends React.Component {
   }
   constructor(props, context) {
     super(props, context);
-    this.login = this.login.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.handleLoginChange = this.handleLoginChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.state = {
@@ -33,7 +33,7 @@ class Login extends React.Component {
       JSON.stringify(this.context) === JSON.stringify(newContext)
     );
   }
-  login(event) {
+  onSubmit(event) {
     event.preventDefault();
     this.props.login({
       login: this.state.login,
@@ -49,7 +49,7 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <form className="form-vertical-group form-login">
+      <form className="form-vertical-group form-login" onSubmit={this.onSubmit}>
         <WithLabel
             item={
               <input
@@ -77,7 +77,6 @@ class Login extends React.Component {
             {counterpart.translate('account.register.register')}
           </Link>
           <button
-              onClick={this.login}
               type="submit"
           >
             {counterpart.translate('account.authenticate.authenticate')}

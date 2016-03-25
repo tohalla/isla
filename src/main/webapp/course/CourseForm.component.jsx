@@ -37,13 +37,17 @@ export default class CourseForm extends React.Component {
     );
     this.setState({course});
   }
-  onSubmit() {
+  onSubmit(event) {
+    event.preventDefault();
     this.props.onSubmit(this.state.course);
     this.setState({course: {}});
   }
   render() {
     return (
-      <form className="form-vertical-group course-form">
+      <form
+          className="form-vertical-group course-form"
+          onSubmit={this.onSubmit}
+      >
         <WithLabel
             item={
               <input
@@ -68,7 +72,6 @@ export default class CourseForm extends React.Component {
         />
         <button
             className="right"
-            onClick={this.onSubmit}
             type="submit"
         >
           {counterpart.translate('course.courseCreation.create')}

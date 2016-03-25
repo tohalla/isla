@@ -21,13 +21,17 @@ export default class CommentForm extends React.Component {
       this.state.comment, {content: event.target.value}
     ));
   }
-  onSubmit() {
+  onSubmit(event) {
+    event.preventDefault();
     this.props.onSubmit(this.state.comment);
     this.setState({comment: {}});
   }
   render() {
     return (
-      <form className="comment-form">
+      <form
+          className="comment-form"
+          onSubmit={this.onSubmit}
+      >
         <input
             className="comment-input"
             onChange={this.handleContentChange}
@@ -37,7 +41,6 @@ export default class CommentForm extends React.Component {
         />
         <button
             className="comment-send"
-            onClick={this.onSubmit}
             type="submit"
         >
           {counterpart.translate('comment.commentCreation.create')}

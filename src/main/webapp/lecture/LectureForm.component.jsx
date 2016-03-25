@@ -29,14 +29,18 @@ export default class LectureForm extends React.Component {
     );
     this.setState({lecture});
   }
-  onSubmit() {
+  onSubmit(event) {
+    event.preventDefault();
     const course = this.props.course;
     this.props.onSubmit(Object.assign(this.state.lecture, {course}));
     this.setState({lecture: {}});
   }
   render() {
     return (
-      <form className="form-vertical-group lecture-form">
+      <form
+          className="form-vertical-group lecture-form"
+          onSubmit={this.onSubmit}
+      >
         <WithLabel
             item={
               <input
@@ -50,7 +54,6 @@ export default class LectureForm extends React.Component {
         />
         <button
             className="right"
-            onClick={this.onSubmit}
             type="submit"
         >
           {counterpart.translate('lecture.lectureCreation.create')}
