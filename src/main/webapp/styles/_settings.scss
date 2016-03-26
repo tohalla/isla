@@ -1,6 +1,7 @@
 $comment-items-height   : 24px;
 $comment-items-width    : 24px;
 
+$clouds         : #ecf0f1;
 $orange         : #F6BF26;
 $white          : #FFFFFF;
 $carrara        : #F2F1EF;
@@ -11,8 +12,10 @@ $gray           : #868686;
 $darkgray       : #414141;
 $black          : #000000;
 $blue           : #2980b9;
-$lighblue       : #4aa3df;
+$lightblue      : #4aa3df;
+$malibu         : #6BB9F0;
 $midnight       : #2c3e50;
+$alice          : #E4F1FE;
 $lightyellow    : #FFF2D0;
 $alizarin       : #e74c3c;
 $green-sea      : #16a085;
@@ -52,7 +55,7 @@ $default-font-family  : "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-se
 
 $default-border-radius  : 7px;
 
-$default-btn-background         : $lighblue;
+$default-btn-background         : $lightblue;
 $default-btn-hover-background   : $blue;
 $default-btn-color              : $white;
 

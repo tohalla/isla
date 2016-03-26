@@ -1,21 +1,59 @@
-.comment-form{
+.comment-form-container {
   background: $orange;
-  width: 100;
   display: block;
-  clear: both;
   padding: 38px 0;
   display: flex;
   justify-content: center;
+}
+.comment-form{
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: stretch;
 
   button{
     padding: 6px 10px;
   }
 
-  .comment-input{
-    width: 80%;
+  input {
+    border: none;
+    margin: 0;
+  }
+  select {
+    min-width: 130px;
+  }
+  .select-comment-type{
+    margin: 0;
+    padding: 6px 10px;
     border-top-left-radius: $default-border-radius;
     border-bottom-left-radius: $default-border-radius;
+    background: $carrara;
     border: none;
+    -webkit-appearance: none;
+    color: $gray;
+  }
+  .comment-input{
+    width: 100%;
+    background: $white;
+    border: none;
+  }
+  .comment-choices{
+    width: 100%;
+    display: block;
+  }
+  .comment-choice{
+    padding-left: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: stretch;
+    & + .comment-choice, &:first-child {
+      border-top: 1px solid $aluminum;
+    }
+  }
+  .choice-button{
+    color: $gray;
+    padding: 0;
+    margin: 0 10px;
   }
   .comment-send{
     border-top-right-radius: $default-border-radius;
@@ -25,7 +63,6 @@
     color: $gray;
   }
 }
-
 .comment{
   width: 100%;
   min-height: $comment-items-height * 1.5;
@@ -44,11 +81,9 @@
     max-width: calc(100% - 100px);
     word-wrap: break-word;
     display: flex;
-    align-items: center;
     text-overflow: ellipsis;
     overflow-x: auto;
     padding: $comment-vertical-padding 0;
-    @include box-sizing(border-box);
   }
   .comment-items{
     display: flex;
@@ -73,5 +108,30 @@
   .check{
     background: url("../images/check.png") no-repeat center top;
     background-size: contain;
+  }
+}
+
+
+.comment-container{
+  width: 100%;
+  display: block;
+  border-bottom: 2px solid $aluminum;
+  .comment {
+    border: 0;
+  }
+  .comment-choice, .comment-choice-result {
+    color: $darkgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: $comment-vertical-padding/3 0;
+    border-top: 1px solid $silver;
+    background: $clouds;
+  }
+  .comment-choice:hover {
+    color: $white;
+    background: $malibu;
+    cursor: pointer;
   }
 }

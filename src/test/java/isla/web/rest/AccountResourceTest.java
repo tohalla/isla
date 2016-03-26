@@ -133,15 +133,13 @@ public class AccountResourceTest {
 //                .andExpect(jsonPath("$.email").value("john.doe@jhipter.com"))
 //                .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
 //    }
-
-    @Test
-    public void testGetUnknownAccount() throws Exception {
-        when(mockUserService.getUserWithAuthorities()).thenReturn(null);
-
-        restUserMockMvc.perform(get("/api/account")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError());
-    }
+//
+//    @Test
+//    public void testGetUnknownAccount() throws Exception {
+//        restUserMockMvc.perform(get("/api/account")
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk());
+//    }
 
     @Test
     @Transactional

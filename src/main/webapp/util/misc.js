@@ -8,3 +8,5 @@ export const getValueFromQueryString = (string, key) => {
   const next = string.indexOf('&');
   return string.substring(key.length + 1, next > 0 ? next : string.length);
 };
+
+export const getPercentage = (value, total) => (Math.floor((value / total) * 100)) + '%';

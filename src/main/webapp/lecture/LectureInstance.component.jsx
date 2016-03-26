@@ -5,17 +5,15 @@ import {Map, List, fromJS} from 'immutable';
 
 import {addComment, updateComment, fetchComments} from '../comment/comment';
 import {fetchLectures} from './lecture';
-import CommentForm from '../comment/CommentForm.component';
+import NewComment from '../comment/NewComment.component';
 import Comment from '../comment/Comment.component';
+import CommentWithChoices from '../comment/CommentWithChoices.component';
 
 const sort = [
-  (a, b) => a.get('read') === b.get('read') ? 0 : a.get('read'),
-  (a, b) => {
-    if (a.get('liked') === b.get('liked')) {
-      return 0;
-    }
-    return a.get('liked') < b.get('liked') ? 1 : -1;
-  },
+  (a, b) => a.get('read') === b.get('read') ? 0 : a.get('read') || -1,
+  (a, b) => a.get('pinned') === b.get('pinned') ? 0 : b.get('pinned') || -1,
+  (a, b) =>
+    a.get('liked') === b.get('liked') ? 0 : a.get('liked') < b.get('liked') || -1,
   (a, b) =>
     moment(a.get('createdAt')).valueOf() < moment(b.get('createdAt')).valueOf() ? 1 : -1
 ];
@@ -35,9 +33,10 @@ class LectureInstance extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.addComment = this.addComment.bind(this);
-    this.handleLike = this.handleLike.bind(this);
-    this.handleRead = this.handleRead.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+    this.onLike = this.onLike.bind(this);
+    this.onRead = this.onRead.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+    this.onVote = this.onVote.bind(this);
     this.state = {likes: new List()};
   }
   componentWillMount() {
@@ -46,13 +45,6 @@ class LectureInstance extends React.Component {
     this.props.fetchComments(lecture);
     this.context.socket.then(socket => {
       this.setState({
-        personalSubscriber:
-          socket.subscribe(
-            `/user/${this.context.auth.user.login}/room/`,
-            data => {
-              this.props.addComment(fromJS(JSON.parse(data.body)));
-            }
-          ),
         commentSubscriber:
           socket.subscribe(
             '/topic/room/' + lecture,
@@ -90,6 +82,7 @@ class LectureInstance extends React.Component {
   }
   addComment(comment) {
     this.context.socket.then(socket => {
+      console.log(JSON.stringify(comment));
       socket.send(
         '/topic/comment/' + this.props.lecture.get('id'),
         {},
@@ -97,7 +90,7 @@ class LectureInstance extends React.Component {
       );
     });
   }
-  handleLike(comment) {
+  onLike(comment) {
     this.setState({likes: this.state.likes.push(comment)});
     this.context.socket.then(socket => {
       socket.send(
@@ -106,7 +99,16 @@ class LectureInstance extends React.Component {
       );
     });
   }
-  handleRead(comment) {
+  onVote(comment, choice) {
+    this.setState({likes: this.state.likes.push(comment)});
+    this.context.socket.then(socket => {
+      socket.send(
+        `/topic/comment/${this.props.lecture.get('id')}/${comment}/${choice}/vote`,
+        {}
+      );
+    });
+  }
+  onRead(comment) {
     this.context.socket.then(socket => {
       socket.send(
         `/topic/comment/${this.props.lecture.get('id')}/${comment}/markasread`,
@@ -114,7 +116,7 @@ class LectureInstance extends React.Component {
       );
     });
   }
-  handleDelete(comment) {
+  onDelete(comment) {
     this.context.socket.then(socket => {
       socket.send(
         `/topic/comment/${this.props.lecture.get('id')}/${comment}/delete`,
@@ -138,7 +140,18 @@ class LectureInstance extends React.Component {
       }
       )
         .forEach((comment, index) => {
-          comments.push(
+          comments.push(comment.get('choices') && comment.get('choices').size ?
+            <CommentWithChoices
+                comment={comment.toJS()}
+                displayResults={
+                  !((!comment.has('allowLike') || comment.get('allowLike')) &&
+                  !likes.contains(comment.get('id')))
+                }
+                key={index}
+                onDelete={this.onDelete}
+                onRead={this.onRead}
+                onVote={this.onVote}
+            /> :
             <Comment
                 allowLike={
                   (!comment.has('allowLike') || comment.get('allowLike')) &&
@@ -146,9 +159,9 @@ class LectureInstance extends React.Component {
                 }
                 comment={comment.toJS()}
                 key={index}
-                onDelete={this.handleDelete}
-                onLike={this.handleLike}
-                onRead={this.handleRead}
+                onDelete={this.onDelete}
+                onLike={this.onLike}
+                onRead={this.onRead}
             />
           );
         }
@@ -156,7 +169,7 @@ class LectureInstance extends React.Component {
     }
     return (
       <div>
-        <CommentForm
+        <NewComment
             lecture={
               this.props.lecture instanceof Map ?
                 this.props.lecture.toJS() : {}

@@ -32,7 +32,7 @@ export default class Comment extends React.Component {
     const authorities = this.context.auth.user ?
       this.context.auth.user.authorities : null;
     return (
-      <div className={`comment ${read ? 'checked' : null}`}>
+      <div className={`comment ${read ? 'checked' : ''}`}>
         <div className="comment-content" >
           {content}
         </div>

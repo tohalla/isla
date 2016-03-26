@@ -1,6 +1,7 @@
 package isla.service;
 
 import isla.domain.Comment;
+import isla.domain.MultipleChoiceOption;
 import isla.repository.CommentRepository;
 import isla.repository.UserRepository;
 import isla.security.SecurityUtils;
@@ -49,6 +50,22 @@ public class CommentService {
         Comment comment = commentRepository.findOne(commentId);
         if (comment.addLike(username))
             commentRepository.save(comment);
+        else
+            return null;
+        return comment;
+    }
+
+    public Comment voteFor(long commentId, long choiceId, String username) {
+        Comment comment = commentRepository.findOne(commentId);
+        if (comment.addLike(username)) {
+            for (MultipleChoiceOption c : comment.getChoices()) {
+                if (c.getId().equals(choiceId)){
+                    c.setScore(c.getScore() + 1);
+                    break;
+                }
+            }
+            commentRepository.save(comment);
+        }
         else
             return null;
         return comment;

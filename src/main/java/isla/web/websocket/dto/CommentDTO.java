@@ -1,17 +1,15 @@
 package isla.web.websocket.dto;
 
 import isla.domain.Comment;
+import isla.domain.MultipleChoiceOption;
 import isla.domain.util.CustomDateTimeDeserializer;
 import isla.domain.util.CustomDateTimeSerializer;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
@@ -34,6 +32,8 @@ public class CommentDTO {
     private int liked;
     
     private boolean deleted;
+    
+    private List<String> choices;
 
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @JsonSerialize(using = CustomDateTimeSerializer.class)
@@ -44,16 +44,20 @@ public class CommentDTO {
 
     public CommentDTO(Comment comment) {
         this(comment.getId(), comment.getContent(), comment.getCreatedAt(), comment.getLiked(),
-                comment.getRead(), comment.getDeleted());
+                comment.getRead(), comment.getDeleted(), comment.getChoices());
     }
 
-    public CommentDTO(long id, String content, DateTime createdAt, int liked, boolean read, boolean deleted) {
+    public CommentDTO(long id, String content, DateTime createdAt, int liked, boolean read, boolean deleted, List<MultipleChoiceOption> choices) {
         this.id = id;
         this.content = content;
         this.createdAt = createdAt;
         this.liked = liked;
         this.read = read;
         this.deleted = deleted;
+        this.choices = new ArrayList<String>();
+        if(choices != null)
+            for(MultipleChoiceOption choice : choices)
+                this.choices.add(choice.getContent());
     }
 
     public long getId() {
@@ -68,6 +72,13 @@ public class CommentDTO {
         return content;
     }
 
+    public void setChoices(List<String> choices) {
+        this.choices = choices;
+    }
+    
+    public List<String> getChoices() {
+        return this.choices;
+    }
 
     public void setContent(String content) {
         this.content = content;
@@ -83,7 +94,7 @@ public class CommentDTO {
 
     @Override
     public String toString() {
-        return "CommentDTO{" + "id='" + id + '\'' + ",content='" + content + '\'' + ",createdAt='"
+        return "CommentDTO{" + "id='" + id + '\'' + ",content='" + content + '\'' + ",choices='" + choices + '\'' + ",createdAt='"
                 + createdAt + '\'' + '}';
     }
 

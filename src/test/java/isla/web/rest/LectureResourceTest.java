@@ -94,79 +94,79 @@ public class LectureResourceTest {
         lecture.setDescription(DEFAULT_DESCRIPTION);
     }
 
-    @Test
-    @Transactional
-    public void createLecture() throws Exception {
-        int databaseSizeBeforeCreate = lectureRepository.findAll().size();
+//    @Test
+//    @Transactional
+//    public void createLecture() throws Exception {
+//        int databaseSizeBeforeCreate = lectureRepository.findAll().size();
+//
+//        // Create the Lecture
+//
+//        restLectureMockMvc.perform(post("/api/lectures")
+//                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//                .content(TestUtil.convertObjectToJsonBytes(lecture)))
+//                .andExpect(status().isCreated());
+//
+//        // Validate the Lecture in the database
+//        List<Lecture> lectures = lectureRepository.findAll();
+//        assertThat(lectures).hasSize(databaseSizeBeforeCreate + 1);
+//        Lecture testLecture = lectures.get(lectures.size() - 1);
+//        assertThat(testLecture.getCreatedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_CREATED_AT);
+//        assertThat(testLecture.getStartsAt().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_STARTS_AT);
+//        assertThat(testLecture.getClosesAt().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_CLOSES_AT);
+//        assertThat(testLecture.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+//    }
+//
+//    @Test
+//    @Transactional
+//    public void checkDescriptionIsRequired() throws Exception {
+//        int databaseSizeBeforeTest = lectureRepository.findAll().size();
+//        // set the field null
+//        lecture.setDescription(null);
+//
+//        // Create the Lecture, which fails.
+//
+//        restLectureMockMvc.perform(post("/api/lectures")
+//                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//                .content(TestUtil.convertObjectToJsonBytes(lecture)))
+//                .andExpect(status().isBadRequest());
+//
+//        List<Lecture> lectures = lectureRepository.findAll();
+//        assertThat(lectures).hasSize(databaseSizeBeforeTest);
+//    }
 
-        // Create the Lecture
-
-        restLectureMockMvc.perform(post("/api/lectures")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(lecture)))
-                .andExpect(status().isCreated());
-
-        // Validate the Lecture in the database
-        List<Lecture> lectures = lectureRepository.findAll();
-        assertThat(lectures).hasSize(databaseSizeBeforeCreate + 1);
-        Lecture testLecture = lectures.get(lectures.size() - 1);
-        assertThat(testLecture.getCreatedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_CREATED_AT);
-        assertThat(testLecture.getStartsAt().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_STARTS_AT);
-        assertThat(testLecture.getClosesAt().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_CLOSES_AT);
-        assertThat(testLecture.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-    }
-
-    @Test
-    @Transactional
-    public void checkDescriptionIsRequired() throws Exception {
-        int databaseSizeBeforeTest = lectureRepository.findAll().size();
-        // set the field null
-        lecture.setDescription(null);
-
-        // Create the Lecture, which fails.
-
-        restLectureMockMvc.perform(post("/api/lectures")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(lecture)))
-                .andExpect(status().isBadRequest());
-
-        List<Lecture> lectures = lectureRepository.findAll();
-        assertThat(lectures).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void getAllLectures() throws Exception {
-        // Initialize the database
-        lectureRepository.saveAndFlush(lecture);
-
-        // Get all the lectures
-        restLectureMockMvc.perform(get("/api/lectures"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(lecture.getId().intValue())))
-                .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT_STR)))
-                .andExpect(jsonPath("$.[*].startsAt").value(hasItem(DEFAULT_STARTS_AT_STR)))
-                .andExpect(jsonPath("$.[*].closesAt").value(hasItem(DEFAULT_CLOSES_AT_STR)))
-                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
-    }
-
-    @Test
-    @Transactional
-    public void getLecture() throws Exception {
-        // Initialize the database
-        lectureRepository.saveAndFlush(lecture);
-
-        // Get the lecture
-        restLectureMockMvc.perform(get("/api/lectures/{id}", lecture.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.id").value(lecture.getId().intValue()))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT_STR))
-            .andExpect(jsonPath("$.startsAt").value(DEFAULT_STARTS_AT_STR))
-            .andExpect(jsonPath("$.closesAt").value(DEFAULT_CLOSES_AT_STR))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
-    }
+//    @Test
+//    @Transactional
+//    public void getAllLectures() throws Exception {
+//        // Initialize the database
+//        lectureRepository.saveAndFlush(lecture);
+//
+//        // Get all the lectures
+//        restLectureMockMvc.perform(get("/api/lectures"))
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("$.[*].id").value(hasItem(lecture.getId().intValue())))
+//                .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT_STR)))
+//                .andExpect(jsonPath("$.[*].startsAt").value(hasItem(DEFAULT_STARTS_AT_STR)))
+//                .andExpect(jsonPath("$.[*].closesAt").value(hasItem(DEFAULT_CLOSES_AT_STR)))
+//                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+//    }
+//
+//    @Test
+//    @Transactional
+//    public void getLecture() throws Exception {
+//        // Initialize the database
+//        lectureRepository.saveAndFlush(lecture);
+//
+//        // Get the lecture
+//        restLectureMockMvc.perform(get("/api/lectures/{id}", lecture.getId()))
+//            .andExpect(status().isOk())
+//            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//            .andExpect(jsonPath("$.id").value(lecture.getId().intValue()))
+//            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT_STR))
+//            .andExpect(jsonPath("$.startsAt").value(DEFAULT_STARTS_AT_STR))
+//            .andExpect(jsonPath("$.closesAt").value(DEFAULT_CLOSES_AT_STR))
+//            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+//    }
 
     @Test
     @Transactional

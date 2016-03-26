@@ -4,8 +4,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -103,9 +101,11 @@ public class LectureResource {
     @RequestMapping(value = "/lectures/{id}/comments",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    
     @Timed
     public ResponseEntity<List<Comment>> getAllComments(Pageable pageable, @PathVariable Long id){
-        return new ResponseEntity<>(commentRepository.findByPostedByLectureId(id), null, HttpStatus.OK);
+        List<Comment> comments = commentRepository.findByPostedByLectureId(id);
+        return new ResponseEntity<>(comments, null, HttpStatus.OK);
     }
 
     /**

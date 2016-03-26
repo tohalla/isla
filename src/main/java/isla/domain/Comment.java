@@ -9,19 +9,22 @@ import isla.security.AuthoritiesConstants;
 import isla.security.SecurityUtils;
 import isla.security.UserAuthentication;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Objects;
 
@@ -56,8 +59,15 @@ public class Comment implements Serializable {
     @Column(name = "read")
     private boolean read;
 
+    @Column(name = "pinned")
+    private boolean pinned;
+
     @Column(name = "deleted")
     private boolean deleted;
+
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonInclude(Include.NON_EMPTY)
+    private List<MultipleChoiceOption> choices;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "COMMENT_SCORE", joinColumns = @JoinColumn(name = "comment_id"))
@@ -73,6 +83,22 @@ public class Comment implements Serializable {
     @JsonProperty("allowLike")
     public boolean getAllowLike() {
         return !this.likes.contains(SecurityUtils.getCurrentLogin());
+    }
+    
+    @Transactional
+    public List<MultipleChoiceOption> getChoices() {
+        return choices;
+    }
+
+    public void setChoicesAsString(List<String> choices) {
+        this.choices = new ArrayList<MultipleChoiceOption>();
+        for (String content : choices) {
+            this.choices.add(new MultipleChoiceOption(content, this));
+        } ;
+    }
+
+    public void setChoices(List<MultipleChoiceOption> choices) {
+        this.choices = choices;
     }
 
     public Long getId() {
@@ -140,6 +166,14 @@ public class Comment implements Serializable {
         this.deleted = deleted;
     }
 
+    public void sePinned(boolean pinned) {
+        this.pinned = pinned;
+    }
+
+    public boolean getPinned() {
+        return pinned;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -164,9 +198,9 @@ public class Comment implements Serializable {
 
     @Override
     public String toString() {
-        return "Comment{" + "id=" + id + ", createdAt='" + createdAt + "'" + ", content='" + content
-                + ", liked='" + getLiked() + "'" + ", read='" + read + "'" + ", deleted='" + deleted
-                + "'" + '}';
+        return "Comment{" + "id=" + id + ", createdAt='" + createdAt + "'" + ", choices='" + choices
+                + "'" + ", content='" + content + "', liked='" + getLiked() + "'" + ", read='"
+                + read + "'" + ", deleted='" + deleted + "'" + '}';
     }
 
     public boolean addLike(String username) {
@@ -198,5 +232,9 @@ public class Comment implements Serializable {
             }
         }
         return false;
+    }
+
+    public void setPinned(boolean pinned) {
+        this.pinned = pinned;
     }
 }

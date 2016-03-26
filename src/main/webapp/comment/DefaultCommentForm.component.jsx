@@ -1,22 +1,18 @@
 import React from 'react';
 import counterpart from 'counterpart';
 
-export default class CommentForm extends React.Component {
+export default class DefaultComment extends React.Component {
   static propTypes = {
-    onSubmit: React.PropTypes.func.isRequired
+    onSubmit: React.PropTypes.func.isRequired,
+    selectCommentType: React.PropTypes.object
   }
   constructor(props, context) {
     super(props, context);
-    this.handleContentChange = this.handleContentChange.bind(this);
+    this.onContentChange = this.onContentChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.state = Object.assign({}, {comment: {}});
+    this.state = {comment: {}};
   }
-  componentWillMount() {
-    if (this.props.isAuthenticated) {
-      this.context.router.push('/authenticate');
-    }
-  }
-  handleContentChange(event) {
+  onContentChange(event) {
     this.setState(Object.assign(
       this.state.comment, {content: event.target.value}
     ));
@@ -32,10 +28,11 @@ export default class CommentForm extends React.Component {
           className="comment-form"
           onSubmit={this.onSubmit}
       >
+        {this.props.selectCommentType}
         <input
             className="comment-input"
-            onChange={this.handleContentChange}
-            placeholder={counterpart.translate('comment.commentCreation.content')}
+            onChange={this.onContentChange}
+            placeholder={counterpart.translate('lectureInstance.commentCreation.content')}
             type="text"
             value={this.state.comment.content}
         />
@@ -43,7 +40,7 @@ export default class CommentForm extends React.Component {
             className="comment-send"
             type="submit"
         >
-          {counterpart.translate('comment.commentCreation.create')}
+          {counterpart.translate('lectureInstance.commentCreation.create')}
         </button>
       </form>
     );
