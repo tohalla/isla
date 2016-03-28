@@ -2,31 +2,28 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(../fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: url(MaterialIcons-Regular.eot); /* For IE6-8 */
   src: local('Material Icons'),
        local('MaterialIcons-Regular'),
-       url(../fonts/MaterialIcons-Regular.woff2) format('woff2'),
-       url(../fonts/MaterialIcons-Regular.woff) format('woff'),
-       url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
+       url(MaterialIcons-Regular.woff2) format('woff2'),
+       url(MaterialIcons-Regular.woff) format('woff'),
+       url(MaterialIcons-Regular.ttf) format('truetype');
 }
+
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
   font-size: 24px;  /* Preferred icon size */
   display: inline-block;
+  width: 1em;
+  height: 1em;
   line-height: 1;
   text-transform: none;
   letter-spacing: normal;
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
-  color: $black;
-  vertical-align: -20%;
-  background: none;
-  &:hover {
-    background: none;
-  }
 
   /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;
@@ -38,22 +35,4 @@
 
   /* Support for IE. */
   font-feature-settings: 'liga';
-}
-.material-icons.icon-light {
-  color: $white;
-}
-.material-icons.icon-gray {
-  color: $darkgray;
-}
-.material-icons.icon-48 {
-  font-size: 48px;
-}
-.material-icons.icon-32 {
-  font-size: 32px;
-}
-.material-icons.icon-24 {
-  font-size: 24px;
-}
-.material-icons.icon-16 {
-  font-size: 16px;
 }

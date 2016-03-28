@@ -30,12 +30,21 @@ class TopBar extends React.Component {
               </span>
               <ul className="menu-items">
                 <li>
-                  <button
+                  <Link
+                      className="material-icons icon-light icon-32"
+                      to="/profile"
+                  >
+                    {'person'}
+                  </Link>
+                </li>
+                <li>
+                  <Link
                       className="material-icons icon-light icon-32"
                       onClick={this.props.logout}
+                      to="/"
                   >
                     {'exit_to_app'}
-                  </button>
+                  </Link>
                 </li>
               </ul>
             </span> :
