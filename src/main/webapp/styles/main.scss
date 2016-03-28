@@ -55,7 +55,16 @@ select{
   border: 1px solid $default-border-color;
 }
 
-.container{
+.container {
+  margin: 0 auto;
+  padding: $default-vertical-padding $default-horizontal-padding;
+  background: $carrara;
+  border-radius: $default-border-radius;
+  display: block;
+  max-width: 800px;
+  width: 100%;
+}
+.content{
   padding: 30px 5% 10px;
 }
 

@@ -12,9 +12,6 @@ const mapStateToProps = state => (
 });
 
 class CourseList extends React.Component {
-  static contextTypes = {
-    auth: React.PropTypes.object.isRequired
-  }
   componentWillMount() {
     this.props.fetchCourses();
   }
@@ -27,12 +24,9 @@ class CourseList extends React.Component {
       this.props.courses.forEach((course, index) => {
         courses.push(<CourseListItem course={course.toJS()} key={index} />);
       });
-      const authorities = this.context.auth.user ?
-        this.context.auth.user.authorities : null;
       return (
         <div>
           <RequireAuthoritory
-              authorities={authorities}
               authority="ROLE_ADMIN"
               item={<CourseForm onSubmit={this.props.addCourse} />}
           />

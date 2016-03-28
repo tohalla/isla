@@ -6,9 +6,6 @@ import MultipleChoiceCommentForm from './MultipleChoiceCommentForm.component';
 import RequireAuthoritory from '../util/RequireAuthority.component';
 
 export default class NewComment extends React.Component {
-  static contextTypes = {
-    auth: React.PropTypes.object.isRequired
-  }
   static propTypes = {
     onSubmit: React.PropTypes.func.isRequired
   }
@@ -21,12 +18,9 @@ export default class NewComment extends React.Component {
     this.setState({commentType: event.target.value});
   }
   render() {
-    const authorities = this.context.auth.user ?
-      this.context.auth.user.authorities : null;
     const selectCommentType = (
       <RequireAuthoritory
           alternativeItem={<span className="select-comment-type" />}
-          authorities={authorities}
           authority="ROLE_ADMIN"
           item={
             <select

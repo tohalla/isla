@@ -1,15 +1,18 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {connect} from 'react-redux';
 import counterpart from 'counterpart';
 
-import {logout} from '../auth/auth';
+import UserMenu from './UserMenu.component';
 
-class TopBar extends React.Component {
+export default class TopBar extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
   static propTypes = {
     auth: React.PropTypes.object.isRequired
   }
   render() {
+    const isActive = this.context.router.isActive;
     return (
       <nav className="nav-default">
         <span className="default-menu">
@@ -17,51 +20,15 @@ class TopBar extends React.Component {
             {counterpart.translate("general.navText")}
           </Link>
           <ul className="menu-items">
-            <li><Link to={'/courses'}>
-              {counterpart.translate("navigation.browseCourses")}
-            </Link></li>
+            <li className={isActive('courses') ? 'active' : ''}>
+              <Link to={'/courses'}>
+                {counterpart.translate("navigation.browseCourses")}
+              </Link>
+            </li>
           </ul>
         </span>
-        <span className="user-menu">
-          {this.props.auth.isAuthenticated ?
-            <span>
-              <span>
-                {counterpart.translate("general.loggedInAs", {user: this.props.auth.user.login})}
-              </span>
-              <ul className="menu-items">
-                <li>
-                  <Link
-                      className="material-icons icon-light icon-32"
-                      to="/profile"
-                  >
-                    {'person'}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                      className="material-icons icon-light icon-32"
-                      onClick={this.props.logout}
-                      to="/"
-                  >
-                    {'exit_to_app'}
-                  </Link>
-                </li>
-              </ul>
-            </span> :
-            <ul className="menu-items">
-              <li><Link to={'/authenticate'}>
-                {counterpart.translate("navigation.authenticate")}
-              </Link></li>
-            </ul>
-
-          }
-        </span>
+        <UserMenu auth={this.props.auth} />
       </nav>
     );
   }
 }
-
-export default connect(
-  null,
-  {logout}
-)(TopBar);

@@ -5,6 +5,7 @@ import {Router, Route} from 'react-router';
 
 import App from './App';
 import Default from './view/Default.component';
+import Admin from './view/Admin.component';
 import Plain from './view/Plain.component';
 import store from './store';
 import Login from './auth/Login.component';
@@ -22,6 +23,7 @@ ReactDOM.render((
         <Route component={Default} path="/">
           <Route component={Login} path="authenticate" />
           <Route component={Activate} path="activate" />
+          <Route component={Admin} path="admin" />
           <Route component={CourseList} path="courses" />
           <Route component={Course} path="courses/:id" />
           <Route component={Register} path="register" />

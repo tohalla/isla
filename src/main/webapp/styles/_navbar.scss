@@ -12,7 +12,7 @@ nav{
     line-height: $nav-height;
     display: inline-block;
     height: 100%;
-    padding: 0 6px;
+    padding: 0 4px;
   }
 }
 .nav-sub{
@@ -31,7 +31,11 @@ nav{
     text-decoration: underline;
   }
 }
-
+.default-menu {
+  a{
+    padding: 0 10px;
+  }
+}
 .nav-default{
   background: $nav-background;
   color: $nav-text-color;
@@ -40,8 +44,6 @@ nav{
     color: $nav-link-color;
     background: $nav-link-background;
     text-decoration: none;
-
-    @include box-sizing(border-box);
 
     &:hover{
       color: $nav-link-hover-color;

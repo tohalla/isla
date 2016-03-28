@@ -1,5 +1,6 @@
 {
   "navText": "Isla",
   "createdAt": "Created at",
-  "loggedInAs": "Logged in as %(user)s"
+  "loggedInAs": "Logged in as %(user)s",
+  "notAuthorizedToViewPage": "You're not authorized to view the page you're trying to access"
 }

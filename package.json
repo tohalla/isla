@@ -53,14 +53,15 @@
     "redux-immutablejs": "0.0.8",
     "rucksack-css": "^0.8.5",
     "sass-loader": "^3.2.0",
+    "stompjs": "git+https://github.com/jmesnil/stomp-websocket.git",
+    "tap-spec": "^4.1.1",
     "tape": "^4.5.1",
     "uglify-js": "^2.6.2",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.10.0",
-    "webpack-merge": "^0.8.4",
-    "stompjs": "git+https://github.com/jmesnil/stomp-websocket.git"
+    "webpack-merge": "^0.8.4"
   },
   "dependencies": {
     "counterpart": "^0.17.2",

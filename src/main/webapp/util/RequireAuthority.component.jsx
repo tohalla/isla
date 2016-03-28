@@ -1,6 +1,9 @@
 import React from 'react';
 
 export default class RequireAuthority extends React.Component {
+  static contextTypes = {
+    auth: React.PropTypes.object
+  }
   static propTypes = {
     alternativeItem: React.PropTypes.object,
     authorities: React.PropTypes.array,
@@ -9,7 +12,10 @@ export default class RequireAuthority extends React.Component {
     oneOf: React.PropTypes.array
   }
   render() {
-    const {authority, oneOf, authorities, item, alternativeItem} = this.props;
+    const {authority, oneOf, item, alternativeItem} = this.props;
+    // if passed as property, will override
+    const authorities = this.props.authorities ||
+      (this.context.auth.user ? this.context.auth.user.authorities : null);
     if (authorities) {
       if (
         typeof authority !== 'undefined' &&

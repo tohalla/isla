@@ -10,8 +10,8 @@ export default class Default extends React.Component {
     return (
       <div className="stretch">
         <div className="wrapper">
-          <TopBar auth={this.context.auth} />
-          <div className="container">
+          <TopBar auth={this.context.auth}/>
+          <div className="content">
             {this.props.children}
           </div>
           <div className="footer-push"></div>

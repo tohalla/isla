@@ -13,9 +13,6 @@ const mapStateToProps = state => (
 });
 
 class Course extends React.Component {
-  static contextTypes = {
-    auth: React.PropTypes.object.isRequired
-  }
   componentWillMount() {
     this.props.fetchCourses(this.props.routeParams.id);
   }
@@ -31,12 +28,9 @@ class Course extends React.Component {
       this.props.course instanceof Map
     ) {
       const course = this.props.course.toJS();
-      const authorities = this.context.auth.user ?
-        this.context.auth.user.authorities : null;
       return (
         <div className="course">
           <RequireAuthoritory
-              authorities={authorities}
               item={
                 <LectureForm
                     course={course}

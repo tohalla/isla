@@ -115,7 +115,7 @@ class Register extends React.Component {
   render() {
     if (this.state.completed) {
       return (
-        <div className="form-vertical-group">
+        <div className="container">
           <div className="success-block">
             {counterpart.translate('account.register.completed')}
           </div>

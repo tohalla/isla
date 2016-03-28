@@ -3,9 +3,6 @@ import RequireAuthoritory from '../util/RequireAuthority.component';
 import {getPercentage} from '../util/misc';
 
 export default class Comment extends React.Component {
-  static contextTypes = {
-    auth: React.PropTypes.object.isRequired
-  }
   static propTypes = {
     comment: React.PropTypes.object.isRequired,
     displayResults: React.PropTypes.bool.isRequired,
@@ -56,8 +53,6 @@ export default class Comment extends React.Component {
         )
       );
     });
-    const authorities = this.context.auth.user ?
-      this.context.auth.user.authorities : null;
     return (
       <div className="comment-container">
         <div className={`comment ${read ? 'checked' : ''}`}>
@@ -66,7 +61,6 @@ export default class Comment extends React.Component {
           </div>
           <div className="comment-items" >
             <RequireAuthoritory
-                authorities={authorities}
                 item={
                   <span className="moderator-actions">
                     {this.props.comment.read ? null :
