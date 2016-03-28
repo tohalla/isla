@@ -22,7 +22,7 @@ export default class TopBar extends React.Component {
           <ul className="menu-items">
             <li className={isActive('courses') ? 'active' : ''}>
               <Link to={'/courses'}>
-                {counterpart.translate("navigation.browseCourses")}
+                {counterpart.translate("general.navigation.browseCourses")}
               </Link>
             </li>
           </ul>

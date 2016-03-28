@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TopBar from '../nav/TopBar.component';
+import Footer from './Footer.component';
 
 export default class Default extends React.Component {
   static contextTypes = {
@@ -16,8 +17,7 @@ export default class Default extends React.Component {
           </div>
           <div className="footer-push"></div>
         </div>
-        <div className="footer">
-        </div>
+        <Footer />
       </div>
     );
   }

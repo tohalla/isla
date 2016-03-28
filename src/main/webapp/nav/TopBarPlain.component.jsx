@@ -11,7 +11,7 @@ export default class TopBarMain extends React.Component {
         <ul className="menu-items">
           <li>
             <button onClick={this.context.router.goBack}>
-              {counterpart.translate("navigation.goBack")}
+              {counterpart.translate("general.navigation.goBack")}
             </button>
           </li>
         </ul>

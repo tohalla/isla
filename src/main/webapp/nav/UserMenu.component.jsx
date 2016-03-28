@@ -53,7 +53,7 @@ class UserMenu extends React.Component {
           </span> :
           <ul className="menu-items">
             <li><Link to={'/authenticate'}>
-              {counterpart.translate("navigation.authenticate")}
+              {counterpart.translate('general.navigation.authenticate')}
             </Link></li>
           </ul>
 
