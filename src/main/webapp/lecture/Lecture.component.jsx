@@ -13,6 +13,9 @@ export default class Lecture extends React.Component {
         <Link to={`/instance/${id}`}>
           {moment(createdAt).format('DD.MM.YYYY - HH:mm')}
         </Link>
+        <button className="material-icons icon-gray icon-24">
+          {'file_download'}
+        </button>
         <span className="lecture-description">
           {description}
         </span>

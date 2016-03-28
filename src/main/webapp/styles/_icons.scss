@@ -22,7 +22,7 @@
   white-space: nowrap;
   direction: ltr;
   color: $black;
-  vertical-align: -20%;
+  vertical-align: middle;
   background: none;
   &:hover {
     background: none;
@@ -43,7 +43,7 @@
   color: $white;
 }
 .material-icons.icon-gray {
-  color: $darkgray;
+  color: $gray;
 }
 .material-icons.icon-48 {
   font-size: 48px;

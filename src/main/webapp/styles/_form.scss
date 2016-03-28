@@ -1,0 +1,54 @@
+
+.form-group{
+  padding: 2px;
+  margin: 8px 0;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+
+  label, span, a, button, b {
+    padding: 6px;
+    align-self: baseline;
+    &:not(button){
+      min-width: 220px;
+    }
+    & + *{
+      margin-left: 20px;
+    }
+  }
+}
+
+.form-vertical-group{
+  margin: 0 auto;
+  padding: $default-vertical-padding $default-horizontal-padding;
+  background: $carrara;
+  border-radius: $default-border-radius;
+  display: block;
+  max-width: 800px;
+  width: 100%;
+}
+
+.form-login{
+  max-width: 520px;
+}
+.form-register{
+  max-width: 520px;
+}
+
+input, textarea{
+  padding: 6px;
+  outline: none;
+  width: 100%;
+  border-radius: 0;
+  border: 1px solid $default-border-color;
+  -webkit-appearance: none;
+}
+
+select{
+  margin: 6px 0;
+  outline: none;
+  border-radius: 0;
+  border: 1px solid $default-border-color;
+}

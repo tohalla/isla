@@ -70,7 +70,6 @@
   align-content: space-between;
   border-bottom: 2px solid $aluminum;
   padding: 0 $comment-horizontal-padding;
-  @include box-sizing(border-box);
 
   &.checked{
     background: $carrara;
