@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import {Map, List, fromJS} from 'immutable';
+import Linkify from 'react-linkify';
 
 import {addComment, updateComment, fetchComments} from '../comment/comment';
 import {fetchLectures} from './lecture';
@@ -140,9 +141,13 @@ class LectureInstance extends React.Component {
       }
       )
         .forEach((comment, index) => {
+          const mutableComment = comment.toJS();
+          mutableComment.content = (
+            <Linkify>{mutableComment.content}</Linkify>
+          );
           comments.push(comment.get('choices') && comment.get('choices').size ?
             <CommentWithChoices
-                comment={comment.toJS()}
+                comment={mutableComment}
                 displayResults={
                   !((!comment.has('allowLike') || comment.get('allowLike')) &&
                   !likes.contains(comment.get('id')))
@@ -157,7 +162,7 @@ class LectureInstance extends React.Component {
                   (!comment.has('allowLike') || comment.get('allowLike')) &&
                   !likes.contains(comment.get('id'))
                 }
-                comment={comment.toJS()}
+                comment={mutableComment}
                 key={index}
                 onDelete={this.onDelete}
                 onLike={this.onLike}
