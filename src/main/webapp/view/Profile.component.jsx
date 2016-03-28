@@ -2,7 +2,7 @@ import React from 'react';
 import RequireAuthority from '../util/RequireAuthority.component';
 import counterpart from 'counterpart';
 
-export default class Admin extends React.Component {
+export default class Profile extends React.Component {
   render() {
     return (
       <div className="container">
@@ -12,8 +12,8 @@ export default class Admin extends React.Component {
                   {counterpart.translate("general.notAuthorizedToViewPage")}
               </div>
             }
-            authority="ROLE_ADMIN"
             item={<span></span>}
+            oneOf={['ROLE_ADMIN', 'ROLE_USER', 'ROLE_TEACHER']}
         />
       </div>
     );

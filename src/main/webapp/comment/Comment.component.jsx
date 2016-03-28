@@ -40,7 +40,7 @@ export default class Comment extends React.Component {
           {liked}
           {this.props.allowLike && !this.props.comment.read ?
             <button
-                className="material-icons icon-gray icon-24"
+                className="material-icons icon-darkgray icon-24"
                 onClick={this.onLike}
             >
               {'thumb_up'}
@@ -52,14 +52,14 @@ export default class Comment extends React.Component {
                 <span className="moderator-actions">
                   {this.props.comment.read ? null :
                       <button
-                          className="material-icons icon-gray icon-24"
+                          className="material-icons icon-darkgray icon-24"
                           onClick={this.onRead}
                       >
                         {'check'}
                       </button>
                   }
                   <button
-                      className="material-icons icon-gray icon-24"
+                      className="material-icons icon-darkgray icon-24"
                       onClick={this.onDelete}
                   >
                     {'clear'}

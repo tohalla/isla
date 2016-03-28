@@ -71,3 +71,28 @@ body {
 .fixed{
   position: fixed;
 }
+.dropdown{
+  position: relative;
+}
+.dropdown-menu {
+  border: 1px solid $default-border-color;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  list-style: none;
+  padding: 0;
+  background: $white;
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 3px 8px;
+    color: $darkgray;
+    &:hover {
+      background: $lightblue;
+      color: $white;
+      cursor: pointer;
+    }
+  }
+}

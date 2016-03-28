@@ -15,7 +15,7 @@ public interface CommentRepository extends JpaRepository<Comment,Long> {
     List<Comment> findByPostedByIsCurrentUser();
 
     @Query("SELECT DISTINCT comment FROM Comment comment LEFT JOIN FETCH comment.choices c WHERE " +
-            "comment.lecture.id=:lectureId AND (deleted IS NULL OR DELETED=false)")
-    List<Comment> findByPostedByLectureId(@Param("lectureId") Long lectureId);
+            "comment.lecture.id=:lectureId AND (:showDeleted=true OR (deleted IS NULL OR DELETED=false))")
+    List<Comment> findByPostedByLectureId(@Param("lectureId") Long lectureId, @Param("showDeleted") boolean showDeleted);
 
 }
