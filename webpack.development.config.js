@@ -19,7 +19,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   output: {
-    path: path.join(PATHS.dist),
+    path: path.join(PATHS.dist, 'assets'),
     filename: '[name].js'
   },
   module: {
@@ -69,13 +69,13 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     }),
-    new ExtractTextPlugin('style/style.css', {
+    new ExtractTextPlugin('style.css', {
       allChunks: true
     }),
     new HtmlWebpackPlugin({
       template: './src/main/webapp/templates/default.html',
       inject: 'body',
-      filename: './index.html'
+      filename: '../index.html'
     })
   ]
 };
