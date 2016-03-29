@@ -11,7 +11,6 @@
       <include file="classpath:config/liquibase/changelog/20151202220000_added_course_id_to_Lecture.xml" relativeToChangelogFile="false"/>
       <include file="classpath:config/liquibase/changelog/20160206201505_insert_read_and_deleted_fields_to_comment.xml" relativeToChangelogFile="false"/>
       <include file="classpath:config/liquibase/changelog/20160215102652_add_course_moderators_table.xml" relativeToChangelogFile="false"/>
-      <include file="classpath:config/liquibase/changelog/20160321235557_add_course_seed.xml" relativeToChangelogFile="false"/>
       <include file="classpath:config/liquibase/changelog/20160322003245_add_comment_score.xml" relativeToChangelogFile="false"/>
       <include file="classpath:config/liquibase/changelog/20160322113106_update_course_to_allow_null_description_and_add_timestamp.xml" relativeToChangelogFile="false"/>
       <include file="classpath:config/liquibase/changelog/20160325231621_add_multiplechoice_question.xml" relativeToChangelogFile="false"/>

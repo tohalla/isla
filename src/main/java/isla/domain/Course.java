@@ -31,7 +31,7 @@ public class Course implements Serializable {
     @Column(name = "course_name")
     private String courseName;
 
-    @Size(max = 4000)
+    @Size(max = 512)
     @Column(name = "course_description")
     private String courseDescription;
 
@@ -47,6 +47,11 @@ public class Course implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Lecture> lectures = new HashSet<>();
 
+    @ManyToOne
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private View view;
+    
     public Long getId() {
         return id;
     }
@@ -86,6 +91,14 @@ public class Course implements Serializable {
     public Set<User> getModerators() {
         return moderators;
     }
+    public void setView(View view) {
+        this.view = view;
+    }
+
+    public View getView() {
+        return this.view;
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -32,5 +32,14 @@
               separator=";"
               tableName="VIEW" />
 
+    <loadData encoding="UTF-8"
+              file="config/liquibase/courses.csv"
+              separator=";"
+              tableName="COURSE" />
+
+    <loadData encoding="UTF-8"
+              file="config/liquibase/course_moderators.csv"
+              separator=";"
+              tableName="COURSE_MODERATORS"/>
   </changeSet>
 </databaseChangeLog>
