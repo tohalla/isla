@@ -4,13 +4,13 @@ import {Provider} from 'react-redux';
 import {Router, Route} from 'react-router';
 
 import App from './App';
-import Default from './view/Default.component';
-import Admin from './view/Admin.component';
-import Profile from './view/Profile.component';
-import Plain from './view/Plain.component';
+import Default from './containers/Default.component';
+import Admin from './containers/Admin.component';
+import Profile from './containers/Profile.component';
+import Plain from './containers/Plain.component';
+import View from './view/View.component';
 import store from './store';
 import Login from './auth/Login.component';
-import CourseList from './course/CourseList.component';
 import LectureInstance from './lecture/LectureInstance.component';
 import Course from './course/Course.component';
 import Register from './auth/Register.component';
@@ -23,10 +23,10 @@ ReactDOM.render((
       <Route component={App}>
         <Route component={Default} path="/">
           <Route component={Login} path="authenticate" />
+          <Route component={View} path="view/:id" />
           <Route component={Activate} path="activate" />
           <Route component={Admin} path="admin" />
           <Route component={Profile} path="profile" />
-          <Route component={CourseList} path="courses" />
           <Route component={Course} path="courses/:id" />
           <Route component={Register} path="register" />
         </Route>

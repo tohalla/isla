@@ -45,3 +45,7 @@ export const ERROR_AUTH_CLEAR = 'ERROR_AUTH_CLEAR';
 
 export const CLEAR_SOCKETS = 'CLEAR_SOCKETS';
 export const ADD_SOCKET = 'ADD_SOCKET';
+
+export const VIEWS_REQUEST = 'VIEWS_REQUEST';
+export const VIEWS_SET = 'VIEWS_SET';
+export const VIEWS_FAILURE = 'VIEWS_FAILURE';

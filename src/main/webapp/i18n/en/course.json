@@ -2,6 +2,7 @@
   "courseCreation": {
     "name": "Course name",
     "description": "Description",
-    "create": "Create course"
+    "create": "Create course",
+    "view": "View"
   }
 }

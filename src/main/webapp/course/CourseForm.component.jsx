@@ -5,7 +5,8 @@ import WithLabel from '../util/WithLabel.component';
 
 export default class CourseForm extends React.Component {
   static propTypes = {
-    onSubmit: React.PropTypes.func.isRequired
+    onSubmit: React.PropTypes.func.isRequired,
+    view: React.PropTypes.object.isRequired
   }
   constructor(props, context) {
     super(props, context);
@@ -39,8 +40,17 @@ export default class CourseForm extends React.Component {
   }
   onSubmit(event) {
     event.preventDefault();
-    this.props.onSubmit(this.state.course);
-    this.setState({course: {}});
+    this.props.onSubmit(Object.assign(
+      this.state.course,
+      {view: this.props.view}
+    ));
+    this.setState({
+      course: {
+        courseName: '',
+        courseDescription: '',
+        moderators: ''
+      }
+    });
   }
   render() {
     return (

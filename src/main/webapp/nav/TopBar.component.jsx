@@ -1,18 +1,43 @@
 import React from 'react';
 import {Link} from 'react-router';
 import counterpart from 'counterpart';
+import {connect} from 'react-redux';
+import {List} from 'immutable';
 
 import UserMenu from './UserMenu.component';
+import {fetchViews} from '../view/view';
 
-export default class TopBar extends React.Component {
+const mapStateToProps = state => ({
+  views: state.getIn(['entities', 'views'])
+});
+
+class TopBar extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   }
   static propTypes = {
     auth: React.PropTypes.object.isRequired
   }
+  componentWillMount() {
+    this.props.fetchViews();
+  }
   render() {
     const isActive = this.context.router.isActive;
+    const viewItems = [];
+    if (this.props.views instanceof List) {
+      this.props.views.forEach((view, index) => {
+        viewItems.push(
+          <li
+              className={isActive(`/view/${view.get('id')}`) ? 'active' : ''}
+              key={index}
+          >
+            <Link to={`/view/${view.get('id')}`}>
+              {counterpart.translate(`views.${view.get('viewName')}`)}
+            </Link>
+          </li>
+        );
+      });
+    }
     return (
       <nav className="nav-default">
         <span className="default-menu">
@@ -20,11 +45,7 @@ export default class TopBar extends React.Component {
             {counterpart.translate("general.navText")}
           </Link>
           <ul className="menu-items">
-            <li className={isActive('courses') ? 'active' : ''}>
-              <Link to={'/courses'}>
-                {counterpart.translate("general.navigation.browseCourses")}
-              </Link>
-            </li>
+            {viewItems}
           </ul>
         </span>
         <UserMenu auth={this.props.auth} />
@@ -32,3 +53,8 @@ export default class TopBar extends React.Component {
     );
   }
 }
+
+export default connect(
+  mapStateToProps,
+  {fetchViews}
+)(TopBar);

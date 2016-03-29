@@ -17,11 +17,13 @@ export default createReducer(fromJS([]), {
   [COURSE_ADD_SUCCESS]: (state, action) => state.push(action.response)
 });
 
-export const fetchCourses = id => {
+export const fetchCourses = props => {
+  const endpoint = props.view ?
+    `views/${props.view}/courses` : `courses/${props.course}/`;
   return {
     [CALL_API]: {
       types: [COURSES_REQUEST, COURSES_SET, COURSES_FAILURE],
-      endpoint: 'courses' + (id ? `/${id}` : '')
+      endpoint: endpoint
     }
   };
 };

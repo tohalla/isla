@@ -48,8 +48,6 @@ public class Course implements Serializable {
     private Set<Lecture> lectures = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private View view;
     
     public Long getId() {

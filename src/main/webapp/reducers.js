@@ -5,6 +5,7 @@ import {LOCATION_CHANGE} from 'react-router-redux';
 import auth from './auth/auth';
 import courses from './course/course';
 import comments from './comment/comment';
+import views from './view/view';
 import lectures from './lecture/lecture';
 
 const routerReducer = createReducer(fromJS({locationBeforeTransitions: null}), {
@@ -16,7 +17,7 @@ const routerReducer = createReducer(fromJS({locationBeforeTransitions: null}), {
 });
 
 const entities = combineReducers({
-  comments, courses, lectures
+  comments, courses, lectures, views
 });
 
 export default combineReducers({

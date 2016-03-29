@@ -14,7 +14,7 @@ const mapStateToProps = state => (
 
 class Course extends React.Component {
   componentWillMount() {
-    this.props.fetchCourses(this.props.routeParams.id);
+    this.props.fetchCourses({course: this.props.routeParams.id});
   }
   shouldComponentUpdate(newProps, newState, newContext) {
     return !(
