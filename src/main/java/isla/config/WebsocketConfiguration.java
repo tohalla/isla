@@ -49,10 +49,8 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/websocket/")
-            .setHandshakeHandler(new DefaultHandshakeHandler())
-            .withSockJS()
-            .setInterceptors(httpSessionHandshakeInterceptor());
+        registry.addEndpoint("/websocket/").withSockJS()
+                .setInterceptors(httpSessionHandshakeInterceptor());
     }
 
     @Bean
@@ -60,17 +58,17 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
         return new HandshakeInterceptor() {
 
             @Override
-            public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+            public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
+                    WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
                 if (request instanceof ServletServerHttpRequest) {
                     ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
-                    HttpSession session = servletRequest.getServletRequest().getSession(false);
                     attributes.put(IP_ADDRESS, servletRequest.getRemoteAddress());
 
                     String token = splitQuery(request.getURI()).get("token");
                     if (token.startsWith("Bearer ")) {
                         token = token.replace("Bearer", "").trim();
-                        final Claims claims =
-                                Jwts.parser().setSigningKey(Constants.signingKey).parseClaimsJws(token).getBody();
+                        final Claims claims = Jwts.parser().setSigningKey(Constants.signingKey)
+                                .parseClaimsJws(token).getBody();
                         final Optional<User> user = claims.getSubject() != null
                                 ? userRepository.findOneByLogin(claims.getSubject()) : null;
                         if (user.isPresent()) {
@@ -79,7 +77,8 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
                     } else {
                         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                         authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
-                        attributes.put("AUTHENTICATION", new AuthenticationToken(token, authorities));
+                        attributes.put("AUTHENTICATION",
+                                new AuthenticationToken(token, authorities));
                     }
                 }
                 return true;
@@ -90,14 +89,15 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
                     WebSocketHandler wsHandler, Exception exception) {
 
             }
-            
+
             private Map<String, String> splitQuery(URI url) throws UnsupportedEncodingException {
                 Map<String, String> query_pairs = new LinkedHashMap<String, String>();
                 String query = url.getQuery();
                 String[] pairs = query.split("&");
                 for (String pair : pairs) {
                     int idx = pair.indexOf("=");
-                    query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+                    query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
+                            URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
                 }
                 return query_pairs;
             }

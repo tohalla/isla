@@ -21,7 +21,7 @@ class App extends React.Component {
   constructor(state, context) {
     super(state, context);
     this.state = {
-      socket: (() => {
+      socket: this.state ? this.state.socket : (() => {
         return fetchToken.then(() => {
           const socket = Stomp.over(sock(
             `${location.protocol}//${config.api.host}:${config.api.port}/` +

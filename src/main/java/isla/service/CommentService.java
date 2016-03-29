@@ -25,13 +25,12 @@ public class CommentService {
     @Inject
     private CommentRepository commentRepository;
 
-    @Inject
-    private UserRepository userRepository;
-
     public Comment markAsRead(long commentId, Authentication auth) {
         Comment comment = commentRepository.findOne(commentId);
-        if (comment.markAsRead(auth))
+        if (comment.markAsRead(auth)) {
+            comment.getChoices().size();
             commentRepository.save(comment);
+        }
         else
             return null;
         return comment;
@@ -39,8 +38,10 @@ public class CommentService {
 
     public Comment markAsDeleted(long commentId, Authentication auth) {
         Comment comment = commentRepository.findOne(commentId);
-        if (comment.markAsDeleted(auth))
+        if (comment.markAsDeleted(auth)) {
+            comment.getChoices().size();
             commentRepository.save(comment);
+        }
         else
             return null;
         return comment;
@@ -48,8 +49,10 @@ public class CommentService {
 
     public Comment addLike(long commentId, String username) {
         Comment comment = commentRepository.findOne(commentId);
-        if (comment.addLike(username))
+        if (comment.addLike(username)) {
+            comment.getChoices().size();
             commentRepository.save(comment);
+        }
         else
             return null;
         return comment;

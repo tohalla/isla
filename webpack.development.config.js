@@ -75,7 +75,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/main/webapp/templates/default.html',
       inject: 'body',
-      filename: '../index.html'
+      filename: './index.html'
     })
   ]
 };

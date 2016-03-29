@@ -66,7 +66,6 @@ public class Comment implements Serializable {
     private boolean deleted;
 
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonInclude(Include.NON_EMPTY)
     private List<MultipleChoiceOption> choices;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -85,7 +84,6 @@ public class Comment implements Serializable {
         return !this.likes.contains(SecurityUtils.getCurrentLogin());
     }
     
-    @Transactional
     public List<MultipleChoiceOption> getChoices() {
         return choices;
     }
