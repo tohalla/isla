@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+  <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql"/>
+  <changeSet id="20160329195604" author="">
+    <createTable tableName="VIEW">
+      <column name="id" type="bigint" autoIncrement="${autoIncrement}" >
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <column name="view_name" type="varchar(128)">
+        <constraints nullable="false" />
+      </column>
+      <column name="menu_item" type="boolean" defaultValue="false">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <addColumn tableName="COURSE">
+      <column name="view_id" type="bigint" />
+    </addColumn>
+
+    <addForeignKeyConstraint  baseColumnNames="view_id"
+                              baseTableName="COURSE"
+                              constraintName="fk_course_view"
+                              referencedColumnNames="id"
+                              referencedTableName="VIEW"/>
+
+    <loadData encoding="UTF-8"
+              file="config/liquibase/views.csv"
+              separator=";"
+              tableName="VIEW" />
+
+  </changeSet>
+</databaseChangeLog>
