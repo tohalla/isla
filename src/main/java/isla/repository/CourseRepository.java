@@ -1,6 +1,8 @@
 package isla.repository;
 
 import isla.domain.Course;
+import isla.domain.View;
+
 import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
@@ -10,4 +12,5 @@ import java.util.List;
  */
 public interface CourseRepository extends JpaRepository<Course,Long> {
 
+    List<Course> findAllByView(View view);
 }
