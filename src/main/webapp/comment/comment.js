@@ -17,11 +17,13 @@ export default createReducer(fromJS([]), {
   [COMMENT_UPDATE]: (state, action) => (
     action.comment.get('deleted') ?
     state.filterNot(comment => comment.get('id') === action.comment.get('id')) :
-    state.map(comment =>
-      comment.get('id') === action.comment.get('id') ?
-        comment.merge(action.comment) :
-        comment
-      )
+    state.map(comment => {
+      if (comment.get('id') === action.comment.get('id')) {
+        delete action.comment.allowLike; // workaround..
+        return comment.merge(action.comment);
+      }
+      return comment;
+    })
   )
 });
 

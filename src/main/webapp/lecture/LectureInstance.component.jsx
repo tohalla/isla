@@ -141,6 +141,7 @@ class LectureInstance extends React.Component {
       }
       )
         .forEach((comment, index) => {
+          console.log(comment.get('id') + '  ' + comment.get('allowLike'));
           const mutableComment = comment.toJS();
           mutableComment.content = (
             <Linkify>{mutableComment.content}</Linkify>
@@ -149,8 +150,8 @@ class LectureInstance extends React.Component {
             <CommentWithChoices
                 comment={mutableComment}
                 displayResults={
-                  !((!comment.has('allowLike') || comment.get('allowLike')) &&
-                  !likes.contains(comment.get('id')))
+                  !comment.get('allowLike') ||
+                  likes.contains(comment.get('id'))
                 }
                 key={index}
                 onDelete={this.onDelete}

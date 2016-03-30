@@ -30,15 +30,17 @@ export default class Comment extends React.Component {
     let choices = [];
 
     this.props.comment.choices.forEach((choice, index) => {
+      const percentage = getPercentage(choice.score, liked);
       choices.push(
         this.props.displayResults ? (
           <div
               className="comment-choice-result"
               id={choice.id}
               key={index}
+              style={{background: `linear-gradient(90deg, #ecf0f1 ${percentage}%, #fff ${percentage}%)`}}
           >
             <span>
-              {`${choice.content} (${getPercentage(choice.score, liked)})`}
+              {`${choice.content} (${percentage}%)`}
             </span>
           </div>
         ) : (
