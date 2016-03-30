@@ -19,6 +19,9 @@ export default class DefaultComment extends React.Component {
   }
   onSubmit(event) {
     event.preventDefault();
+    if (this.state.comment.length < 1) {
+      return;
+    }
     this.props.onSubmit(this.state.comment);
     this.setState({comment: {}});
   }
@@ -31,8 +34,11 @@ export default class DefaultComment extends React.Component {
         {this.props.selectCommentType}
         <input
             className="comment-input"
+            maxLenght={512}
+            minLength={1}
             onChange={this.onContentChange}
             placeholder={counterpart.translate('lectureInstance.commentCreation.content')}
+            required
             type="text"
             value={this.state.comment.content}
         />

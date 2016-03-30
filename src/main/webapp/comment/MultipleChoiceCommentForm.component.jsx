@@ -26,11 +26,17 @@ export default class MultipleChoiceComment extends React.Component {
   }
   onSubmit(event) {
     event.preventDefault();
+    if (this.state.comment.choices.length < 1) {
+      return;
+    }
     this.props.onSubmit(this.state.comment);
     this.setState({comment: {choices: []}, newChoice: ''});
   }
   onAddChoice(event) {
     event.preventDefault();
+    if (this.state.newChoice.length < 1) {
+      return;
+    }
     const {newChoice, comment} = this.state;
     this.setState({
       newChoice: '',

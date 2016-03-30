@@ -45,7 +45,7 @@ public class Comment implements Serializable {
     private DateTime createdAt;
 
     @NotNull
-    @Size(min = 2, max = 512)
+    @Size(min = 1, max = 512)
     @Column(name = "content", length = 512, nullable = false)
     private String content;
 

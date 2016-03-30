@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
 
+import Text from '../util/Text.component';
+
 export default class CourseListItem extends React.Component {
   static propTypes: {
     course: React.propTypes.object.isRequired
@@ -13,7 +15,7 @@ export default class CourseListItem extends React.Component {
           <Link to={`/courses/${id}`}>{courseName}</Link>
         </div>
         <div className="course-content">
-          {courseDescription}
+          <Text value={courseDescription} />
         </div>
       </div>
     );

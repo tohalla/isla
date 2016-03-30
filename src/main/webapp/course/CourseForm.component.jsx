@@ -40,6 +40,9 @@ export default class CourseForm extends React.Component {
   }
   onSubmit(event) {
     event.preventDefault();
+    if (this.state.course.courseName.length < 2) {
+      return;
+    }
     this.props.onSubmit(Object.assign(
       this.state.course,
       {view: this.props.view}
@@ -61,8 +64,11 @@ export default class CourseForm extends React.Component {
         <WithLabel
             item={
               <input
+                  maxLenght={512}
+                  minLength={2}
                   onChange={this.handleCourseNameChange}
                   placeholder={counterpart.translate('course.courseCreation.name')}
+                  required
                   type="text"
                   value={this.state.course.courseName}
               />

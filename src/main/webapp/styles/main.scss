@@ -50,8 +50,9 @@ body {
 }
 
 .row{
-  margin: 10px 0;
+  display: block;
   width: 100%;
+  white-space: pre-wrap;
 }
 
 .timestamp{
