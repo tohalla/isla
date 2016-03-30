@@ -1,8 +1,0 @@
-<isla-course-form ng-if="course.ableToAdd" handle-addition="course.update()">
-</isla-course-form>
-<div class="course-feed">
-  <div ng-repeat-start="course in course.courseData"></div>
-    <a href ui-sref="course({courseId: course.id})" title="{{course.courseName}}">{{course.courseName}}</a>
-  <div ng-repeat-end></div>
-  <a href ng-click="course.update()" class="material-icons refresh-list">refresh</a>
-</div>

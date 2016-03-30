@@ -29,25 +29,13 @@ task setProdProperties(dependsOn: bootRun) << {
 }
 
 
-task gruntBuild(type: Exec) {
+task webpack(type: Exec) {
   if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-    commandLine 'cmd', '/c', 'grunt', '--force', 'build'
+    commandLine 'cmd', '/c', 'npm', 'run', 'build:prod'
   } else {
-    commandLine 'grunt', '--force', 'build'
+    commandLine 'npm', 'run', 'build'
   }
 
 }
-task gruntTest(type: Exec) {
-  if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-    commandLine 'cmd', '/c', 'grunt', 'test'
-  } else {
-    commandLine 'grunt', 'test'
-  }
 
-}
-gruntBuild.dependsOn 'npmInstall'
-gruntBuild.dependsOn 'bower'
-processResources.dependsOn gruntBuild
-test.dependsOn gruntTest
-bootRun.dependsOn gruntTest
-
+processResources.dependsOn webpack

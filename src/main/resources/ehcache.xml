@@ -28,12 +28,4 @@
     <cache name="isla.domain.User.authorities"
            timeToLiveSeconds="3600">
     </cache>
-
-    <cache name="isla.domain.PersistentToken"
-           timeToLiveSeconds="3600">
-    </cache>
-
-    <cache name="isla.domain.User.persistentTokens"
-           timeToLiveSeconds="3600">
-    </cache>
 </ehcache>

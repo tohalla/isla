@@ -5,20 +5,26 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import isla.domain.util.CustomDateTimeDeserializer;
 import isla.domain.util.CustomDateTimeSerializer;
+import isla.security.AuthoritiesConstants;
+import isla.security.SecurityUtils;
+import isla.security.UserAuthentication;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonInclude.Include;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Objects;
 
@@ -27,7 +33,6 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "COMMENT")
-@Document(indexName = "comment")
 public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,7 +45,7 @@ public class Comment implements Serializable {
     private DateTime createdAt;
 
     @NotNull
-    @Size(min = 2, max = 512)
+    @Size(min = 1, max = 512)
     @Column(name = "content", length = 512, nullable = false)
     private String content;
 
@@ -54,13 +59,45 @@ public class Comment implements Serializable {
     @Column(name = "read")
     private boolean read;
 
+    @Column(name = "pinned")
+    private boolean pinned;
+
     @Column(name = "deleted")
     private boolean deleted;
+
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MultipleChoiceOption> choices;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "COMMENT_SCORE", joinColumns = @JoinColumn(name = "comment_id"))
     @Column(name = "user_sid")
+    @JsonIgnore
     private Set<String> likes = new HashSet<String>();
+
+    @JsonProperty("liked")
+    public int getLiked() {
+        return likes.size();
+    }
+
+    @JsonProperty("allowLike")
+    public boolean getAllowLike() {
+        return !this.likes.contains(SecurityUtils.getCurrentLogin());
+    }
+    
+    public List<MultipleChoiceOption> getChoices() {
+        return choices;
+    }
+
+    public void setChoicesAsString(List<String> choices) {
+        this.choices = new ArrayList<MultipleChoiceOption>();
+        for (String content : choices) {
+            this.choices.add(new MultipleChoiceOption(content, this));
+        } ;
+    }
+
+    public void setChoices(List<MultipleChoiceOption> choices) {
+        this.choices = choices;
+    }
 
     public Long getId() {
         return id;
@@ -74,8 +111,9 @@ public class Comment implements Serializable {
         return createdAt;
     }
 
-    public void setCreatedAt(DateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCreatedAt() {
+        if (this.createdAt == null)
+            this.createdAt = new DateTime();
     }
 
     public String getContent() {
@@ -126,6 +164,14 @@ public class Comment implements Serializable {
         this.deleted = deleted;
     }
 
+    public void sePinned(boolean pinned) {
+        this.pinned = pinned;
+    }
+
+    public boolean getPinned() {
+        return pinned;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -150,30 +196,43 @@ public class Comment implements Serializable {
 
     @Override
     public String toString() {
-        return "Comment{" + "id=" + id + ", createdAt='" + createdAt + "'" + ", content='" + content
-                + ", read='" + read + "'" + ", deleted='" + deleted + "'" + '}';
+        return "Comment{" + "id=" + id + ", createdAt='" + createdAt + "'" + ", choices='" + choices
+                + "'" + ", content='" + content + "', liked='" + getLiked() + "'" + ", read='"
+                + read + "'" + ", deleted='" + deleted + "'" + '}';
     }
 
-    public boolean addLike(String userSid) {
-        if (likes.contains(userSid))
+    public boolean addLike(String username) {
+        if (likes.contains(username))
             return false;
-        likes.add(userSid);
+        likes.add(username);
         return true;
     }
 
-    public boolean markAsRead(User user) {
-        if (lecture.getCourse().getModerators().contains(user)) {
-            setRead(true);
-            return true;
+    public boolean markAsRead(Authentication auth) {
+        if (auth instanceof UserAuthentication) {
+            if (lecture.getCourse().getModerators()
+                    .contains(((UserAuthentication) auth).getDetails())
+                    || auth.getAuthorities().contains(AuthoritiesConstants.ADMIN)) {
+                setRead(true);
+                return true;
+            }
         }
         return false;
     }
-    
-    public boolean markAsDeleted(User user) {
-        if (lecture.getCourse().getModerators().contains(user)) {
-            setDeleted(true);
-            return true;
+
+    public boolean markAsDeleted(Authentication auth) {
+        if (auth instanceof UserAuthentication) {
+            if (lecture.getCourse().getModerators()
+                    .contains(((UserAuthentication) auth).getDetails())
+                    || auth.getAuthorities().contains(AuthoritiesConstants.ADMIN)) {
+                setDeleted(true);
+                return true;
+            }
         }
         return false;
+    }
+
+    public void setPinned(boolean pinned) {
+        this.pinned = pinned;
     }
 }

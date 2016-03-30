@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.security.Principal;
 import java.util.Collection;
 
 /**
@@ -36,6 +37,13 @@ public final class SecurityUtils {
         return userName;
     }
 
+    public static String getUserName(Principal principal) {
+        if (principal instanceof UserDetails) {
+            return ((UserDetails)principal).getUsername();
+        } 
+        return principal.toString();
+    }
+    
     /**
      * Check if a user is authenticated.
      *

@@ -6,7 +6,8 @@ import org.springframework.security.config.annotation.web.messaging.MessageSecur
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
 
 @Configuration
-public class WebsocketSecurityConfiguration extends AbstractSecurityWebSocketMessageBrokerConfigurer {
+public class WebsocketSecurityConfiguration
+        extends AbstractSecurityWebSocketMessageBrokerConfigurer {
 
 
     @Override
@@ -15,7 +16,7 @@ public class WebsocketSecurityConfiguration extends AbstractSecurityWebSocketMes
 	        .simpTypeMatchers(SimpMessageType.CONNECT, SimpMessageType.HEARTBEAT, SimpMessageType.UNSUBSCRIBE, SimpMessageType.DISCONNECT).permitAll()
 	        .simpDestMatchers("/topic/comment/**").permitAll()
             .simpSubscribeDestMatchers("/topic/room/**").permitAll()
-	        .simpDestMatchers("/topic/**").authenticated()
+            .simpSubscribeDestMatchers("/user/**").permitAll()
 	        .simpTypeMatchers(SimpMessageType.MESSAGE, SimpMessageType.SUBSCRIBE).denyAll()
 	        .anyMessage().denyAll();
     }

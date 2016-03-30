@@ -4,21 +4,23 @@
     {
       "folder_exclude_patterns":
       [
-        "bower_components",
-        "swagger-ui",
+        "node_modules",
+        "build",
+        "target",
+        ".sass-cache",
+        ".gradle",
+        ".settings",
+        "bin",
+        "tmp",
         "dist"
       ],
       "file_exclude_patterns":
       [
-        "*.css"
+        "*.css",
+        "*.java",
+        "*.log"
       ],
-      "path": "./src/main/webapp"
-    },
-    {
-      "path": "./src/test/javascript"
-    },
-    {
-      "path": "./src/main/scss"
+      "path": "."
     }
   ],
   "settings":

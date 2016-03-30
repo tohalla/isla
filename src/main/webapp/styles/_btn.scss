@@ -1,0 +1,14 @@
+button, .btn{
+  outline: none;
+  padding: 6px;
+  border: 0px;
+  color: $default-btn-color;
+  background: $default-btn-background;
+  &:hover{
+    background: $default-btn-hover-background;
+  }
+}
+button:disabled{
+  background: $default-btn-disabled-background;
+  color: $default-btn-disabled-color;
+}

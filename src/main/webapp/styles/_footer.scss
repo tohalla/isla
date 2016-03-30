@@ -1,0 +1,29 @@
+.footer{
+  background: $footer-background;
+  height: $footer-height;
+  color: $gray;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  a{
+    color: $darkgray;
+    text-decoration: underline;
+    &:hover{
+      color: $black;
+    }
+  }
+}
+.footer-push{
+  height: $footer-height;
+}
+
+.github {
+  a {
+    background: url("../images/GitHub-Mark-64px.png") no-repeat left top;
+    background-size: contain;
+    padding-left: 40px;
+    display: inline-block;
+    line-height: 32px;
+  }
+}

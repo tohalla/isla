@@ -1,0 +1,19 @@
+.course-item {
+  width: 100%;
+  border: 1px solid $aluminum;
+  border-radius: $default-border-radius;
+}
+.course-item + .course-item {
+  margin-top: $default-item-spacing;
+}
+.course-content {
+  padding: $default-vertical-padding $default-horizontal-padding;
+}
+.course-list {
+  margin: $default-vertical-margin auto;
+  width: 90%;
+}
+.course-title {
+  background: $carrara;
+  padding: 4px 8px;
+}

@@ -1,0 +1,85 @@
+$nav-height: 46px;
+nav{
+  height: $nav-height;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span{
+    display: flex;
+    align-items: center;
+  }
+  a{
+    line-height: $nav-height;
+    display: inline-block;
+    height: 100%;
+    padding: 0 4px;
+  }
+}
+.nav-sub{
+  background: $aluminum;
+  border-bottom: 1px solid $gray;
+  font-size: 80%;
+
+  a{
+    color: $darkgray;
+    text-decoration: none;
+    &:hover{
+      color: $black;
+    }
+  }
+  .active a{
+    text-decoration: underline;
+  }
+}
+.default-menu {
+  a{
+    padding: 0 10px;
+  }
+}
+.nav-default{
+  background: $nav-background;
+  color: $nav-text-color;
+
+  a:not(.nav-brand){
+    color: $nav-link-color;
+    background: $nav-link-background;
+    text-decoration: none;
+
+    &:hover{
+      color: $nav-link-hover-color;
+      background: $nav-link-hover-background;
+    }
+  }
+  ul .active a{
+    color: $nav-link-active-color;
+    text-decoration: underline;
+  }
+}
+.nav-plain{
+  position: absolute;
+  padding: 0 5%;
+  top: 0;
+  height: auto;
+
+  button, a{
+    margin: 0;
+    color: $nav-plain-link-color;
+    background: $nav-plain-link-background;
+    padding: 2px 4px;
+  }
+}
+.menu-items{
+  list-style: none;
+  margin: 0 15px;
+  padding: 0;
+  & > li{
+    display: inline-block;
+  }
+}
+
+.nav-brand{
+  margin-right: 80px;
+  color: $nav-brand-color;
+  text-decoration: none;
+}
+

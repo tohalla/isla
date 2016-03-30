@@ -6,16 +6,17 @@ buildscript {
     dependencies {
         classpath('org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE')
         classpath('com.moowork.gradle:gradle-node-plugin:0.10')
-        classpath('com.moowork.gradle:gradle-grunt-plugin:0.10')
     }
 }
 
 apply plugin: 'java'
 sourceCompatibility=1.8
 targetCompatibility=1.8
+
 apply plugin: 'maven'
 apply plugin: 'spring-boot'
 apply plugin: 'war'
+
 defaultTasks 'bootRun'
 
 bootRepackage {
@@ -30,7 +31,7 @@ bootRun {
     addResources = false
 }
 
-apply from: 'yeoman.gradle'
+apply from: 'front.gradle'
 apply from: 'sonar.gradle'
 
 apply from: 'liquibase.gradle'
@@ -45,11 +46,6 @@ if (project.hasProperty('prod')) {
 } else {
   apply from: 'profile_dev.gradle'
 }
-
-group = 'isla'
-version = '0.0.0'
-
-description = ''
 
 configurations {
     providedRuntime
@@ -125,7 +121,6 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web') {
         exclude module: 'spring-boot-starter-tomcat'
@@ -161,6 +156,7 @@ dependencies {
     testCompile group: 'org.hamcrest', name: 'hamcrest-library'
     testCompile group: 'io.gatling.highcharts', name: 'gatling-charts-highcharts', version: gatling_version
 
+    compile 'io.jsonwebtoken:jjwt:0.6.0'
 
 }
 
@@ -174,3 +170,4 @@ task wrapper(type: Wrapper) {
 
 task stage(dependsOn: 'bootRepackage') {
 }
+

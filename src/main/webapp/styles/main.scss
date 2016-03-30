@@ -1,0 +1,99 @@
+@import "settings.scss";
+@import "footer.scss";
+@import "table.scss";
+@import "lecture.scss";
+@import "form.scss";
+@import "room.scss";
+@import "course.scss";
+@import "alert.scss";
+@import "btn.scss";
+@import "navbar.scss";
+@import "icons.scss";
+
+*{
+  font-family: $default-font-family;
+  box-sizing: border-box;
+}
+html, body, .stretch{
+  height: 100%;
+  max-width: 100%;
+}
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin-bottom: -$footer-height;
+}
+a{
+  color: $link-color;
+  outline: none;
+  &:hover{
+    color: $link-hover-color;
+  }
+}
+body {
+  background: $background;
+  badding-bottom: $footer-height;
+  color: #333;
+}
+.container {
+  margin: 0 auto;
+  padding: $default-vertical-padding $default-horizontal-padding;
+  background: $carrara;
+  border-radius: $default-border-radius;
+  display: block;
+  max-width: 800px;
+  width: 100%;
+}
+.content{
+  padding: 30px 5% 10px;
+}
+
+.row{
+  display: block;
+  width: 100%;
+  white-space: pre-wrap;
+}
+
+.timestamp{
+  padding-left: 15px;
+  color: $gray;
+  font-style: italic;
+  font-size: 90%;
+  &::before{
+    content: '- ';
+  }
+}
+
+.right{
+  display: block;
+  margin-left: auto;
+}
+.fixed{
+  position: fixed;
+}
+.dropdown{
+  position: relative;
+}
+.dropdown-menu {
+  border: 1px solid $default-border-color;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  list-style: none;
+  padding: 0;
+  background: $white;
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 3px 8px;
+    color: $darkgray;
+    &:hover {
+      background: $lightblue;
+      color: $white;
+      cursor: pointer;
+    }
+  }
+}

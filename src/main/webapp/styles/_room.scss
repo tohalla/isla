@@ -1,0 +1,138 @@
+.comment-form-container {
+  background: $orange;
+  display: block;
+  padding: 38px 0;
+  display: flex;
+  justify-content: center;
+}
+.comment-form{
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: stretch;
+
+  button{
+    padding: 6px 10px;
+  }
+
+  input {
+    border: none;
+    margin: 0;
+  }
+  select {
+    min-width: 130px;
+  }
+  .select-comment-type{
+    margin: 0;
+    padding: 6px 10px;
+    border-top-left-radius: $default-border-radius;
+    border-bottom-left-radius: $default-border-radius;
+    background: $carrara;
+    border: none;
+    -webkit-appearance: none;
+    color: $gray;
+  }
+  .comment-input{
+    width: 100%;
+    background: $white;
+    border: none;
+  }
+  .comment-choices{
+    width: 100%;
+    display: block;
+  }
+  .comment-choice{
+    padding-left: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: stretch;
+    & + .comment-choice, &:first-child {
+      border-top: 1px solid $aluminum;
+    }
+  }
+  .choice-button{
+    color: $gray;
+    padding: 0;
+    margin: 0 10px;
+  }
+  .comment-send{
+    border-top-right-radius: $default-border-radius;
+    border-bottom-right-radius: $default-border-radius;
+    border: none;
+    background: $aluminum;
+    color: $gray;
+  }
+}
+.comment{
+  width: 100%;
+  min-height: $comment-items-height * 1.5;
+  display: flex;
+  align-content: space-between;
+  border-bottom: 2px solid $aluminum;
+  padding: 0 $comment-horizontal-padding;
+
+  &.checked{
+    background: $carrara;
+  }
+
+  .comment-content{
+    display: inline-block;
+    max-width: calc(100% - 100px);
+    word-wrap: break-word;
+    display: flex;
+    text-overflow: ellipsis;
+    overflow-x: auto;
+    padding: $comment-vertical-padding 0;
+  }
+  .comment-items{
+    display: flex;
+    align-items: center;
+    margin-right: 0;
+    margin-left: auto;
+  }
+  .comment-item{
+    border: none;
+    display: inline-block;
+    width: $comment-items-width;
+    height: $comment-items-height;
+  }
+  .like{
+    background: url("../images/like.png") no-repeat center top;
+    background-size: contain;
+  }
+  .delete{
+    background: url("../images/delete.png") no-repeat center top;
+    background-size: contain;
+  }
+  .check{
+    background: url("../images/check.png") no-repeat center top;
+    background-size: contain;
+  }
+}
+
+
+.comment-container{
+  width: 100%;
+  display: block;
+  border-bottom: 2px solid $aluminum;
+  .comment {
+    border: 0;
+  }
+  .comment-choice, .comment-choice-result {
+    color: $darkgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: $comment-vertical-padding/3 0;
+    border-top: 1px solid $silver;
+  }
+  .comment-choice {
+    background: $clouds;
+  }
+  .comment-choice:hover {
+    color: $white;
+    background: $malibu;
+    cursor: pointer;
+  }
+}

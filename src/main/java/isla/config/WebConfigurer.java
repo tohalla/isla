@@ -115,9 +115,7 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
         MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
-        // IE issue, see https://github.com/jhipster/generator-jhipster/pull/711
         mappings.add("html", "text/html;charset=utf-8");
-        // CloudFoundry issue, see https://github.com/cloudfoundry/gorouter/issues/64
         mappings.add("json", "text/html;charset=utf-8");
         container.setMimeMappings(mappings);
     }
@@ -155,7 +153,6 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
         staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/");
         staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/index.html");
         staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/assets/*");
-        staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/scripts/*");
         staticResourcesProductionFilter.setAsyncSupported(true);
     }
 
@@ -170,7 +167,6 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
                         new CachingHttpHeadersFilter(env));
 
         cachingHttpHeadersFilter.addMappingForUrlPatterns(disps, true, "/assets/*");
-        cachingHttpHeadersFilter.addMappingForUrlPatterns(disps, true, "/scripts/*");
         cachingHttpHeadersFilter.setAsyncSupported(true);
     }
 

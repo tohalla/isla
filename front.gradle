@@ -1,0 +1,12 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+apply plugin: 'com.moowork.node'
+
+task buildFront(type: NpmTask) {
+    args = ['run', 'build']
+}
+task watch(type: NpmTask) {
+    args = ['run', 'watch']
+}
+
+buildFront.dependsOn(npmInstall)
+build.dependsOn(buildFront)

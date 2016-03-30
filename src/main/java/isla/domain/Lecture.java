@@ -9,7 +9,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -24,36 +23,35 @@ import java.util.Objects;
 @Entity
 @Table(name = "LECTURE")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName="lecture")
 public class Lecture implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @JsonSerialize(using = CustomDateTimeSerializer.class)
     @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private DateTime createdAt;
-    
+
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @JsonSerialize(using = CustomDateTimeSerializer.class)
     @JsonDeserialize(using = CustomDateTimeDeserializer.class)
     @Column(name = "starts_at")
     private DateTime startsAt;
-    
+
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @JsonSerialize(using = CustomDateTimeSerializer.class)
     @JsonDeserialize(using = CustomDateTimeDeserializer.class)
     @Column(name = "closes_at")
     private DateTime closesAt;
 
-    @NotNull
-    @Size(max = 512)        
+    @Size(max = 512)
     @Column(name = "description", length = 512, nullable = false)
     private String description;
-    
+
     @ManyToOne
     private Course course;
 
@@ -74,8 +72,9 @@ public class Lecture implements Serializable {
         return createdAt;
     }
 
-    public void setCreatedAt(DateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCreatedAt() {
+        if (this.createdAt == null)
+            this.createdAt = new DateTime();
     }
 
     public DateTime getStartsAt() {
@@ -111,12 +110,12 @@ public class Lecture implements Serializable {
     }
 
     public void setCourse(Course course) {
-		this.course = course;
-	}
+        this.course = course;
+    }
 
     public Course getCourse() {
-		return course;
-	}
+        return course;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -129,7 +128,8 @@ public class Lecture implements Serializable {
 
         Lecture lecture = (Lecture) o;
 
-        if ( ! Objects.equals(id, lecture.id)) return false;
+        if (!Objects.equals(id, lecture.id))
+            return false;
 
         return true;
     }
@@ -141,12 +141,8 @@ public class Lecture implements Serializable {
 
     @Override
     public String toString() {
-        return "Lecture{" +
-                "id=" + id +
-                ", createdAt='" + createdAt + "'" +
-                ", startsAt='" + startsAt + "'" +
-                ", closesAt='" + closesAt + "'" +
-                ", description='" + description + "'" +
-                '}';
+        return "Lecture{" + "id=" + id + ", createdAt='" + createdAt + "'" + ", startsAt='"
+                + startsAt + "'" + ", closesAt='" + closesAt + "'" + ", description='" + description
+                + "'" + '}';
     }
 }

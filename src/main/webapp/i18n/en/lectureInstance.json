@@ -1,0 +1,11 @@
+{
+  "commentCreation": {
+    "create": "send",
+    "content": "Comment",
+    "choiceContent": "Choice"
+  },
+  "commentTypes": {
+    "normal": "Normal",
+    "multipleChoice": "Multiple choice"
+  }
+}

@@ -1,0 +1,37 @@
+.error-block, .success-block {
+  padding: $default-indentation-size/2 $default-indentation-size;
+  width: 100%;
+  display: block;
+  color: $white;
+  a {
+    color: $white;
+  }
+}
+.error-block{
+  background: $default-error-color;
+}
+.success-block{
+  background: $default-success-color;
+}
+.help-block{
+  padding: $default-indentation-size/2 $default-indentation-size;
+  background: $default-highlight-color;
+  margin: 5px 0;
+  display: block;
+}
+.help-title, .error-title{
+  font-weight: bold;
+  display: block;
+}
+.help-item, .error-item{
+  margin: 2px $default-indentation-size 2px 0;
+  width: 100%;
+  word-wrap: break-word;
+  display: block;
+  font-size: 80%;
+  padding-left: 5px;
+  &::before {
+    content: "\2022";
+    padding-right: 5px;
+  }
+}

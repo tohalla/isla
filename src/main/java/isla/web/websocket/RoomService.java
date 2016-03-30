@@ -3,12 +3,9 @@ package isla.web.websocket;
 import isla.domain.Comment;
 import isla.repository.CommentRepository;
 import isla.repository.LectureRepository;
-import isla.security.SecurityUtils;
 import isla.web.websocket.dto.CommentDTO;
-import isla.web.websocket.dto.CommentActionDTO;
 import isla.service.CommentService;
 
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -16,9 +13,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-
-import static isla.config.WebsocketConfiguration.SESSION_ID;
 
 import javax.inject.Inject;
 
@@ -42,39 +38,49 @@ public class RoomService {
             @DestinationVariable("lecture") long lecture) {
         Comment comment = new Comment();
         comment.setContent(commentDTO.getContent());
-        comment.setCreatedAt(DateTime.now());
+        comment.setCreatedAt();
+        if(commentDTO.getChoices() != null && commentDTO.getChoices().size() > 0){
+            comment.setChoicesAsString(commentDTO.getChoices());
+            comment.setPinned(true);
+        }
         comment.setLecture(lectureRepository.getOne(lecture));
 
         log.debug("Sending comment tracking data {}", commentDTO);
         messagingTemplate.convertAndSend("/topic/room/" + lecture,
-                new CommentDTO(commentRepository.save(comment)));
+                commentRepository.save(comment));
     }
 
     @MessageMapping("/topic/comment/{lecture}/{comment}/{action}")
     public void likeComment(@DestinationVariable("lecture") long lecture,
             @DestinationVariable("comment") long commentId,
             @DestinationVariable("action") String action, StompHeaderAccessor stompHeaderAccessor) {
-        String userSid = stompHeaderAccessor.getSessionAttributes().get(SESSION_ID).toString();
-        Comment comment;
+        Comment comment = null;
+        final Authentication auth = (Authentication) stompHeaderAccessor.getSessionAttributes().get("AUTHENTICATION");
         switch (action.toUpperCase()) {
             case "LIKE":
-                comment = commentService.addLike(commentId, userSid);
-                if (comment != null)
-                    messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
-                            new CommentActionDTO(comment.getId(), userSid, action));
+                comment = commentService.addLike(commentId, auth.getPrincipal().toString());
                 break;
             case "DELETE":
-                comment = commentService.markAsDeleted(commentId);
-                if (comment != null)
-                    messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
-                            new CommentActionDTO(comment.getId(), userSid, action));
+                comment = commentService.markAsDeleted(commentId, auth);
                 break;
             case "MARKASREAD":
-                comment = commentService.markAsRead(commentId);
-                if (comment != null)
-                    messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
-                            new CommentActionDTO(comment.getId(), userSid, action));
+                comment = commentService.markAsRead(commentId, auth);
                 break;
         }
+        if (comment != null)
+            messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
+                    comment);
+    }
+    
+    @MessageMapping("/topic/comment/{lecture}/{comment}/{choice}/vote")
+    public void voteComment(@DestinationVariable("lecture") long lecture,
+            @DestinationVariable("comment") long commentId,
+            @DestinationVariable("choice") long choiceId, StompHeaderAccessor stompHeaderAccessor) {
+        Comment comment = null;
+        final Authentication auth = (Authentication) stompHeaderAccessor.getSessionAttributes().get("AUTHENTICATION");
+        comment = commentService.voteFor(commentId, choiceId, auth.getPrincipal().toString());
+        if (comment != null)
+            messagingTemplate.convertAndSend("/topic/room/" + lecture + "/actions",
+                    comment);
     }
 }

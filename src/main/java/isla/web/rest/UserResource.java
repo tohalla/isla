@@ -5,11 +5,9 @@ import isla.domain.Authority;
 import isla.domain.User;
 import isla.repository.AuthorityRepository;
 import isla.repository.UserRepository;
-import isla.repository.search.UserSearchRepository;
 import isla.security.AuthoritiesConstants;
 import isla.service.UserService;
 import isla.web.rest.dto.ManagedUserDTO;
-import isla.web.rest.dto.UserDTO;
 import isla.web.rest.util.HeaderUtil;
 import isla.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -29,9 +27,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing users.
@@ -71,9 +66,6 @@ public class UserResource {
 
     @Inject
     private UserService userService;
-
-    @Inject
-    private UserSearchRepository userSearchRepository;
 
     /**
      * POST  /users -> Create a new user.
@@ -158,19 +150,5 @@ public class UserResource {
                 .map(user -> new ManagedUserDTO(user))
                 .map(managedUserDTO -> new ResponseEntity<>(managedUserDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    /**
-     * SEARCH  /_search/users/:query -> search for the User corresponding
-     * to the query.
-     */
-    @RequestMapping(value = "/_search/users/{query}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<User> search(@PathVariable String query) {
-        return StreamSupport
-            .stream(userSearchRepository.search(queryString(query)).spliterator(), false)
-            .collect(Collectors.toList());
     }
 }

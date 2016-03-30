@@ -1,16 +1,11 @@
 package isla.web.rest;
 
-import static org.elasticsearch.index.query.QueryBuilders.queryString;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -32,7 +27,6 @@ import isla.domain.Lecture;
 import isla.domain.User;
 import isla.repository.CourseRepository;
 import isla.repository.LectureRepository;
-import isla.repository.search.CourseSearchRepository;
 import isla.security.AuthoritiesConstants;
 import isla.web.rest.util.HeaderUtil;
 
@@ -47,9 +41,6 @@ public class CourseResource {
 
     @Inject
     private CourseRepository courseRepository;
-
-    @Inject
-    private CourseSearchRepository courseSearchRepository;
 
     @Inject
     private LectureRepository lectureRepository;
@@ -69,7 +60,6 @@ public class CourseResource {
                     .header("Failure", "A new course cannot already have an ID").body(null);
         }
         Course result = courseRepository.save(course);
-        courseSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/courses/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("course", result.getId().toString()))
                 .body(result);
@@ -89,7 +79,6 @@ public class CourseResource {
             return createCourse(course);
         }
         Course result = courseRepository.save(course);
-        courseSearchRepository.save(course);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("course", course.getId().toString()))
                 .body(result);
@@ -150,21 +139,8 @@ public class CourseResource {
     public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
         log.debug("REST request to delete Course : {}", id);
         courseRepository.delete(id);
-        courseSearchRepository.delete(id);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityDeletionAlert("course", id.toString())).build();
-    }
-
-    /**
-     * SEARCH /_search/courses/:query -> search for the course corresponding to the query.
-     */
-    @RequestMapping(value = "/_search/courses/{query}", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<Course> searchCourses(@PathVariable String query) {
-        return StreamSupport
-                .stream(courseSearchRepository.search(queryString(query)).spliterator(), false)
-                .collect(Collectors.toList());
     }
 
     /**

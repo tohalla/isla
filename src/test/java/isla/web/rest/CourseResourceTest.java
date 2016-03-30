@@ -38,7 +38,6 @@ import isla.domain.Course;
 import isla.domain.Lecture;
 import isla.repository.CourseRepository;
 import isla.repository.LectureRepository;
-import isla.repository.search.CourseSearchRepository;
 
 
 /**
@@ -61,9 +60,6 @@ public class CourseResourceTest {
     private CourseRepository courseRepository;
 
     @Inject
-    private CourseSearchRepository courseSearchRepository;
-
-    @Inject
     private LectureRepository lectureRepository;
 
     @Inject
@@ -81,7 +77,6 @@ public class CourseResourceTest {
         MockitoAnnotations.initMocks(this);
         CourseResource courseResource = new CourseResource();
         ReflectionTestUtils.setField(courseResource, "courseRepository", courseRepository);
-        ReflectionTestUtils.setField(courseResource, "courseSearchRepository", courseSearchRepository);
         ReflectionTestUtils.setField(courseResource, "lectureRepository", lectureRepository);
         this.restCourseMockMvc = MockMvcBuilders.standaloneSetup(courseResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
@@ -205,7 +200,7 @@ public class CourseResourceTest {
 		// Add two lectures
         Lecture lecture1 = new Lecture();
         lecture1.setDescription("eka luento");
-        lecture1.setCreatedAt(DateTime.now());
+        lecture1.setCreatedAt();
         lecture1.setStartsAt(DateTime.now().plusHours(1));
         lecture1.setClosesAt(DateTime.now().plusHours(2).plusMinutes(30));
         lecture1.setCourse(course);
@@ -213,7 +208,7 @@ public class CourseResourceTest {
 
         Lecture lecture2 = new Lecture();
         lecture2.setDescription("toka luento");
-        lecture2.setCreatedAt(DateTime.now());
+        lecture2.setCreatedAt();
         lecture2.setStartsAt(DateTime.now().plusDays(1).plusHours(1));
         lecture2.setClosesAt(DateTime.now().plusDays(1).plusHours(2).plusMinutes(30));
         lecture2.setCourse(course);

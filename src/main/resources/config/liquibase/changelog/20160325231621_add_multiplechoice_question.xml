@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+  <changeSet id="20160325231622" author="">
+
+
+    <addColumn tableName="COMMENT">
+      <column name="pinned" type="boolean" />
+    </addColumn>
+
+    <createTable tableName="MULTIPLECHOICE_OPTION">
+        <column name="id" type="bigint" autoIncrement="${autoIncrement}" >
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name="content" type="varchar(512)">
+            <constraints nullable="false" />
+        </column>
+        <column name="score" type="integer">
+        </column>
+        <column name="parent_comment_id" type="bigint">
+            <constraints nullable="false" />
+        </column>
+    </createTable>
+
+    <addForeignKeyConstraint baseColumnNames="parent_comment_id"
+                             baseTableName="MULTIPLECHOICE_OPTION"
+                             constraintName="fk_parent_comment_id"
+                             referencedColumnNames="id"
+                             referencedTableName="COMMENT"/>
+
+  </changeSet>
+</databaseChangeLog>
