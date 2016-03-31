@@ -1,6 +1,5 @@
 import React from 'react';
-import reactMixin from 'react-mixin';
-import onclickoutside from 'react-onclickoutside';
+import onclickoutside from 'react-click-outside';
 
 export default class DropdownButton extends React.Component {
   static propTypes: {
@@ -32,17 +31,19 @@ export default class DropdownButton extends React.Component {
       menuItems.push(
         <li
             className="dropdown-item"
-            id={item}
+            id={typeof item === 'object' ? item.value : item}
             key={index}
             onClick={this.handleMenuItemClick}
         >
-          {item}
+          {typeof item === 'object' ? item.text : item}
         </li>
       );
     });
     return (
       <span className="dropdown" onClick={this.onClick}>
-        {this.props.clickableItem}
+        <div className="dropdown-clickable-item">
+          {this.props.clickableItem}
+        </div>
         {
           this.state.displayDropdown ?
             <ul className="dropdown-menu">
@@ -54,4 +55,4 @@ export default class DropdownButton extends React.Component {
   }
 }
 
-reactMixin(DropdownButton.prototype, onclickoutside);
+export default onclickoutside(DropdownButton);

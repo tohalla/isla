@@ -1,9 +1,37 @@
 .comment-form-container {
+  position: relative;
   background: $orange;
   display: block;
   padding: 38px 0;
   display: flex;
   justify-content: center;
+  border-bottom: 1px solid $gray;
+}
+.lecture-feed-actions {
+  position: absolute;
+  right: 10%;
+  bottom: 0px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    display: inline-block;
+    margin: 0 1px;
+  }
+  button {
+    background: $darkgray;
+    font-size: 90%;
+    padding: 2px 4px;
+    color: $aluminum;
+    &:hover {
+      background: $darkgray;
+      color: $white;
+    }
+    &.active {
+      background: $gray;
+      color: $white;
+    }
+  }
 }
 .comment-form{
   width: 90%;

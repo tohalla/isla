@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import {Map, List, fromJS} from 'immutable';
 import Linkify from 'react-linkify';
+import counterpart from 'counterpart';
 
 import {addComment, updateComment, fetchComments} from '../comment/comment';
 import {fetchLectures} from './lecture';
@@ -36,9 +37,11 @@ class LectureInstance extends React.Component {
     this.addComment = this.addComment.bind(this);
     this.onLike = this.onLike.bind(this);
     this.onRead = this.onRead.bind(this);
+    this.toggleFreeze = this.toggleFreeze.bind(this);
+    this.toggleHideChecked = this.toggleHideChecked.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onVote = this.onVote.bind(this);
-    this.state = {likes: new List()};
+    this.state = {likes: new List(), freezeView: false, hideChecked: false};
   }
   componentWillMount() {
     const lecture = this.props.routeParams.id;
@@ -65,9 +68,12 @@ class LectureInstance extends React.Component {
   }
   shouldComponentUpdate(newProps, newState, newContext) {
     return !(
-      this.props.comments === newProps.comments &&
-      this.props.lecture === newProps.lecture &&
-      JSON.stringify(this.context) === JSON.stringify(newContext)
+      (newState.freezeView && this.state.freezeView) || (
+        this.props.comments === newProps.comments &&
+        this.props.lecture === newProps.lecture &&
+        this.state === newState &&
+        JSON.stringify(this.context) === JSON.stringify(newContext)
+      )
     );
   }
   componentWillUnmount() {
@@ -83,7 +89,6 @@ class LectureInstance extends React.Component {
   }
   addComment(comment) {
     this.context.socket.then(socket => {
-      console.log(JSON.stringify(comment));
       socket.send(
         '/topic/comment/' + this.props.lecture.get('id'),
         {},
@@ -125,9 +130,17 @@ class LectureInstance extends React.Component {
       );
     });
   }
+  toggleFreeze(event) {
+    event.preventDefault();
+    this.setState({freezeView: !this.state.freezeView});
+  }
+  toggleHideChecked(event) {
+    event.preventDefault();
+    this.setState({hideChecked: !this.state.hideChecked});
+  }
   render() {
     const comments = [];
-    const likes = this.state.likes;
+    const {freezeView, likes, hideChecked} = this.state;
     if (this.props.comments instanceof List) {
       this.props.comments.sort((a, b) => {
         let order = 0;
@@ -141,47 +154,72 @@ class LectureInstance extends React.Component {
       }
       )
         .forEach((comment, index) => {
-          console.log(comment.get('id') + '  ' + comment.get('allowLike'));
-          const mutableComment = comment.toJS();
-          mutableComment.content = (
-            <Linkify>{mutableComment.content}</Linkify>
-          );
-          comments.push(comment.get('choices') && comment.get('choices').size ?
-            <CommentWithChoices
-                comment={mutableComment}
-                displayResults={
-                  !comment.get('allowLike') ||
-                  likes.contains(comment.get('id'))
-                }
-                key={index}
-                onDelete={this.onDelete}
-                onRead={this.onRead}
-                onVote={this.onVote}
-            /> :
-            <Comment
-                allowLike={
-                  (!comment.has('allowLike') || comment.get('allowLike')) &&
-                  !likes.contains(comment.get('id'))
-                }
-                comment={mutableComment}
-                key={index}
-                onDelete={this.onDelete}
-                onLike={this.onLike}
-                onRead={this.onRead}
-            />
-          );
+          if (!hideChecked || !comment.get('read')) {
+            const mutableComment = comment.toJS();
+            mutableComment.content = (
+              <Linkify>{mutableComment.content}</Linkify>
+            );
+            comments.push(comment.get('choices') && comment.get('choices').size ?
+              <CommentWithChoices
+                  comment={mutableComment}
+                  displayResults={
+                    !comment.get('allowLike') ||
+                    likes.contains(comment.get('id'))
+                  }
+                  key={index}
+                  onDelete={this.onDelete}
+                  onRead={this.onRead}
+                  onVote={this.onVote}
+              /> :
+              <Comment
+                  allowLike={
+                    (!comment.has('allowLike') || comment.get('allowLike')) &&
+                    !likes.contains(comment.get('id'))
+                  }
+                  comment={mutableComment}
+                  key={index}
+                  onDelete={this.onDelete}
+                  onLike={this.onLike}
+                  onRead={this.onRead}
+              />
+            );
+          }
         }
       );
     }
     return (
       <div>
-        <NewComment
-            lecture={
-              this.props.lecture instanceof Map ?
-                this.props.lecture.toJS() : {}
-            }
-            onSubmit={this.addComment}
-        />
+        <div className="comment-form-container">
+          <NewComment
+              lecture={
+                this.props.lecture instanceof Map ?
+                  this.props.lecture.toJS() : {}
+              }
+              onSubmit={this.addComment}
+          />
+          <ul className="lecture-feed-actions">
+            <li>
+              <button
+                  className={freezeView ? 'active' : ''}
+                  onClick={this.toggleFreeze}
+              >
+                {counterpart.translate(`lectureInstance.actions.freeze.${
+                  freezeView ? 'enabled' : 'disabled'
+                }`)}
+              </button>
+            </li>
+            <li>
+              <button
+                  className={hideChecked ? 'active' : ''}
+                  onClick={this.toggleHideChecked}
+              >
+                {counterpart.translate(`lectureInstance.actions.hideChecked.${
+                  hideChecked ? 'enabled' : 'disabled'
+                }`)}
+              </button>
+            </li>
+          </ul>
+        </div>
         {comments}
       </div>
     );

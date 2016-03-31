@@ -53,10 +53,6 @@ export default class NewComment extends React.Component {
       }
     };
 
-    return (
-      <div className="comment-form-container">
-        {commentForm()}
-      </div>
-    );
+    return commentForm();
   }
 }

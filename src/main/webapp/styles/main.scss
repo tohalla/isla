@@ -74,16 +74,18 @@ body {
 }
 .dropdown{
   position: relative;
+  display: inline-block;
 }
 .dropdown-menu {
   border: 1px solid $default-border-color;
   position: absolute;
-  top: 0;
-  left: 0;
+  bottom: 0px;
+  left: 50%;
   z-index: 999;
   list-style: none;
   padding: 0;
   background: $white;
+  transform: translate(-50%, 100%);
   .dropdown-item {
     display: block;
     width: 100%;
