@@ -57,16 +57,20 @@ nav{
 }
 .nav-plain{
   position: absolute;
-  padding: 0 5%;
+  padding: 0;
   top: 0;
   height: auto;
   z-index: 999;
 
   button, a{
-    margin: 0;
+    margin: 0 1px;
     color: $nav-plain-link-color;
     background: $nav-plain-link-background;
     padding: 2px 4px;
+    text-size: 90%;
+    &:hover {
+      color: $nav-plain-link-hover-color;
+    }
   }
 }
 .menu-items{
