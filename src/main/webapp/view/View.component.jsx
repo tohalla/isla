@@ -54,10 +54,12 @@ export default class View extends React.Component {
           <RequireAuthoritory
               authority="ROLE_ADMIN"
               item={
-                <CourseForm
-                    onSubmit={this.props.addCourse}
-                    view={this.state.activeView}
-                />
+                <div className="container">
+                  <CourseForm
+                      onSubmit={this.props.addCourse}
+                      view={this.state.activeView}
+                  />
+                </div>
               }
 
           />

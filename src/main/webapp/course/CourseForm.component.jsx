@@ -67,31 +67,31 @@ export default class CourseForm extends React.Component {
                   maxLenght={512}
                   minLength={2}
                   onChange={this.handleCourseNameChange}
-                  placeholder={counterpart.translate('course.courseCreation.name')}
+                  placeholder={counterpart.translate('course.name')}
                   required
                   type="text"
                   value={this.state.course.courseName}
               />
             }
-            label={counterpart.translate('course.courseCreation.name')}
+            label={counterpart.translate('course.name')}
         />
         <WithLabel
             item={
               <textarea
                   onChange={this.handleCourseDescriptionChange}
-                  placeholder={counterpart.translate('course.courseCreation.description')}
+                  placeholder={counterpart.translate('course.description')}
                   type="text"
                   value={this.state.course.courseDescription}
               />
             }
-            label={counterpart.translate('course.courseCreation.description')}
+            label={counterpart.translate('course.description')}
         />
         <div className="form-roup">
           <button
               className="right"
               type="submit"
           >
-            {counterpart.translate('course.courseCreation.create')}
+            {counterpart.translate('course.create')}
           </button>
         </div>
       </form>

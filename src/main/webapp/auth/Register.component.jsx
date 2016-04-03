@@ -123,98 +123,100 @@ class Register extends React.Component {
       );
     }
     return (
-      <form
-          className="form-vertical-group form-register"
-          onSubmit={this.onSubmit}
-      >
-        {this.state.error ?
-          <div className="error-block">
-            {counterpart.translate(`account.errors.${this.state.error}`)}
-          </div> : null
-        }
-        <WithLabel
-            item={
-              <input
-                  onChange={this.handleLoginChange}
-                  placeholder={counterpart.translate('account.login')}
-                  type="text"
-                  value={this.state.user.login}
-              />
-            }
-            label={counterpart.translate('account.login')}
-        />
-        <WithErrors
-            errors={this.state.errors.email}
-            item={
-              <WithLabel
-                  item={
-                    <input
-                        onBlur={this.validateEmail}
-                        onChange={this.handleEmailChange}
-                        placeholder={counterpart.translate('account.email')}
-                        type="email"
-                        value={this.state.user.email}
-                    />
-                  }
-                  label={counterpart.translate('account.email')}
-              />
-            }
-            title={counterpart.translate('account.email')}
-        />
-        <WithErrors
-            errors={this.state.errors.password}
-            item={
-              <div>
+      <div className="container">
+        <form
+            className="form-vertical-group form-register"
+            onSubmit={this.onSubmit}
+        >
+          {this.state.error ?
+            <div className="error-block">
+              {counterpart.translate(`account.errors.${this.state.error}`)}
+            </div> : null
+          }
+          <WithLabel
+              item={
+                <input
+                    onChange={this.handleLoginChange}
+                    placeholder={counterpart.translate('account.login')}
+                    type="text"
+                    value={this.state.user.login}
+                />
+              }
+              label={counterpart.translate('account.login')}
+          />
+          <WithErrors
+              errors={this.state.errors.email}
+              item={
                 <WithLabel
                     item={
                       <input
-                          onBlur={this.validatePassword1}
-                          onChange={this.handlePasswordChange}
-                          placeholder={
-                            counterpart.translate('account.password')}
-                          type="password"
-                          value={this.state.user.password}
+                          onBlur={this.validateEmail}
+                          onChange={this.handleEmailChange}
+                          placeholder={counterpart.translate('account.email')}
+                          type="email"
+                          value={this.state.user.email}
                       />
                     }
-                    label={counterpart.translate('account.password')}
+                    label={counterpart.translate('account.email')}
                 />
-                <WithLabel
-                    item={
-                      <input
-                          onBlur={this.validatePassword2}
-                          onChange={this.handleRetypePasswordChange}
-                          placeholder={
-                            counterpart.translate('account.retypePassword')
-                          }
-                          type="password"
-                          value={this.state.user.retypePassword}
-                      />
-                    }
-                    label={counterpart.translate('account.retypePassword')}
+              }
+              title={counterpart.translate('account.email')}
+          />
+          <WithErrors
+              errors={this.state.errors.password}
+              item={
+                <div>
+                  <WithLabel
+                      item={
+                        <input
+                            onBlur={this.validatePassword1}
+                            onChange={this.handlePasswordChange}
+                            placeholder={
+                              counterpart.translate('account.password')}
+                            type="password"
+                            value={this.state.user.password}
+                        />
+                      }
+                      label={counterpart.translate('account.password')}
+                  />
+                  <WithLabel
+                      item={
+                        <input
+                            onBlur={this.validatePassword2}
+                            onChange={this.handleRetypePasswordChange}
+                            placeholder={
+                              counterpart.translate('account.retypePassword')
+                            }
+                            type="password"
+                            value={this.state.user.retypePassword}
+                        />
+                      }
+                      label={counterpart.translate('account.retypePassword')}
+                  />
+                </div>
+              }
+              title={counterpart.translate('account.password')}
+          />
+          <WithLabel
+              item={
+                <Locales
+                    onChange={this.handleLocaleChange}
+                    value={this.state.user.langKey}
                 />
-              </div>
-            }
-            title={counterpart.translate('account.password')}
-        />
-        <WithLabel
-            item={
-              <Locales
-                  onChange={this.handleLocaleChange}
-                  value={this.state.user.langKey}
-              />
-            }
-            label={counterpart.translate('account.selectDefaultLanguage')}
-        />
-        <div className="form-roup">
-          <button
-              className="right"
-              disabled={!this.allowSubmit()}
-              type="submit"
-          >
-            {counterpart.translate('account.register.register')}
-          </button>
-        </div>
-      </form>
+              }
+              label={counterpart.translate('account.selectDefaultLanguage')}
+          />
+          <div className="form-roup">
+            <button
+                className="right"
+                disabled={!this.allowSubmit()}
+                type="submit"
+            >
+              {counterpart.translate('account.register.register')}
+            </button>
+          </div>
+        </form>
+      </div>
     );
   }
 }

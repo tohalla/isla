@@ -42,7 +42,7 @@ class Login extends React.Component {
       password: this.state.password
     })
       .then(() => this.context.router.push('/'))
-      .catch(error => this.setState({error: 'invalidLogin'}));
+      .catch(() => this.setState({error: 'invalidLogin'}));
   }
   handleLoginChange(event) {
     this.setState({login: event.target.value});
@@ -55,46 +55,48 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <form className="form-vertical-group form-login" onSubmit={this.onSubmit}>
-        {this.state.error ?
-          <div className="error-block">
-            {counterpart.translate(`account.errors.${this.state.error}`)}
-          </div> : null
-        }
-        <WithLabel
-            item={
-              <input
-                  onChange={this.handleLoginChange}
-                  placeholder={counterpart.translate('account.login')}
-                  type="text"
-                  value={this.state.login}
-              />
-            }
-            label={counterpart.translate('account.login')}
-        />
-        <WithLabel
-            item={
-              <input
-                  onChange={this.handlePasswordChange}
-                  placeholder={counterpart.translate('account.password')}
-                  type="password"
-                  value={this.state.password}
-              />
-            }
-            label={counterpart.translate('account.password')}
-        />
-        <div className="form-group">
-          <Link to={'/register'}>
-            {counterpart.translate('account.register.register')}
-          </Link>
-          <button
-              disabled={!this.allowSubmit()}
-              type="submit"
-          >
-            {counterpart.translate('account.authenticate.authenticate')}
-          </button>
-        </div>
-      </form>
+      <div className="container">
+        <form className="form-vertical-group form-login" onSubmit={this.onSubmit}>
+          {this.state.error ?
+            <div className="error-block">
+              {counterpart.translate(`account.errors.${this.state.error}`)}
+            </div> : null
+          }
+          <WithLabel
+              item={
+                <input
+                    onChange={this.handleLoginChange}
+                    placeholder={counterpart.translate('account.login')}
+                    type="text"
+                    value={this.state.login}
+                />
+              }
+              label={counterpart.translate('account.login')}
+          />
+          <WithLabel
+              item={
+                <input
+                    onChange={this.handlePasswordChange}
+                    placeholder={counterpart.translate('account.password')}
+                    type="password"
+                    value={this.state.password}
+                />
+              }
+              label={counterpart.translate('account.password')}
+          />
+          <div className="form-group">
+            <Link to={'/register'}>
+              {counterpart.translate('account.register.register')}
+            </Link>
+            <button
+                disabled={!this.allowSubmit()}
+                type="submit"
+            >
+              {counterpart.translate('account.authenticate.authenticate')}
+            </button>
+          </div>
+        </form>
+      </div>
     );
   }
 }

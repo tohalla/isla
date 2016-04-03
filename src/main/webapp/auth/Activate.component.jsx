@@ -27,7 +27,7 @@ class Activate extends React.Component {
   }
   render() {
     return this.state ? (
-      <div className="form-vertical-group">
+      <div className="container">
         <div className={this.state.ok ? 'success-block' : 'error-block'}>
           {counterpart.translate(`account.activate.${this.state.message}`) + ' '}
           {this.state.ok ?
