@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class WithLabel extends React.Component {
   static propTypes = {
-    label: React.PropTypes.string
+    onSubmit: React.PropTypes.func.isRequired
   };
   render() {
     return (

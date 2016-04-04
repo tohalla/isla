@@ -1,5 +1,4 @@
 import React from 'react';
-import counterpart from 'counterpart';
 import {connect} from 'react-redux';
 import {Map} from 'immutable';
 
@@ -8,7 +7,6 @@ import LectureForm from '../lecture/LectureForm.component';
 import {addLecture} from '../lecture/lecture';
 import LectureList from '../lecture/LectureList.component';
 import RequireAuthoritory from '../util/RequireAuthority.component';
-import WithLabel from '../util/WithLabel.component';
 
 const mapStateToProps = state => (
   {course: state.getIn(['entities', 'courses'])

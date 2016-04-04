@@ -62,28 +62,22 @@ class Login extends React.Component {
               {counterpart.translate(`account.errors.${this.state.error}`)}
             </div> : null
           }
-          <WithLabel
-              item={
-                <input
-                    onChange={this.handleLoginChange}
-                    placeholder={counterpart.translate('account.login')}
-                    type="text"
-                    value={this.state.login}
-                />
-              }
-              label={counterpart.translate('account.login')}
-          />
-          <WithLabel
-              item={
-                <input
-                    onChange={this.handlePasswordChange}
-                    placeholder={counterpart.translate('account.password')}
-                    type="password"
-                    value={this.state.password}
-                />
-              }
-              label={counterpart.translate('account.password')}
-          />
+          <WithLabel label={counterpart.translate('account.login')}>
+            <input
+                onChange={this.handleLoginChange}
+                placeholder={counterpart.translate('account.login')}
+                type="text"
+                value={this.state.login}
+            />
+          </WithLabel>
+          <WithLabel label={counterpart.translate('account.password')}>
+            <input
+                onChange={this.handlePasswordChange}
+                placeholder={counterpart.translate('account.password')}
+                type="password"
+                value={this.state.password}
+            />
+          </WithLabel>
           <div className="form-group">
             <Link to={'/register'}>
               {counterpart.translate('account.register.register')}

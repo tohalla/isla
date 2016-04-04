@@ -41,17 +41,14 @@ export default class LectureForm extends React.Component {
           className="form-vertical-group lecture-form"
           onSubmit={this.onSubmit}
       >
-        <WithLabel
-            item={
-              <input
-                  onChange={this.handleLectureDescriptionChange}
-                  placeholder={counterpart.translate('lecture.lectureCreation.description')}
-                  type="text"
-                  value={this.state.lecture.description}
-              />
-            }
-            label={counterpart.translate('lecture.lectureCreation.description')}
-        />
+        <WithLabel label={counterpart.translate('lecture.lectureCreation.description')}>
+          <input
+              onChange={this.handleLectureDescriptionChange}
+              placeholder={counterpart.translate('lecture.lectureCreation.description')}
+              type="text"
+              value={this.state.lecture.description}
+          />
+        </WithLabel>
         <div className="form-roup">
           <button
               className="right"

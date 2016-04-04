@@ -133,32 +133,26 @@ class Register extends React.Component {
               {counterpart.translate(`account.errors.${this.state.error}`)}
             </div> : null
           }
-          <WithLabel
-              item={
-                <input
-                    onChange={this.handleLoginChange}
-                    placeholder={counterpart.translate('account.login')}
-                    type="text"
-                    value={this.state.user.login}
-                />
-              }
-              label={counterpart.translate('account.login')}
-          />
+          <WithLabel label={counterpart.translate('account.login')}>
+            <input
+                onChange={this.handleLoginChange}
+                placeholder={counterpart.translate('account.login')}
+                type="text"
+                value={this.state.user.login}
+            />
+          </WithLabel>
           <WithErrors
               errors={this.state.errors.email}
               item={
-                <WithLabel
-                    item={
-                      <input
-                          onBlur={this.validateEmail}
-                          onChange={this.handleEmailChange}
-                          placeholder={counterpart.translate('account.email')}
-                          type="email"
-                          value={this.state.user.email}
-                      />
-                    }
-                    label={counterpart.translate('account.email')}
-                />
+                <WithLabel label={counterpart.translate('account.email')}>
+                  <input
+                      onBlur={this.validateEmail}
+                      onChange={this.handleEmailChange}
+                      placeholder={counterpart.translate('account.email')}
+                      type="email"
+                      value={this.state.user.email}
+                  />
+                </WithLabel>
               }
               title={counterpart.translate('account.email')}
           />
@@ -166,46 +160,37 @@ class Register extends React.Component {
               errors={this.state.errors.password}
               item={
                 <div>
-                  <WithLabel
-                      item={
-                        <input
-                            onBlur={this.validatePassword1}
-                            onChange={this.handlePasswordChange}
-                            placeholder={
-                              counterpart.translate('account.password')}
-                            type="password"
-                            value={this.state.user.password}
-                        />
-                      }
-                      label={counterpart.translate('account.password')}
-                  />
-                  <WithLabel
-                      item={
-                        <input
-                            onBlur={this.validatePassword2}
-                            onChange={this.handleRetypePasswordChange}
-                            placeholder={
-                              counterpart.translate('account.retypePassword')
-                            }
-                            type="password"
-                            value={this.state.user.retypePassword}
-                        />
-                      }
-                      label={counterpart.translate('account.retypePassword')}
-                  />
+                  <WithLabel label={counterpart.translate('account.password')}>
+                    <input
+                        onBlur={this.validatePassword1}
+                        onChange={this.handlePasswordChange}
+                        placeholder={
+                          counterpart.translate('account.password')}
+                        type="password"
+                        value={this.state.user.password}
+                    />
+                  </WithLabel>
+                  <WithLabel label={counterpart.translate('account.retypePassword')}>
+                    <input
+                        onBlur={this.validatePassword2}
+                        onChange={this.handleRetypePasswordChange}
+                        placeholder={
+                          counterpart.translate('account.retypePassword')
+                        }
+                        type="password"
+                        value={this.state.user.retypePassword}
+                    />
+                  </WithLabel>
                 </div>
               }
               title={counterpart.translate('account.password')}
           />
-          <WithLabel
-              item={
-                <Locales
-                    onChange={this.handleLocaleChange}
-                    value={this.state.user.langKey}
-                />
-              }
-              label={counterpart.translate('account.selectDefaultLanguage')}
-          />
+          <WithLabel label={counterpart.translate('account.selectDefaultLanguage')}>
+            <Locales
+                onChange={this.handleLocaleChange}
+                value={this.state.user.langKey}
+            />
+          </WithLabel>
           <div className="form-roup">
             <button
                 className="right"

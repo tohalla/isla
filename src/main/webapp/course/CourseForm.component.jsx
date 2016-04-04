@@ -61,31 +61,25 @@ export default class CourseForm extends React.Component {
           className="form-vertical-group course-form"
           onSubmit={this.onSubmit}
       >
-        <WithLabel
-            item={
-              <input
-                  maxLenght={512}
-                  minLength={2}
-                  onChange={this.handleCourseNameChange}
-                  placeholder={counterpart.translate('course.name')}
-                  required
-                  type="text"
-                  value={this.state.course.courseName}
-              />
-            }
-            label={counterpart.translate('course.name')}
-        />
-        <WithLabel
-            item={
-              <textarea
-                  onChange={this.handleCourseDescriptionChange}
-                  placeholder={counterpart.translate('course.description')}
-                  type="text"
-                  value={this.state.course.courseDescription}
-              />
-            }
-            label={counterpart.translate('course.description')}
-        />
+        <WithLabel label={counterpart.translate('course.name')}>
+          <input
+              maxLenght={512}
+              minLength={2}
+              onChange={this.handleCourseNameChange}
+              placeholder={counterpart.translate('course.name')}
+              required
+              type="text"
+              value={this.state.course.courseName}
+          />
+        </WithLabel>
+        <WithLabel label={counterpart.translate('course.description')}>
+          <textarea
+              onChange={this.handleCourseDescriptionChange}
+              placeholder={counterpart.translate('course.description')}
+              type="text"
+              value={this.state.course.courseDescription}
+          />
+        </WithLabel>
         <div className="form-roup">
           <button
               className="right"
