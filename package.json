@@ -78,7 +78,9 @@
     "react-redux": "^4.4.1",
     "react-router": "^2.0.1",
     "react-router-redux": "^4.0.0",
+    "react-tag-input": "^2.2.5",
     "redux": "^3.3.1",
+    "redux-form": "^5.0.1",
     "redux-thunk": "^2.0.1",
     "sockjs-client": "^1.0.3"
   },

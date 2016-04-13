@@ -10,8 +10,8 @@ export default class CourseForm extends React.Component {
   }
   constructor(props, context) {
     super(props, context);
-    this.handleCourseNameChange = this.handleCourseNameChange.bind(this);
-    this.handleCourseDescriptionChange = this.handleCourseDescriptionChange.bind(this);
+    this.onCourseNameChange = this.onCourseNameChange.bind(this);
+    this.onCourseDescriptionChange = this.onCourseDescriptionChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
       course: {
@@ -26,13 +26,13 @@ export default class CourseForm extends React.Component {
       this.context.router.push('/authenticate');
     }
   }
-  handleCourseNameChange(event) {
+  onCourseNameChange(event) {
     const course = Object.assign(
       this.state.course, {courseName: event.target.value}
     );
     this.setState({course});
   }
-  handleCourseDescriptionChange(event) {
+  onCourseDescriptionChange(event) {
     const course = Object.assign(
       this.state.course, {courseDescription: event.target.value}
     );
@@ -65,7 +65,7 @@ export default class CourseForm extends React.Component {
           <input
               maxLenght={512}
               minLength={2}
-              onChange={this.handleCourseNameChange}
+              onChange={this.onCourseNameChange}
               placeholder={counterpart.translate('course.name')}
               required
               type="text"
@@ -74,7 +74,7 @@ export default class CourseForm extends React.Component {
         </WithLabel>
         <WithLabel label={counterpart.translate('course.description')}>
           <textarea
-              onChange={this.handleCourseDescriptionChange}
+              onChange={this.onCourseDescriptionChange}
               placeholder={counterpart.translate('course.description')}
               type="text"
               value={this.state.course.courseDescription}

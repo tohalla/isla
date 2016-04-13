@@ -1,7 +1,8 @@
 button, .btn{
   outline: none;
   padding: 6px;
-  border: 0px;
+  margin: 1px;
+  border: 0;
   color: $default-btn-color;
   background: $default-btn-background;
   &:hover{

@@ -126,8 +126,10 @@ public class AccountResource {
     public ResponseEntity<String> saveAccount(@RequestBody UserDTO userDTO) {
         return userRepository.findOneByLogin(userDTO.getLogin())
                 .filter(u -> u.getLogin().equals(SecurityUtils.getCurrentLogin())).map(u -> {
-                    userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(),
-                            userDTO.getEmail(), userDTO.getLangKey());
+                    userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getLangKey());
+                    if(checkPasswordLength(userDTO.getPassword())) {
+                        userService.changePassword(userDTO.getPassword());
+                    }
                     return new ResponseEntity<String>(HttpStatus.OK);
                 }).orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }

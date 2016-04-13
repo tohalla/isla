@@ -37,7 +37,7 @@ export default class Comment extends React.Component {
           {content}
         </div>
         <div className="comment-items" >
-          {liked}
+          <span className="like-count">{liked}</span>
           {this.props.allowLike && !this.props.comment.read ?
             <button
                 className="material-icons icon-darkgray icon-24"

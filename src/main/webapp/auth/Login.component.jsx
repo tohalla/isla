@@ -15,8 +15,8 @@ class Login extends React.Component {
     super(props, context);
     this.onSubmit = this.onSubmit.bind(this);
     this.allowSubmit = this.allowSubmit.bind(this);
-    this.handleLoginChange = this.handleLoginChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.onLoginChange = this.onLoginChange.bind(this);
+    this.onPasswordChange = this.onPasswordChange.bind(this);
     this.state = {
       login: '',
       password: ''
@@ -44,10 +44,10 @@ class Login extends React.Component {
       .then(() => this.context.router.push('/'))
       .catch(() => this.setState({error: 'invalidLogin'}));
   }
-  handleLoginChange(event) {
+  onLoginChange(event) {
     this.setState({login: event.target.value});
   }
-  handlePasswordChange(event) {
+  onPasswordChange(event) {
     this.setState({password: event.target.value});
   }
   allowSubmit() {
@@ -64,7 +64,7 @@ class Login extends React.Component {
           }
           <WithLabel label={counterpart.translate('account.login')}>
             <input
-                onChange={this.handleLoginChange}
+                onChange={this.onLoginChange}
                 placeholder={counterpart.translate('account.login')}
                 type="text"
                 value={this.state.login}
@@ -72,7 +72,7 @@ class Login extends React.Component {
           </WithLabel>
           <WithLabel label={counterpart.translate('account.password')}>
             <input
-                onChange={this.handlePasswordChange}
+                onChange={this.onPasswordChange}
                 placeholder={counterpart.translate('account.password')}
                 type="password"
                 value={this.state.password}

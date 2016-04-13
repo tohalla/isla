@@ -11,9 +11,9 @@ export default class Lecture extends React.Component {
   };
   constructor(props, context) {
     super(props, context);
-    this.handleMenuItemClick = this.handleMenuItemClick.bind(this);
+    this.onMenuItemClick = this.onMenuItemClick.bind(this);
   }
-  handleMenuItemClick(item) {
+  onMenuItemClick(item) {
     switch (item.toLowerCase()) {
       case 'excel':
         window.location.href = `http://${config.api.host}:${config.api.port}/api/lectures/${this.props.lecture.id}/comments/excel`;
@@ -35,8 +35,8 @@ export default class Lecture extends React.Component {
                 {'file_download'}
               </button>
             }
-            handleMenuItemClick={this.handleMenuItemClick}
             menuItems={['Excel', 'PDF']}
+            onMenuItemClick={this.onMenuItemClick}
         />
         <span className="lecture-description">
           {description}

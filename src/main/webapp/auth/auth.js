@@ -6,6 +6,9 @@ import {
   REGISTER_SUCCESS,
   REGISTER_REQUEST,
   REGISTER_FAILURE,
+  UPDATE_ACCOUNT_SUCCESS,
+  UPDATE_ACCOUNT_REQUEST,
+  UPDATE_ACCOUNT_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
@@ -37,6 +40,8 @@ export default createReducer(
     }).set('user', action.response),
     [ACCOUNT_FAILURE]: (state, action) =>
       state.merge({isFetching: false}, action.response),
+    [ACCOUNT_REQUEST]: (state, action) =>
+      state.merge({isFetching: true}, action.response),
     [LOGOUT_FAILURE]: (state, action) =>
       state.merge({isFetching: false}, action.response),
     [REGISTER_FAILURE]: (state, action) =>
@@ -111,6 +116,19 @@ export const register = user => {
     }
   };
 };
+
+export const update = user => dispatch => dispatch({
+  [CALL_API]: {
+    types: [UPDATE_ACCOUNT_REQUEST, UPDATE_ACCOUNT_SUCCESS, UPDATE_ACCOUNT_FAILURE],
+    endpoint: 'account',
+    config: {
+      body: user,
+      method: 'POST',
+      onSuccess: () => dispatch(fetchAccount()),
+      onFailure: error => Promise.reject(error)
+    }
+  }
+});
 
 export const clearAuthErrors = () => {
   return {

@@ -24,6 +24,13 @@ html, body, .stretch{
   height: 100%;
   margin-bottom: -$footer-height;
 }
+.block {
+  width: 100%;
+  display: block;
+}
+.block + *{
+  margin-top: 10px;
+}
 a{
   color: $link-color;
   outline: none;
@@ -33,7 +40,6 @@ a{
 }
 body {
   background: $background;
-  badding-bottom: $footer-height;
   color: #333;
 }
 .container {

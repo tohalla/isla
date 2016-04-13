@@ -25,6 +25,8 @@
     "invalidLogin": "Login failed with given credentials."
   },
   "login": "Username",
+  "firstName": "First name",
+  "lastName": "Last name",
   "password": "Password",
   "retypePassword": "Retype password",
   "email": "Email",

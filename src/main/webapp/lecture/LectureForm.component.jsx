@@ -10,7 +10,7 @@ export default class LectureForm extends React.Component {
   }
   constructor(props, context) {
     super(props, context);
-    this.handleLectureDescriptionChange = this.handleLectureDescriptionChange.bind(this);
+    this.onLectureDescriptionChange = this.onLectureDescriptionChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
       lecture: {
@@ -23,7 +23,7 @@ export default class LectureForm extends React.Component {
       this.context.router.push('/authenticate');
     }
   }
-  handleLectureDescriptionChange(event) {
+  onLectureDescriptionChange(event) {
     const lecture = Object.assign(
       this.state.lecture, {description: event.target.value}
     );
@@ -43,7 +43,7 @@ export default class LectureForm extends React.Component {
       >
         <WithLabel label={counterpart.translate('lecture.lectureCreation.description')}>
           <input
-              onChange={this.handleLectureDescriptionChange}
+              onChange={this.onLectureDescriptionChange}
               placeholder={counterpart.translate('lecture.lectureCreation.description')}
               type="text"
               value={this.state.lecture.description}

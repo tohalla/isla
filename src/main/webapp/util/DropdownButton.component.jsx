@@ -4,14 +4,14 @@ import onclickoutside from 'react-click-outside';
 export default class DropdownButton extends React.Component {
   static propTypes: {
     clickableItem: React.PropTypes.object.isRequired,
-    handleMenuItemClick: React.PropTypes.func.isRequired,
+    onMenuItemClick: React.PropTypes.func.isRequired,
     menuItems: React.propTypes.array.isRequired // array of strings
   };
   constructor(props, context) {
     super(props, context);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.onClick = this.onClick.bind(this);
-    this.handleMenuItemClick = this.handleMenuItemClick.bind(this);
+    this.onMenuItemClick = this.onMenuItemClick.bind(this);
     this.state = {
       displayDropdown: false
     };
@@ -19,8 +19,8 @@ export default class DropdownButton extends React.Component {
   handleClickOutside() {
     this.setState({displayDropdown: false});
   }
-  handleMenuItemClick(event) {
-    this.props.handleMenuItemClick(event.target.id);
+  onMenuItemClick(event) {
+    this.props.onMenuItemClick(event.target.id);
   }
   onClick() {
     this.setState({displayDropdown: !this.state.displayDropdown});
@@ -33,7 +33,7 @@ export default class DropdownButton extends React.Component {
             className="dropdown-item"
             id={typeof item === 'object' ? item.value : item}
             key={index}
-            onClick={this.handleMenuItemClick}
+            onClick={this.onMenuItemClick}
         >
           {typeof item === 'object' ? item.text : item}
         </li>
