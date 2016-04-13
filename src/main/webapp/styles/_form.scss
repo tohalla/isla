@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: space-between;
 
-  label, span, a, button, b {
+  & > * {
     align-self: baseline;
     padding: 6px;
     &:not(button):first-child{
@@ -37,12 +37,13 @@
   max-width: 520px;
 }
 
-input, textarea{
+input, textarea, .add-entries {
   padding: 6px;
   outline: none;
   width: 100%;
   border-radius: 0;
   border: 1px solid $default-border-color;
+  background: $white;
   -webkit-appearance: none;
 }
 
@@ -52,3 +53,74 @@ select{
   border-radius: 0;
   border: 1px solid $default-border-color;
 }
+
+.add-entries{
+  display: inline-block;
+}
+.add-entries input{
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.entries{
+  display: block;
+}
+.entry{
+  display: inline-block;
+  background: $clouds;
+  color: $black;
+  padding: 8px;
+  margin: 4px;
+  line-height: 1em;
+  border: 1px solid $aluminum;
+  border-radius: 4px;
+  button {
+    background: none;
+    color: $gray;
+    padding: 0;
+    margin: 0 0 0 5px;
+    &:hover {
+      background: none;
+      color: $darkgray;
+    }
+  }
+}
+.suggestions{
+  position: absolute;
+  min-width: 200px;
+  z-index: 999;
+  background: $white;
+  max-height: 121px;
+  overflow: auto;
+  border: 1px solid $default-border-color;
+}
+.suggestions ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.suggestions ul li{
+  display: block;
+  padding: 5px;
+}
+.suggestions ul .active{
+  background: $clouds;
+  cursor: pointer;
+}
+.suggestions ul li + li{
+  border-top: 1px solid $default-border-color;
+}
+mark{
+  background: none;
+  font-weight: 600;
+}
+.icon-delete:before{
+  content: "\2718";
+}
+.icon{
+  padding: 0;
+  color: #FFFFFF;
+  background: none;
+  border: none;
+}
+

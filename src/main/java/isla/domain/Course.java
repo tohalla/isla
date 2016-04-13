@@ -36,10 +36,10 @@ public class Course implements Serializable {
     private String courseDescription;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnore
     @JoinTable(name = "course_moderators",
             joinColumns = {@JoinColumn(name = "course_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<User> moderators = new HashSet<>();
 
     @OneToMany(mappedBy = "course")
@@ -123,6 +123,7 @@ public class Course implements Serializable {
     @Override
     public String toString() {
         return "Course{" + "id=" + id + ", course_name='" + courseName + "'"
-                + ", course_description='" + courseDescription + "'" + '}';
+                + ", course_description='" + courseDescription + "'" + ", moderators='" + moderators + "'"
+                + '}';
     }
 }

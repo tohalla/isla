@@ -1,6 +1,7 @@
 {
   "name": "Course name",
   "description": "Description",
+  "moderators": "Moderators",
   "create": "Create course",
   "view": "View"
 }

@@ -8,9 +8,6 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import isla.domain.Course;
-import isla.domain.User;
 import isla.domain.View;
 import isla.repository.CourseRepository;
 import isla.repository.ViewRepository;
-import isla.web.rest.util.PaginationUtil;
 
 /**
  * REST controller for managing View.

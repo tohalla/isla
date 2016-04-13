@@ -7,9 +7,13 @@ button, .btn{
   background: $default-btn-background;
   &:hover{
     background: $default-btn-hover-background;
+    cursor: pointer;
   }
 }
 button:disabled{
   background: $default-btn-disabled-background;
   color: $default-btn-disabled-color;
+  &:hover {
+    cursor: initial;
+  }
 }

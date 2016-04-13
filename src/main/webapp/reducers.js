@@ -7,6 +7,7 @@ import auth from './auth/auth';
 import courses from './course/course';
 import comments from './comment/comment';
 import views from './view/view';
+import users from './user/user';
 import lectures from './lecture/lecture';
 
 const routing = createReducer(fromJS({locationBeforeTransitions: null}), {
@@ -18,7 +19,7 @@ const routing = createReducer(fromJS({locationBeforeTransitions: null}), {
 });
 
 const entities = combineReducers({
-  comments, courses, lectures, views
+  comments, courses, lectures, views, users
 });
 
 export default combineReducers({

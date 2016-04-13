@@ -53,3 +53,7 @@ export const ADD_SOCKET = 'ADD_SOCKET';
 export const VIEWS_REQUEST = 'VIEWS_REQUEST';
 export const VIEWS_SET = 'VIEWS_SET';
 export const VIEWS_FAILURE = 'VIEWS_FAILURE';
+
+export const USERS_REQUEST = 'USERS_REQUEST';
+export const USERS_SET = 'USERS_SET';
+export const USERS_FAILURE = 'USERS_FAILURE';
