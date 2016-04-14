@@ -28,10 +28,10 @@ class TopBar extends React.Component {
       this.props.views.forEach((view, index) => {
         viewItems.push(
           <li
-              className={isActive(`/view/${view.get('id')}`) ? 'active' : ''}
+              className={isActive(`/views/${view.get('id')}`) ? 'active' : ''}
               key={index}
           >
-            <Link to={`/view/${view.get('id')}`}>
+            <Link to={`/views/${view.get('id')}`}>
               {counterpart.translate(`views.${view.get('viewName')}`)}
             </Link>
           </li>

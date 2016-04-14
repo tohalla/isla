@@ -23,7 +23,7 @@ ReactDOM.render((
       <Route component={App}>
         <Route component={Default} path="/">
           <Route component={Login} path="authenticate" />
-          <Route component={View} path="view/:id" />
+          <Route component={View} path="views/:id" />
           <Route component={Activate} path="activate" />
           <Route component={Admin} path="admin" />
           <Route component={Profile} path="profile" />

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import {Map, List, fromJS} from 'immutable';
+import {List, fromJS} from 'immutable';
 import Linkify from 'react-linkify';
 import counterpart from 'counterpart';
 
@@ -28,9 +28,6 @@ class LectureInstance extends React.Component {
   static contextTypes = {
     socket: React.PropTypes.object.isRequired,
     auth: React.PropTypes.object.isRequired
-  }
-  static propTypes = {
-    lecture: React.PropTypes.object.isRequired
   }
   constructor(props, context) {
     super(props, context);
@@ -161,6 +158,7 @@ class LectureInstance extends React.Component {
             );
             comments.push(comment.get('choices') && comment.get('choices').size ?
               <CommentWithChoices
+                  allowModeratorActions={this.props.lecture.getIn(['course', 'hasModeratorRights'])}
                   comment={mutableComment}
                   displayResults={
                     !comment.get('allowLike') ||
@@ -176,6 +174,7 @@ class LectureInstance extends React.Component {
                     (!comment.has('allowLike') || comment.get('allowLike')) &&
                     !likes.contains(comment.get('id'))
                   }
+                  allowModeratorActions={this.props.lecture.getIn(['course', 'hasModeratorRights'])}
                   comment={mutableComment}
                   key={index}
                   onDelete={this.onDelete}
@@ -191,10 +190,7 @@ class LectureInstance extends React.Component {
       <div>
         <div className="comment-form-container">
           <NewComment
-              lecture={
-                this.props.lecture instanceof Map ?
-                  this.props.lecture.toJS() : {}
-              }
+              allowModeratorActions={this.props.lecture.getIn(['course', 'hasModeratorRights'])}
               onSubmit={this.addComment}
           />
           <ul className="lecture-feed-actions">

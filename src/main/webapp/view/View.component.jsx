@@ -3,10 +3,9 @@ import {connect} from 'react-redux';
 import {List} from 'immutable';
 
 import CourseList from '../course/CourseList.component';
-import {fetchCourses} from '../course/course';
+import {fetchCourses, addCourse} from '../course/course';
 import CourseForm from '../course/CourseForm.component';
 import RequireAuthoritory from '../util/RequireAuthority.component';
-import {addCourse} from '../course/course';
 
 const mapStateToProps = state => ({
   courses: state.getIn(['entities', 'courses']),
@@ -61,7 +60,6 @@ export default class View extends React.Component {
                   />
                 </div>
               }
-
           />
           <CourseList courses={this.props.courses.toJS()} />
         </div>

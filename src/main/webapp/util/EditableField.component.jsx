@@ -39,37 +39,39 @@ export default class EditableField extends React.Component {
     const {displayValue, editField, allowChanges} = this.props;
     if (this.state.editing) {
       return (
-        <div className="block">
-          {editField}
+        <div className="block editable-toggle">
           <div className="block">
-          <button
-              className="material-icons icon-submit icon-20"
-              disabled={!allowChanges}
-              onClick={this.finishEdit}
-              type="button"
-          >
-            {'check'}
-          </button>
-          <button
-              className="material-icons icon-cancel icon-20"
-              onClick={this.cancelEdit}
-              type="button"
-          >
-            {'clear'}
-          </button>
+            {editField}
+          </div>
+          <div className="block">
+            <button
+                className="material-icons icon-submit icon-20"
+                disabled={!allowChanges}
+                onClick={this.finishEdit}
+                type="button"
+            >
+              {'check'}
+            </button>
+            <button
+                className="material-icons icon-cancel icon-20"
+                onClick={this.cancelEdit}
+                type="button"
+            >
+              {'clear'}
+            </button>
           </div>
         </div>
       );
     }
     return (
-      <div>
+      <div className="editable-toggle">
+        <label>{displayValue}</label>
         <button
-            className="material-icons icon-darkgray icon-20"
+            className="material-icons icon-gray icon-20"
             onClick={this.startEdit}
         >
           {'edit'}
         </button>
-        <label>{displayValue}</label>
       </div>
     );
   }

@@ -1,9 +1,9 @@
 import React from 'react';
-import RequireAuthoritory from '../util/RequireAuthority.component';
 import {getPercentage} from '../util/misc';
 
 export default class Comment extends React.Component {
   static propTypes = {
+    allowModeratorActions: React.PropTypes.bool,
     comment: React.PropTypes.object.isRequired,
     displayResults: React.PropTypes.bool.isRequired,
     onDelete: React.PropTypes.func.isRequired,
@@ -62,27 +62,24 @@ export default class Comment extends React.Component {
             {content}
           </div>
           <div className="comment-items" >
-            <RequireAuthoritory
-                item={
-                  <span className="moderator-actions">
-                    {this.props.comment.read ? null :
-                        <button
-                            className="material-icons icon-gray icon-24"
-                            onClick={this.onRead}
-                        >
-                          {'check'}
-                        </button>
-                    }
+            {this.props.allowModeratorActions ?
+              <span className="moderator-actions">
+                {this.props.comment.read ? null :
                     <button
-                        className="material-icons icon-gray icon-24"
-                        onClick={this.onDelete}
+                        className="material-icons icon-darkgray icon-24"
+                        onClick={this.onRead}
                     >
-                      {'clear'}
+                      {'check'}
                     </button>
-                  </span>
                 }
-                oneOf={["ROLE_ADMIN", "ROLE_TEACHER"]}
-            />
+                <button
+                    className="material-icons icon-darkgray icon-24"
+                    onClick={this.onDelete}
+                >
+                  {'clear'}
+                </button>
+              </span> : null
+            }
           </div>
         </div>
         {choices}

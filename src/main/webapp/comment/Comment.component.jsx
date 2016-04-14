@@ -1,5 +1,4 @@
 import React from 'react';
-import RequireAuthoritory from '../util/RequireAuthority.component';
 
 export default class Comment extends React.Component {
   static contextTypes = {
@@ -7,6 +6,7 @@ export default class Comment extends React.Component {
   }
   static propTypes = {
     allowLike: React.PropTypes.bool.isRequired,
+    allowModeratorActions: React.PropTypes.bool,
     comment: React.PropTypes.object.isRequired,
     onDelete: React.PropTypes.func.isRequired,
     onLike: React.PropTypes.func.isRequired,
@@ -29,8 +29,6 @@ export default class Comment extends React.Component {
   }
   render() {
     const {content, read, liked} = this.props.comment;
-    const authorities = this.context.auth.user ?
-      this.context.auth.user.authorities : null;
     return (
       <div className={`comment ${read ? 'checked' : ''}`}>
         <div className="comment-content" >
@@ -46,28 +44,24 @@ export default class Comment extends React.Component {
               {'thumb_up'}
             </button> : null
           }
-          <RequireAuthoritory
-              authorities={authorities}
-              item={
-                <span className="moderator-actions">
-                  {this.props.comment.read ? null :
-                      <button
-                          className="material-icons icon-darkgray icon-24"
-                          onClick={this.onRead}
-                      >
-                        {'check'}
-                      </button>
-                  }
+          {this.props.allowModeratorActions ?
+            <span className="moderator-actions">
+              {this.props.comment.read ? null :
                   <button
                       className="material-icons icon-darkgray icon-24"
-                      onClick={this.onDelete}
+                      onClick={this.onRead}
                   >
-                    {'clear'}
+                    {'check'}
                   </button>
-                </span>
               }
-              oneOf={["ROLE_ADMIN", "ROLE_TEACHER"]}
-          />
+              <button
+                  className="material-icons icon-darkgray icon-24"
+                  onClick={this.onDelete}
+              >
+                {'clear'}
+              </button>
+            </span> : null
+          }
         </div>
       </div>
     );

@@ -29,6 +29,7 @@ import isla.domain.User;
 import isla.repository.CourseRepository;
 import isla.repository.LectureRepository;
 import isla.security.AuthoritiesConstants;
+import isla.web.rest.dto.CourseDTO;
 import isla.web.rest.util.HeaderUtil;
 
 /**
@@ -39,7 +40,7 @@ import isla.web.rest.util.HeaderUtil;
 public class CourseResource {
 
     private final Logger log = LoggerFactory.getLogger(CourseResource.class);
-
+    
     @Inject
     private CourseRepository courseRepository;
 
@@ -92,9 +93,14 @@ public class CourseResource {
     @RequestMapping(value = "/courses", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Course> getAllCourses() {
+    public List<CourseDTO> getAllCourses() {
         log.debug("REST request to get all Courses");
-        return courseRepository.findAll();
+        List<Course> courses = courseRepository.findAll();
+        List<CourseDTO> response = new ArrayList<CourseDTO>();
+        courses.forEach(course -> {
+            response.add(new CourseDTO(course));
+        });
+        return response;
     }
 
     /**

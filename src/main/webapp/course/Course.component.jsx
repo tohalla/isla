@@ -1,12 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Map} from 'immutable';
+import {Link} from 'react-router';
+import counterpart from 'counterpart';
 
 import {fetchCourses} from './course';
 import LectureForm from '../lecture/LectureForm.component';
 import {addLecture} from '../lecture/lecture';
 import LectureList from '../lecture/LectureList.component';
-import RequireAuthoritory from '../util/RequireAuthority.component';
 
 const mapStateToProps = state => (
   {course: state.getIn(['entities', 'courses'])
@@ -31,15 +32,19 @@ class Course extends React.Component {
       return (
         <div className="course">
           <div className="container">
-            <RequireAuthoritory
-                item={
-                  <LectureForm
-                      course={course}
-                      onSubmit={this.props.addLecture}
-                  />
-                }
-                oneOf={["ROLE_ADMIN", "ROLE_TEACHER"]}
-            />
+            <div className="block">
+              <Link to={`/views/${this.props.course.getIn(['view', 'id'])}`}>
+                {counterpart.translate(
+                  `views.${this.props.course.getIn(['view', 'viewName'])}`
+                )}
+              </Link>
+            </div>
+            {course.hasModeratorRights ?
+              <LectureForm
+                  course={course}
+                  onSubmit={this.props.addLecture}
+              /> : null
+            }
           </div>
           <LectureList course={course.id} />
         </div>

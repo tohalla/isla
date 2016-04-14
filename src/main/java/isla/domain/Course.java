@@ -2,8 +2,13 @@ package isla.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import isla.security.AuthoritiesConstants;
+import isla.security.SecurityUtils;
+import isla.security.UserAuthentication;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -49,7 +54,17 @@ public class Course implements Serializable {
 
     @ManyToOne
     private View view;
-    
+
+    public boolean getHasModeratorRights() {
+        if (SecurityUtils.isUserInRole(AuthoritiesConstants.ADMIN))
+            return true;
+        for (User moderator : this.moderators) {
+            if (moderator.getLogin().equals(SecurityUtils.getCurrentLogin()))
+                return true;
+        }
+        return false;
+    }
+
     public Long getId() {
         return id;
     }
@@ -89,6 +104,7 @@ public class Course implements Serializable {
     public Set<User> getModerators() {
         return moderators;
     }
+
     public void setView(View view) {
         this.view = view;
     }
@@ -123,7 +139,7 @@ public class Course implements Serializable {
     @Override
     public String toString() {
         return "Course{" + "id=" + id + ", course_name='" + courseName + "'"
-                + ", course_description='" + courseDescription + "'" + ", moderators='" + moderators + "'"
-                + '}';
+                + ", course_description='" + courseDescription + "'" + ", moderators='" + moderators
+                + "'" + '}';
     }
 }
