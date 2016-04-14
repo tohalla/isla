@@ -60,7 +60,6 @@ class Course extends React.Component {
       this.props.course instanceof Map
     ) {
       const course = this.props.course.toJS();
-      console.log(this.context.auth);
       let courseActions;
       if (
         course.hasModeratorRights ||

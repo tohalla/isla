@@ -3,8 +3,10 @@ import {syncHistoryWithStore} from 'react-router-redux';
 import {createHashHistory} from 'history';
 import store from './store';
 
+const history = useRouterHistory(createHashHistory)({queryKey: false});
+
 export default syncHistoryWithStore(
-  useRouterHistory(createHashHistory)({queryKey: false}),
+  history,
   store,
   {selectLocationState: state => state.get('routing').toJS()}
 );

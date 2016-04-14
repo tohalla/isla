@@ -43,6 +43,11 @@ class App extends React.Component {
       socket: this.state.socket
     };
   }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.location.pathname !== nextProps.location.pathname) {
+      window.previousLocation = this.props.location;
+    }
+  }
   render() {
     return (
       <div className="stretch">
