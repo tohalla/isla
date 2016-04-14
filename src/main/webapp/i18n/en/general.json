@@ -1,7 +1,9 @@
 {
   "navText": "Isla",
-  "submitChanges": "Submit changes",
+  "submitChanges": "Save changes",
   "createdAt": "Created at",
+  "cancel": "Cancel",
+  "edit": "Edit",
   "loggedInAs": "Logged in as %(user)s",
   "notAuthorizedToViewPage": "You're not authorized to view the page you're trying to access",
   "navigation": {

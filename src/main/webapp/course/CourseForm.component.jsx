@@ -1,7 +1,7 @@
 import React from 'react';
 import counterpart from 'counterpart';
 import {connect} from 'react-redux';
-import {List} from 'immutable';
+import {List, fromJS} from 'immutable';
 
 import WithLabel from '../util/WithLabel.component';
 import EntryInput from 'react-redux-entry-input';
@@ -16,8 +16,14 @@ class CourseForm extends React.Component {
     auth: React.PropTypes.object.isRequired
   }
   static propTypes = {
+    course: React.PropTypes.object,
+    onCancel: React.PropTypes.func,
     onSubmit: React.PropTypes.func.isRequired,
+    submitText: React.PropTypes.string,
     view: React.PropTypes.object.isRequired
+  }
+  static defaultProps = {
+    submitText: counterpart.translate('course.create')
   }
   constructor(props, context) {
     super(props, context);
@@ -26,10 +32,12 @@ class CourseForm extends React.Component {
     this.handleModeratorDelete = this.handleModeratorDelete.bind(this);
     this.onCourseDescriptionChange = this.onCourseDescriptionChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onCancel = this.onCancel.bind(this);
+    const course = this.props.course;
     this.state = {
-      courseName: '',
-      courseDescription: '',
-      moderators: new List()
+      courseName: course ? course.courseName : '',
+      courseDescription: course ? course.courseDescription : '',
+      moderators: course ? fromJS(course.moderators) : new List()
     };
   }
   componentWillMount() {
@@ -50,21 +58,34 @@ class CourseForm extends React.Component {
   handleModeratorAddition(moderator) {
     this.setState({moderators: this.state.moderators.push(moderator)});
   }
+  onCancel() {
+    const course = this.props.course;
+    this.setState({
+      courseName: course ? course.courseName : '',
+      courseDescription: course ? course.courseDescription : '',
+      moderators: course ? fromJS(course.moderators) : new List()
+    });
+    if (this.props.onCancel) {
+      this.props.onCancel();
+    }
+  }
   onSubmit(event) {
     event.preventDefault();
     if (this.state.courseName.length < 2) {
       return;
     }
+    const course = this.props.course;
     this.props.onSubmit({
+      id: course ? course.id : null,
       courseName: this.state.courseName,
       courseDescription: this.state.courseDescription,
       moderators: this.state.moderators.toJS(),
       view: this.props.view
     });
     this.setState({
-      courseName: '',
-      courseDescription: '',
-      moderators: new List()
+      courseName: course ? course.courseName : '',
+      courseDescription: course ? course.courseDescription : '',
+      moderators: course ? fromJS(course.moderators) : new List()
     });
   }
   render() {
@@ -103,12 +124,16 @@ class CourseForm extends React.Component {
           />
         </WithLabel>
         <div className="form-roup">
-          <button
-              className="right"
-              type="submit"
-          >
-            {counterpart.translate('course.create')}
-          </button>
+          <div className="right">
+            {this.props.onCancel ?
+              <button onClick={this.onCancel} type="button">
+                {counterpart.translate('general.cancel')}
+              </button> : null
+            }
+            <button type="submit">
+            {this.props.submitText}
+            </button>
+          </div>
         </div>
       </form>
     );

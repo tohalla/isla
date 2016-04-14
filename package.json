@@ -71,6 +71,7 @@
     "isomorphic-fetch": "^2.2.1",
     "js-cookie": "^2.1.0",
     "moment": "^2.12.0",
+    "qrcode.react": "^0.6.1",
     "react-click-outside": "^2.1.0",
     "react-dom": "^15.0.1",
     "react-interpolate-component": "^0.8.1",

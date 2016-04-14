@@ -5,6 +5,7 @@ import {List, fromJS} from 'immutable';
 import Linkify from 'react-linkify';
 import counterpart from 'counterpart';
 
+import QRCode from 'qrcode.react';
 import {addComment, updateComment, fetchComments} from '../comment/comment';
 import {fetchLectures} from './lecture';
 import NewComment from '../comment/NewComment.component';
@@ -38,7 +39,13 @@ class LectureInstance extends React.Component {
     this.toggleHideChecked = this.toggleHideChecked.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onVote = this.onVote.bind(this);
-    this.state = {likes: new List(), freezeView: false, hideChecked: false};
+    this.toggleQR = this.toggleQR.bind(this);
+    this.state = {
+      displayQRCode: false,
+      likes: new List(),
+      freezeView: false,
+      hideChecked: false
+    };
   }
   componentWillMount() {
     const lecture = this.props.routeParams.id;
@@ -83,6 +90,9 @@ class LectureInstance extends React.Component {
     if (this.state.actionSubscriber) {
       this.state.actionSubscriber.unsubscribe();
     }
+  }
+  toggleQR() {
+    this.setState({displayQRCode: !this.state.displayQRCode});
   }
   addComment(comment) {
     this.context.socket.then(socket => {
@@ -188,12 +198,26 @@ class LectureInstance extends React.Component {
     }
     return (
       <div>
+        {this.state.displayQRCode ?
+          <div className="qr-code" onClick={this.toggleQR}>
+            <div className="qr-container">
+              <QRCode size={window.innerHeight * 0.8} value={document.location.href}/>
+            </div>
+          </div> : null
+        }
         <div className="comment-form-container">
           <NewComment
               allowModeratorActions={this.props.lecture.getIn(['course', 'hasModeratorRights'])}
               onSubmit={this.addComment}
           />
           <ul className="lecture-feed-actions">
+            {this.props.lecture.getIn(['course', 'hasModeratorRights']) ?
+            <li>
+              <button onClick={this.toggleQR}>
+                {counterpart.translate(`lectureInstance.actions.displayQRCode`)}
+              </button>
+            </li> : null
+          }
             <li>
               <button
                   className={freezeView ? 'active' : ''}
