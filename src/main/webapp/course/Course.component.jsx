@@ -14,6 +14,12 @@ const mapStateToProps = state => (
 });
 
 class Course extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      action: ''
+    };
+  }
   componentWillMount() {
     this.props.fetchCourses({course: this.props.routeParams.id});
   }

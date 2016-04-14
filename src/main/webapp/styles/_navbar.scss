@@ -15,22 +15,6 @@ nav{
     padding: 0 4px;
   }
 }
-.nav-sub{
-  background: $aluminum;
-  border-bottom: 1px solid $gray;
-  font-size: 80%;
-
-  a{
-    color: $darkgray;
-    text-decoration: none;
-    &:hover{
-      color: $black;
-    }
-  }
-  .active a{
-    text-decoration: underline;
-  }
-}
 .default-menu {
   a{
     padding: 0 10px;

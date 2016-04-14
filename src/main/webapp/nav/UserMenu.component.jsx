@@ -15,7 +15,7 @@ class UserMenu extends React.Component {
       <span className="user-menu">
         {this.props.auth.isAuthenticated ?
           <span>
-            <span>
+            <span className="logged-in-as">
               {counterpart.translate("general.loggedInAs", {user: this.props.auth.user.login})}
             </span>
             <ul className="menu-items">

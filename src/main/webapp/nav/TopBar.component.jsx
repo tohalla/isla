@@ -6,6 +6,7 @@ import {List} from 'immutable';
 
 import UserMenu from './UserMenu.component';
 import {fetchViews} from '../view/view';
+import {onMobile} from '../util/misc';
 
 const mapStateToProps = state => ({
   views: state.getIn(['entities', 'views'])
@@ -18,8 +19,18 @@ class TopBar extends React.Component {
   static propTypes = {
     auth: React.PropTypes.object.isRequired
   }
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      expand: false
+    };
+    this.toggleMenu = this.toggleMenu.bind(this);
+  }
   componentWillMount() {
     this.props.fetchViews();
+  }
+  toggleMenu() {
+    this.setState({expand: !this.state.expand});
   }
   render() {
     const isActive = this.context.router.isActive;
@@ -38,12 +49,44 @@ class TopBar extends React.Component {
         );
       });
     }
+    if (onMobile() && !this.state.expand) {
+      return (
+        <nav className="nav-default">
+          <span className="mobile-menu">
+            <Link className="nav-brand" to={'/'}>
+              {counterpart.translate("general.navText")}
+            </Link>
+            <button
+                className="material-icons icon-light icon-32"
+                onClick={this.toggleMenu}
+                type="button"
+            >
+              {'menu'}
+            </button>
+          </span>
+        </nav>
+      );
+    }
     return (
       <nav className="nav-default">
         <span className="default-menu">
-          <Link className="nav-brand" to={'/'}>
-            {counterpart.translate("general.navText")}
-          </Link>
+          {onMobile() ?
+            <span className="mobile-menu">
+              <Link className="nav-brand" to={'/'}>
+                {counterpart.translate("general.navText")}
+              </Link>
+              <button
+                  className="material-icons icon-light icon-32"
+                  onClick={this.toggleMenu}
+                  type="button"
+              >
+                {'menu'}
+              </button>
+            </span> :
+            <Link className="nav-brand" to={'/'}>
+              {counterpart.translate("general.navText")}
+            </Link>
+          }
           <ul className="menu-items">
             {viewItems}
           </ul>

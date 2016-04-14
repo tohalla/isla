@@ -10,3 +10,5 @@ export const getValueFromQueryString = (string, key) => {
 };
 
 export const getPercentage = (value, total) => (Math.floor((value / total) * 100));
+
+export const onMobile = () => window.innerWidth <= 767;

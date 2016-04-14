@@ -104,3 +104,6 @@ body {
     }
   }
 }
+@media (max-width: 767px) {
+  @import "mobile.scss";
+}
