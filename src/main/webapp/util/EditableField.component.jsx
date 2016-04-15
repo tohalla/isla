@@ -3,7 +3,7 @@ import React from 'react';
 export default class EditableField extends React.Component {
   static propTypes = {
     allowChanges: React.PropTypes.bool,
-    displayValue: React.PropTypes.string.isRequired,
+    displayValue: React.PropTypes.object.isRequired,
     editField: React.PropTypes.object.isRequired
   };
   static defaultProps = {
@@ -65,13 +65,19 @@ export default class EditableField extends React.Component {
     }
     return (
       <div className="editable-toggle">
-        <label>{displayValue}</label>
-        <button
-            className="material-icons icon-gray icon-20"
-            onClick={this.startEdit}
-        >
-          {'edit'}
-        </button>
+        {React.cloneElement(
+          displayValue,
+          {},
+          <span>
+            {displayValue.props.children}
+            <button
+                className="material-icons icon-gray icon-20"
+                onClick={this.startEdit}
+            >
+              {'edit'}
+            </button>
+          </span>
+        )}
       </div>
     );
   }

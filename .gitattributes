@@ -20,3 +20,6 @@
 *.ai binary
 *.eps binary
 *.swf binary
+*.otf binary
+*.svg binary
+*.woff binary

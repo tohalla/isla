@@ -29,6 +29,7 @@ nav{
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  background: $charcoal;
 }
 .user-menu {
   width: 100%;
@@ -58,7 +59,6 @@ nav{
   text-decoration: none;
 }
 
-
 .nav-default{
   a, .logged-in-as {
     padding: 0 10px;
@@ -68,3 +68,40 @@ nav{
     text-decoration: none;
   }
 }
+
+.hide-if-mobile {
+  display: none;
+}
+
+.form-label {
+  min-width: 200px;
+}
+.content{
+  padding: 0;
+}
+.container {
+  border-radius: 0;
+  padding: $default-vertical-padding $default-horizontal-padding/2;
+  background: $carrara;
+  display: block;
+}
+.form-vertical-group{
+  margin: 0 auto;
+  padding: 10px;
+  display: block;
+  max-width: 800px;
+}
+.course-item {
+  width: auto;
+  border: 1px solid $aluminum;
+  border-radius: 0;
+}
+.course-list {
+  margin: $default-vertical-margin auto;
+  width: 100%;
+}
+.course-title {
+  background: $carrara;
+  padding: 4px 8px;
+}
+

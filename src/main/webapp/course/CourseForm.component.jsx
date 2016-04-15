@@ -114,14 +114,15 @@ class CourseForm extends React.Component {
           />
         </WithLabel>
         <WithLabel label={counterpart.translate('course.moderators')}>
-          <EntryInput
-              actionAddEntryToState={this.handleModeratorAddition}
-              actionRemoveEntryFromState={this.handleModeratorDelete}
-              entries={this.state.moderators}
-              nameVariable={'login'}
-              placeholder={counterpart.translate('course.moderators')}
-              suggestions={this.props.users}
-          />
+          {this.props.users instanceof List ?
+            <EntryInput
+                actionAddEntryToState={this.handleModeratorAddition}
+                actionRemoveEntryFromState={this.handleModeratorDelete}
+                entries={this.state.moderators}
+                nameVariable={'login'}
+                placeholder={counterpart.translate('course.moderators')}
+                suggestions={this.props.users}
+            /> : null}
         </WithLabel>
         <div className="form-roup">
           <div className="right">

@@ -18,7 +18,12 @@ html, body, .stretch{
   height: 100%;
   max-width: 100%;
 }
+.plain {
+  background: $white;
+  min-height: 100%;
+}
 .wrapper {
+  background: $white;
   min-height: 100%;
   height: auto !important;
   height: 100%;
@@ -38,8 +43,8 @@ a{
     color: $link-hover-color;
   }
 }
-body {
-  background: $background;
+html {
+  background: $carrara;
   color: #333;
 }
 .container {

@@ -127,13 +127,11 @@ class Course extends React.Component {
                 )}
               </Link>
             </div>
-            <div className="form-vertical-group">
-              <WithLabel bold label={counterpart.translate('course.name')}>
-                {course.courseName}
-              </WithLabel>
-              <WithLabel bold label={counterpart.translate('course.description')}>
+            <div className="course-info">
+              <b>{course.courseName}</b>
+              <div className="course-description">
                 {course.courseDescription}
-              </WithLabel>
+              </div>
             </div>
             {courseActions}
           </div>

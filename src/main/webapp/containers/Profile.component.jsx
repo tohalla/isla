@@ -107,41 +107,76 @@ class Profile extends React.Component {
                 <div className="container">
                   <div className="form-vertical-group">
                     <div className="form-group">
-                      <b>{counterpart.translate('account.login')}</b>
-                      <span>{user.login}</span>
+                      <WithLabel
+                          bold
+                          displayLabelOnMobile
+                          label={counterpart.translate('account.login')}
+                      >
+                        <span>{user.login}</span>
+                      </WithLabel>
                     </div>
                     <div className="form-group">
-                      <b>{counterpart.translate('account.email')}</b>
-                      <span>{user.email}</span>
+                      <WithLabel
+                          bold
+                          displayLabelOnMobile
+                          label={counterpart.translate('account.email')}
+                      >
+                        <span>{user.email}</span>
+                      </WithLabel>
                     </div>
                     <div className="form-group">
-                      <b>{counterpart.translate('account.firstName')}</b>
                       <EditableField
                           allowChanges={!firstName.error && (firstName.touched || firstName.active)}
-                          displayValue={firstName.value}
+                          displayValue={
+                            <WithLabel
+                                bold
+                                displayLabelOnMobile
+                                label={counterpart.translate('account.firstName')}
+                            >
+                              {firstName.value}
+                            </WithLabel>
+                          }
                           editField={<input {...firstName} placeholder={counterpart.translate('account.firstName')}/>}
                       />
                     </div>
                     <div className="form-group">
-                      <b>{counterpart.translate('account.lastName')}</b>
                       <EditableField
                           allowChanges={!lastName.error && (lastName.touched || lastName.active)}
-                          displayValue={lastName.value}
+                          displayValue={
+                            <WithLabel
+                                bold
+                                displayLabelOnMobile
+                                label={counterpart.translate('account.lastName')}
+                            >
+                              {lastName.value}
+                            </WithLabel>
+                          }
                           editField={<input {...lastName} placeholder={counterpart.translate('account.lastName')}/>}
                       />
                     </div>
                     <div className="form-group">
-                      <b>{counterpart.translate('account.password')}</b>
                       <EditableField
                           allowChanges={
                             (!password.password.error && (password.password.touched || password.password.active)) &&
                             (!password.retype.error && (password.retype.touched || password.retype.active))
                           }
-                          displayValue={''}
+                          displayValue={
+                            <WithLabel
+                                bold
+                                displayLabelOnMobile
+                                label={counterpart.translate('account.password')}
+                            >
+                              {''}
+                            </WithLabel>
+                          }
                           editField={<Password hideLabels {...password}/>}
                       />
                     </div>
-                    <WithLabel bold label={counterpart.translate('account.selectDefaultLanguage')}>
+                    <WithLabel
+                        bold
+                        displayLabelOnMobile
+                        label={counterpart.translate('account.selectDefaultLanguage')}
+                    >
                       <Locales field={langKey}/>
                     </WithLabel>
                     {!pristine && !error ?
