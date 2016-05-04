@@ -1,0 +1,10 @@
+{
+  "name": "Kurssin nimi",
+  "description": "Kurssikuvaus",
+  "moderators": "Ylläpitäjät",
+  "create": "Luo uusi kurssi",
+  "view": "Näkymä",
+  "actions": {
+    "addLecture": "Avaa uusi istunto"
+  }
+}
