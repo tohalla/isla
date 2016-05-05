@@ -9,6 +9,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -59,6 +60,11 @@ public class Lecture implements Serializable {
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> comments = new HashSet<>();
+    
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) { createdAt = new DateTime(DateTimeZone.UTC); }
+    }
 
     public Long getId() {
         return id;
@@ -70,11 +76,6 @@ public class Lecture implements Serializable {
 
     public DateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt() {
-        if (this.createdAt == null)
-            this.createdAt = new DateTime();
     }
 
     public DateTime getStartsAt() {

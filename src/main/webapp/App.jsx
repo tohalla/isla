@@ -68,4 +68,3 @@ require('./i18n/translations');
 // styles
 require('normalize.css/normalize.css');
 require('./styles/main.scss');
-

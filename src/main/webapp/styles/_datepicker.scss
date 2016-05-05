@@ -18,14 +18,6 @@ $datepicker__margin: 0px;
   left: 50px;
 }
 
-.react-datepicker__tether-element-attached-top .react-datepicker__triangle {
-  @extend %triangle-arrow-up;
-}
-
-.react-datepicker__tether-element-attached-bottom .react-datepicker__triangle {
-  @extend %triangle-arrow-down;
-}
-
 .react-datepicker__tether-element-attached-bottom.react-datepicker__tether-element {
   margin-top: -20px;
 }
@@ -182,7 +174,6 @@ $datepicker__margin: 0px;
   }
 
   &--down-arrow {
-    @extend %triangle-arrow-down;
     border-top-color: $gray;
     margin-bottom: 3px;
     left: 5px;
