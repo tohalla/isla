@@ -1,6 +1,16 @@
 .lecture-list {
   margin: $default-vertical-margin auto;
   width: 90%;
+  max-width: 700px;
+}
+.lecture-list-item {
+  padding: 5px;
+  border: 1px solid $carrara;
+
+}
+.lecture-title {
+  display: block;
+  width: 100%;
 }
 .lecture-description{
   margin-left: 30px;

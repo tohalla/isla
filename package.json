@@ -73,6 +73,7 @@
     "moment": "^2.12.0",
     "qrcode.react": "^0.6.1",
     "react-click-outside": "^2.1.0",
+    "react-datepicker": "^0.25.0",
     "react-dom": "^15.0.1",
     "react-interpolate-component": "^0.8.1",
     "react-linkify": "^0.1.1",

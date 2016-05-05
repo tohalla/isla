@@ -1,5 +1,7 @@
 import React from 'react';
 import counterpart from 'counterpart';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 import WithLabel from '../util/WithLabel.component';
 
@@ -12,12 +14,12 @@ export default class LectureForm extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.onLectureDescriptionChange = this.onLectureDescriptionChange.bind(this);
+    this.onClosesAtChange = this.onClosesAtChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.state = {
-      lecture: {
-        description: ''
-      }
+      description: '',
+      closesAt: moment().endOf('day')
     };
   }
   componentWillMount() {
@@ -26,20 +28,27 @@ export default class LectureForm extends React.Component {
     }
   }
   onLectureDescriptionChange(event) {
-    const lecture = Object.assign(
-      this.state.lecture, {description: event.target.value}
-    );
-    this.setState({lecture});
+    this.setState({description: event.target.value});
+  }
+  onClosesAtChange(date) {
+    console.log(date);
+    this.setState({closesAt: date ? moment(date).endOf('day') : null});
   }
   onCancel() {
-    this.setState({lecture: {}});
+    this.setState({
+      description: '',
+      closesAt: moment(moment().endOf('day'))
+    });
     this.props.onCancel();
   }
   onSubmit(event) {
     event.preventDefault();
     const course = this.props.course;
-    this.props.onSubmit(Object.assign(this.state.lecture, {course}));
-    this.setState({lecture: {}});
+    this.props.onSubmit(Object.assign(this.state, {course}));
+    this.setState({
+      description: '',
+      closesAt: moment(moment().endOf('day'))
+    });
   }
   render() {
     return (
@@ -52,7 +61,17 @@ export default class LectureForm extends React.Component {
               onChange={this.onLectureDescriptionChange}
               placeholder={counterpart.translate('lecture.lectureCreation.description')}
               type="text"
-              value={this.state.lecture.description}
+              value={this.state.description}
+          />
+        </WithLabel>
+        <WithLabel label={counterpart.translate('lecture.lectureCreation.closesAt')}>
+          <DatePicker
+              dateFormat="DD.MM.YYYY"
+              isClearable
+              minDate={moment()}
+              onChange={this.onClosesAtChange}
+              placeholder={counterpart.translate('lecture.lectureCreation.closesAt')}
+              selected={this.state.closesAt}
           />
         </WithLabel>
         <div className="form-roup">

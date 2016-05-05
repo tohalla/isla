@@ -1,7 +1,7 @@
 import React from 'react';
 import {getPercentage} from '../util/misc';
 
-export default class Comment extends React.Component {
+export default class CommentWithChoices extends React.Component {
   static propTypes = {
     allowModeratorActions: React.PropTypes.bool,
     comment: React.PropTypes.object.isRequired,

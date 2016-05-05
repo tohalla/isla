@@ -1,6 +1,8 @@
 {
   "lectureCreation": {
     "description": "Enter description for lecture",
+    "closesAt": "Lecture closes at",
     "create": "Open lecture"
-  }
+  },
+  "openUntil": "Session is active until %(time)s"
 }

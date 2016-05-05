@@ -202,14 +202,14 @@ public class Comment implements Serializable {
     }
 
     public boolean addLike(String username) {
-        if (likes.contains(username))
+        if (likes.contains(username) || getLecture().getClosesAt().isBeforeNow())
             return false;
         likes.add(username);
         return true;
     }
 
     public boolean markAsRead(Authentication auth) {
-        if (auth instanceof UserAuthentication) {
+        if (auth instanceof UserAuthentication && getLecture().getClosesAt().isAfterNow()) {
             if (lecture.getCourse().getModerators()
                     .contains(((UserAuthentication) auth).getDetails())
                     || auth.getAuthorities().contains(AuthoritiesConstants.ADMIN)) {
@@ -221,7 +221,7 @@ public class Comment implements Serializable {
     }
 
     public boolean markAsDeleted(Authentication auth) {
-        if (auth instanceof UserAuthentication) {
+        if (auth instanceof UserAuthentication && getLecture().getClosesAt().isAfterNow()) {
             if (lecture.getCourse().getModerators()
                     .contains(((UserAuthentication) auth).getDetails())
                     || auth.getAuthorities().contains(AuthoritiesConstants.ADMIN)) {

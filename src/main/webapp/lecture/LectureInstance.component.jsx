@@ -205,41 +205,44 @@ class LectureInstance extends React.Component {
             </div>
           </div> : null
         }
-        <div className="comment-form-container">
-          <NewComment
-              allowModeratorActions={this.props.lecture.getIn(['course', 'hasModeratorRights'])}
-              onSubmit={this.addComment}
-          />
-          <ul className="lecture-feed-actions">
-            {this.props.lecture.getIn(['course', 'hasModeratorRights']) ?
-            <li>
-              <button onClick={this.toggleQR}>
-                {counterpart.translate(`lectureInstance.actions.displayQRCode`)}
-              </button>
-            </li> : null
-          }
-            <li>
-              <button
-                  className={freezeView ? 'active' : ''}
-                  onClick={this.toggleFreeze}
-              >
-                {counterpart.translate(`lectureInstance.actions.freeze.${
-                  freezeView ? 'enabled' : 'disabled'
-                }`)}
-              </button>
-            </li>
-            <li>
-              <button
-                  className={hideChecked ? 'active' : ''}
-                  onClick={this.toggleHideChecked}
-              >
-                {counterpart.translate(`lectureInstance.actions.hideChecked.${
-                  hideChecked ? 'enabled' : 'disabled'
-                }`)}
-              </button>
-            </li>
-          </ul>
-        </div>
+        {moment().isBefore(moment(this.props.lecture.get('closesAt'))) ? (
+            <div className="comment-form-container">
+              <NewComment
+                  allowModeratorActions={this.props.lecture.getIn(['course', 'hasModeratorRights'])}
+                  onSubmit={this.addComment}
+              />
+              <ul className="lecture-feed-actions">
+                {this.props.lecture.getIn(['course', 'hasModeratorRights']) ?
+                <li>
+                  <button onClick={this.toggleQR}>
+                    {counterpart.translate(`lectureInstance.actions.displayQRCode`)}
+                  </button>
+                </li> : null
+              }
+                <li>
+                  <button
+                      className={freezeView ? 'active' : ''}
+                      onClick={this.toggleFreeze}
+                  >
+                    {counterpart.translate(`lectureInstance.actions.freeze.${
+                      freezeView ? 'enabled' : 'disabled'
+                    }`)}
+                  </button>
+                </li>
+                <li>
+                  <button
+                      className={hideChecked ? 'active' : ''}
+                      onClick={this.toggleHideChecked}
+                  >
+                    {counterpart.translate(`lectureInstance.actions.hideChecked.${
+                      hideChecked ? 'enabled' : 'disabled'
+                    }`)}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          ) : null
+        }
         {comments}
       </div>
     );
