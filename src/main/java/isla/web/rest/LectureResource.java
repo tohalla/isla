@@ -1,11 +1,17 @@
 package isla.web.rest;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -31,6 +37,7 @@ import isla.repository.CommentRepository;
 import isla.repository.LectureRepository;
 import isla.security.AuthoritiesConstants;
 import isla.web.rest.util.HeaderUtil;
+import isla.web.rest.util.PdfBuilder;
 
 /**
  * REST controller for managing Lecture.
@@ -127,7 +134,34 @@ public class LectureResource {
         
         return new ResponseEntity<>(returnValue, headers, HttpStatus.OK);
     }
+    
+    /**
+     * GET /lectures/:id/comments/pdf -> get all the comments of lecture in PDF format.
+     */
+    @RequestMapping(value = "/lectures/{id}/comments/pdf", method = RequestMethod.GET)
+    @Timed
+    public void getAllCommentsPDF(@PathVariable Long id,HttpServletRequest request, HttpServletResponse response) throws IOException {
+ 
+        final ServletContext servletContext = request.getSession().getServletContext();
+        final File tempDirectory = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
+        final String temperotyFilePath = tempDirectory.getAbsolutePath();
 
+        String filename = "lecture-" + id + ".pdf";
+
+        response.setContentType("application/pdf");
+        response.setHeader("Content-disposition", "attachment; filename="+ filename);
+ 
+        try {
+            List<Comment> comments = commentRepository.findByPostedByLectureId(id, true);     
+            ByteArrayOutputStream baos = PdfBuilder.getCommentsPdf(comments, temperotyFilePath+"\\"+filename);
+            OutputStream os = response.getOutputStream();
+            baos.writeTo(os);
+            os.flush();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+ 
+    }
     /**
      * GET /lectures/:id -> get the "id" lecture.
      */

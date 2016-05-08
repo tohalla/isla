@@ -19,6 +19,9 @@ export default class Lecture extends React.Component {
       case 'excel':
         window.location.href = `http://${config.api.host}:${config.api.port}/api/lectures/${this.props.lecture.id}/comments/excel`;
         break;
+      case 'pdf':
+        window.location.href = `http://${config.api.host}:${config.api.port}/api/lectures/${this.props.lecture.id}/comments/pdf`;
+        break;
       default:
         alert('not yet implemented'); // eslint-disable-line
     }
