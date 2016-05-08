@@ -95,7 +95,7 @@ export const login = credentials => dispatch => dispatch({
       },
       onSuccess: data => {
         localStorage.setItem('token', `Bearer ${data.token}`);
-        return dispatch(fetchAccount());
+        window.location = '/';
       },
       onFailure: error => Promise.reject(error)
     }
@@ -143,7 +143,7 @@ export const logout = () => dispatch => dispatch({
     config: {
       onSuccess: () => {
         localStorage.removeItem('token');
-        dispatch(fetchAccount());
+        window.location = '/';
       }
     }
   }
