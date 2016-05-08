@@ -60,3 +60,5 @@ export const VIEWS_FAILURE = 'VIEWS_FAILURE';
 export const USERS_REQUEST = 'USERS_REQUEST';
 export const USERS_SET = 'USERS_SET';
 export const USERS_FAILURE = 'USERS_FAILURE';
+
+export const SET_LOCALE = 'SET_LOCALE';

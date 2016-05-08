@@ -22,9 +22,6 @@ class CourseForm extends React.Component {
     submitText: React.PropTypes.string,
     view: React.PropTypes.object.isRequired
   }
-  static defaultProps = {
-    submitText: counterpart.translate('course.create')
-  }
   constructor(props, context) {
     super(props, context);
     this.onCourseNameChange = this.onCourseNameChange.bind(this);
@@ -132,7 +129,7 @@ class CourseForm extends React.Component {
               </button> : null
             }
             <button type="submit">
-            {this.props.submitText}
+            {this.props.submitText || counterpart.translate('course.create')}
             </button>
           </div>
         </div>

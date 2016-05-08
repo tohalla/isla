@@ -21,7 +21,8 @@ import {
   ACCOUNT_REQUEST,
   ACCOUNT_SET,
   ACCOUNT_FAILURE,
-  ERROR_AUTH_CLEAR
+  ERROR_AUTH_CLEAR,
+  SET_LOCALE
 } from '../constants';
 
 export default createReducer(
@@ -46,7 +47,8 @@ export default createReducer(
       state.merge({isFetching: false}, action.response),
     [REGISTER_FAILURE]: (state, action) =>
       state.merge({isFetching: false}, action.response),
-    [ERROR_AUTH_CLEAR]: state => state.delete('error')
+    [ERROR_AUTH_CLEAR]: state => state.delete('error'),
+    [SET_LOCALE]: (state, action) => state.setIn(['user', 'langKey'], action.locale)
   }
 );
 
@@ -149,3 +151,4 @@ export const logout = () => dispatch => dispatch({
   }
 });
 
+export const setLocale = locale => ({type: SET_LOCALE, locale});

@@ -12,9 +12,9 @@ translationFiles.forEach(file => {
   var langKey = file.match(/\.\/(.*?)\//)[0];
   langKey = langKey.substring(2, langKey.length - 1);
   const code = file.substring(file.lastIndexOf('/') + 1, file.length - 5);
-  translations[langKey] = Object.assign(
-    {[code]: require(`${file}`)}, translations[langKey]
-  );
+  translations[langKey] = Object.assign({
+    [code]: JSON.parse(decodeURIComponent(escape(JSON.stringify(require(`${file}`)))))
+  }, translations[langKey]);
 });
 
 if (translations) {

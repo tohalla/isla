@@ -31,7 +31,6 @@ export default class LectureForm extends React.Component {
     this.setState({description: event.target.value});
   }
   onClosesAtChange(date) {
-    console.log(date);
     this.setState({closesAt: date ? moment(date).endOf('day') : null});
   }
   onCancel() {

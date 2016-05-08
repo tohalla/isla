@@ -5,6 +5,7 @@
   "cancel": "Cancel",
   "edit": "Edit",
   "loggedInAs": "Logged in as %(user)s",
+  "setLocale": "Select language",
   "notAuthorizedToViewPage": "You're not authorized to view the page you're trying to access",
   "navigation": {
     "authenticate": "Authenticate",

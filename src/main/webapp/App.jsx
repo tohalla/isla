@@ -1,4 +1,5 @@
 import React from 'react';
+import counterpart from 'counterpart';
 import DevTools from './Devtools';
 import {fetchAccount} from './auth/auth';
 import store from './store';
@@ -46,6 +47,13 @@ class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.location.pathname !== nextProps.location.pathname) {
       window.previousLocation = this.props.location;
+    }
+    if (nextProps.auth.getIn(['user', 'langKey']) !== counterpart.getLocale()) {
+      counterpart.setLocale(
+        this.props.auth.getIn(['user', 'langKey']) ||
+        localStorage.langKey ||
+        'en'
+      );
     }
   }
   render() {

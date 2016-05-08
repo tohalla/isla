@@ -5,6 +5,7 @@
   "cancel": "Peruuta",
   "edit": "Muokkaa",
   "loggedInAs": "Kirjautunut %(user)s",
+  "setLocale": "Valitse kieli",
   "notAuthorizedToViewPage": "Sinulla ei ole oikeuksia tarkastella valitsemaasi sisältöä",
   "navigation": {
     "authenticate": "Kirjaudu",
