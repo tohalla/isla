@@ -13,7 +13,7 @@ translationFiles.forEach(file => {
   langKey = langKey.substring(2, langKey.length - 1);
   const code = file.substring(file.lastIndexOf('/') + 1, file.length - 5);
   translations[langKey] = Object.assign({
-    [code]: JSON.parse(decodeURIComponent(escape(JSON.stringify(require(`${file}`)))))
+    [code]: require(`${file}`)
   }, translations[langKey]);
 });
 
