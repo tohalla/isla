@@ -30,7 +30,7 @@ export default class CommentWithChoices extends React.Component {
     let choices = [];
 
     this.props.comment.choices.forEach((choice, index) => {
-      const percentage = getPercentage(choice.score, liked);
+      const percentage = getPercentage(choice.score || 0, liked || 1);
       choices.push(
         this.props.displayResults ? (
           <div

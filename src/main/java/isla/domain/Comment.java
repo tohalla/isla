@@ -81,9 +81,9 @@ public class Comment implements Serializable {
 
     @JsonProperty("allowLike")
     public boolean getAllowLike() {
-        return !this.likes.contains(SecurityUtils.getCurrentLogin());
+        return !this.deleted && !this.read && !this.likes.contains(SecurityUtils.getCurrentLogin());
     }
-    
+
     public List<MultipleChoiceOption> getChoices() {
         return choices;
     }
@@ -202,7 +202,8 @@ public class Comment implements Serializable {
     }
 
     public boolean addLike(String username) {
-        if (likes.contains(username) || getLecture().getClosesAt().isBeforeNow())
+        if (likes.contains(username) || getLecture().getClosesAt().isBeforeNow()
+                || !this.getAllowLike())
             return false;
         likes.add(username);
         return true;

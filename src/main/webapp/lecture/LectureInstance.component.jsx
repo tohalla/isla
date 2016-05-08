@@ -171,6 +171,7 @@ class LectureInstance extends React.Component {
                   allowModeratorActions={this.props.lecture.getIn(['course', 'hasModeratorRights'])}
                   comment={mutableComment}
                   displayResults={
+                    comment.get('read') ||
                     !comment.get('allowLike') ||
                     likes.contains(comment.get('id'))
                   }

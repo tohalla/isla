@@ -14,7 +14,7 @@ export default class MultipleChoiceComment extends React.Component {
     this.onRemoveChoice = this.onRemoveChoice.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onCommentKeyPress = this.onCommentKeyPress.bind(this);
-    this.state = {comment: {choices: []}, newChoice: ''};
+    this.state = {comment: {choices: [], content: ''}, newChoice: ''};
   }
   onContentChange(event) {
     this.setState({
@@ -30,7 +30,7 @@ export default class MultipleChoiceComment extends React.Component {
       return;
     }
     this.props.onSubmit(this.state.comment);
-    this.setState({comment: {choices: []}, newChoice: ''});
+    this.setState({comment: {choices: [], content: ''}, newChoice: ''});
   }
   onAddChoice(event) {
     event.preventDefault();
