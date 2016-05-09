@@ -15,12 +15,18 @@ export default class Lecture extends React.Component {
     this.onMenuItemClick = this.onMenuItemClick.bind(this);
   }
   onMenuItemClick(item) {
+    const link = document.createElement('a');
+    link.download = `lecture-${this.props.lecture.id}`;
+    link.target = '_new';
+    link.rel = 'noopener noreferrer';
     switch (item.toLowerCase()) {
       case 'excel':
-        window.location.href = `http://${config.api.host}:${config.api.port}/api/lectures/${this.props.lecture.id}/comments/excel`;
+        link.href = `http://${config.api.host}:${config.api.port}/api/lectures/${this.props.lecture.id}/comments/excel`;
+        link.click();
         break;
       case 'pdf':
-        window.location.href = `http://${config.api.host}:${config.api.port}/api/lectures/${this.props.lecture.id}/comments/pdf`;
+        link.href = `http://${config.api.host}:${config.api.port}/api/lectures/${this.props.lecture.id}/comments/pdf`;
+        link.click();
         break;
       default:
         alert('not yet implemented'); // eslint-disable-line

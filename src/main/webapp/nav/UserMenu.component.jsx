@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import counterpart from 'counterpart';
 
-import {logout, setLocale} from '../auth/auth';
+import {logout} from '../auth/auth';
 import RequireAuthority from '../util/RequireAuthority.component';
 import Locales from '../i18n/Locales.component';
 
@@ -14,7 +14,6 @@ class UserMenu extends React.Component {
   render() {
     const localesField = {
       onChange: event => {
-        this.props.setLocale(event.target.value);
         localStorage.setItem('langKey', event.target.value);
       },
       value: localStorage.langKey || 'en'
@@ -78,5 +77,5 @@ class UserMenu extends React.Component {
 
 export default connect(
   null,
-  {logout, setLocale}
+  {logout}
 )(UserMenu);
