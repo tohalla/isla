@@ -41,6 +41,7 @@ public class Course implements Serializable {
     private String courseDescription;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
     @JoinTable(name = "course_moderators",
             joinColumns = {@JoinColumn(name = "course_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
@@ -55,6 +56,7 @@ public class Course implements Serializable {
     @ManyToOne
     private View view;
 
+    @JsonProperty("hasModeratorRights")
     public boolean getHasModeratorRights() {
         if (SecurityUtils.isUserInRole(AuthoritiesConstants.ADMIN))
             return true;

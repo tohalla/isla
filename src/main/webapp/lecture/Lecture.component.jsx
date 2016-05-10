@@ -33,9 +33,15 @@ export default class Lecture extends React.Component {
     }
   }
   render() {
-    const {id, description, createdAt, closesAt} = this.props.lecture;
+    const {id, description, createdAt, closesAt, startsAt} = this.props.lecture;
+    console.log(this.props.lecture);
+    const isActive =
+      moment().isBefore(moment(closesAt)) && (
+        !startsAt ||
+        moment().isAfter(moment(startsAt))
+      );
     return (
-      <div className="lecture-list-item">
+      <div className={`lecture-list-item${isActive ? '' : ' inactive'}`}>
         <div className="lecture-title">
           <Link to={`/instance/${id}`}>
             {moment(createdAt).format('DD.MM.YYYY - HH:mm')}

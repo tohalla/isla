@@ -1,5 +1,6 @@
 package isla.repository;
 
+import isla.domain.Comment;
 import isla.domain.Course;
 import isla.domain.View;
 

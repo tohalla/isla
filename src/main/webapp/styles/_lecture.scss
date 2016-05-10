@@ -6,7 +6,9 @@
 .lecture-list-item {
   padding: 5px;
   border: 1px solid $carrara;
-
+  &.inactive {
+    background: $carrara;
+  }
 }
 .lecture-title {
   display: block;

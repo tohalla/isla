@@ -99,9 +99,20 @@ public class LectureResource {
     @RequestMapping(value = "/lectures", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Lecture> getAllLectures() {
+    public ResponseEntity<List<Lecture>> getAllLectures() {
         log.debug("REST request to get all Lectures");
-        return lectureRepository.findAll();
+        return new ResponseEntity<>(lectureRepository.findAll(), null, HttpStatus.OK);
+    }
+
+    /**
+     * GET /lectures/active -> get all active the lectures.
+     */
+    @RequestMapping(value = "/lectures/active", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Lecture>> getAllActiveLectures() {
+        log.debug("REST request to get all active Lectures");
+        return new ResponseEntity<>(lectureRepository.findAllActive(), null, HttpStatus.OK);
     }
 
     /**
