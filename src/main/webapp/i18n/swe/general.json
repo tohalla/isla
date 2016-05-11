@@ -1,0 +1,19 @@
+{
+  "navText": "Isla",
+  "submitChanges": "Tallenna muutokset",
+  "createdAt": "Julkaistu",
+  "cancel": "Peruuta",
+  "edit": "Muokkaa",
+  "loggedInAs": "Kirjautunut %(user)s",
+  "setLocale": "Valitse kieli",
+  "notAuthorizedToViewPage": "Sinulla ei ole oikeuksia tarkastella valitsemaasi sisältöä",
+  "navigation": {
+    "authenticate": "Kirjaudu",
+    "browseLectures": "Istunnot",
+    "browseCourses": "Kurssit",
+    "goBack": "Palaa"
+  },
+  "footer": {
+    "github": "Isla Githubissa!"
+  }
+}
