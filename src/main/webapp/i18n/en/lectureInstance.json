@@ -8,7 +8,7 @@
       "disabled": "Hide checked comments",
       "enabled": "Show checked comments"
     },
-    "displayQRCode": "Display QR code"
+    "displayQRCode": "Display QR-code"
   },
   "commentCreation": {
     "create": "send",
