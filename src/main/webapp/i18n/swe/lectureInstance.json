@@ -1,22 +1,22 @@
 {
   "actions": {
     "freeze": {
-      "disabled": "Pysäytä näkymä",
-      "enabled": "Vapauta näkymä"
+      "disabled": "Stoppa utsikt",
+      "enabled": "Befria utsikt"
     },
     "hideChecked": {
-      "disabled": "Piilota luetut kommentit",
-      "enabled": "Näytä luetut kommentit"
+      "disabled": "Dölja kontrolleras kommentarer",
+      "enabled": "Visa kontrolleras kommentarer"
     },
-    "displayQRCode": "Näytä QR koodi"
+    "displayQRCode": "Visa QR-kod"
   },
   "commentCreation": {
-    "create": "lähetä",
-    "content": "Kommentti",
-    "choiceContent": "Valinta"
+    "create": "skicka",
+    "content": "Kommentar",
+    "choiceContent": "Val"
   },
   "commentTypes": {
-    "normal": "Normaali",
-    "multipleChoice": "Monivalinta"
+    "normal": "Normal",
+    "multipleChoice": "Flervalsfråga"
   }
 }
