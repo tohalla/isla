@@ -1,19 +1,19 @@
 {
   "navText": "Isla",
-  "submitChanges": "Tallenna muutokset",
-  "createdAt": "Julkaistu",
-  "cancel": "Peruuta",
-  "edit": "Muokkaa",
-  "loggedInAs": "Kirjautunut %(user)s",
-  "setLocale": "Valitse kieli",
-  "notAuthorizedToViewPage": "Sinulla ei ole oikeuksia tarkastella valitsemaasi sisältöä",
+  "submitChanges": "Spara ändringar",
+  "createdAt": "Skapad",
+  "cancel": "Annullera",
+  "edit": "Redigera",
+  "loggedInAs": "Inloggad %(user)s",
+  "setLocale": "Välj språk",
+  "notAuthorizedToViewPage": "Du är inte behörighet att visa den sida som du försöker komma åt",
   "navigation": {
-    "authenticate": "Kirjaudu",
-    "browseLectures": "Istunnot",
-    "browseCourses": "Kurssit",
-    "goBack": "Palaa"
+    "authenticate": "Logga in",
+    "browseLectures": "Sessioner",
+    "browseCourses": "Kurser",
+    "goBack": "Lämna tillbaka"
   },
   "footer": {
-    "github": "Isla Githubissa!"
+    "github": "Kolla in oss på Github!"
   }
 }
