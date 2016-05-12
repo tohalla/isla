@@ -10,16 +10,13 @@ import {addLecture} from '../lecture/lecture';
 import LectureList from '../lecture/LectureList.component';
 import RequireAuthority from '../util/RequireAuthority.component';
 import CourseForm from './CourseForm.component';
-import WithLabel from '../util/WithLabel.component';
 
 const mapStateToProps = state => (
-  {course: state.getIn(['entities', 'courses'])
+  {course: state.getIn(['entities', 'courses']),
+  auth: state.get('auth')
 });
 
 class Course extends React.Component {
-  static contextTypes = {
-    auth: React.PropTypes.object.isRequired
-  }
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -64,9 +61,9 @@ class Course extends React.Component {
       if (
         course.hasModeratorRights ||
         (
-          this.context.auth.user &&
-          this.context.auth.user.authorities &&
-          this.context.auth.user.authorities.indexOf('ROLE_ADMIN') !== -1
+          this.props.auth.get('user') &&
+          this.props.auth.getIn(['user', 'authorities']) &&
+          this.props.auth.getIn(['user', 'authorities']).contains('ROLE_ADMIN')
         )
       ) {
         switch (this.state.action) {

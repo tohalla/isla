@@ -3,27 +3,30 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import counterpart from 'counterpart';
 
-import {logout} from '../auth/auth';
+import {logout, setLocale} from '../auth/auth';
 import RequireAuthority from '../util/RequireAuthority.component';
 import Locales from '../i18n/Locales.component';
 
+const mapStateToProps = state => ({
+  auth: state.get('auth')
+});
 class UserMenu extends React.Component {
-  static propTypes = {
-    auth: React.PropTypes.object.isRequired
-  }
   render() {
     const localesField = {
       onChange: event => {
-        localStorage.setItem('langKey', event.target.value);
+        this.props.setLocale(event.target.value);
       },
-      value: localStorage.langKey || 'en'
+      value: this.props.auth.getIn(['user', 'langKey']) || 'en'
     };
     return (
       <span className="user-menu">
-        {this.props.auth.isAuthenticated ?
+        {this.props.auth.get('isAuthenticated') ?
           <span>
             <span className="logged-in-as">
-              {counterpart.translate("general.loggedInAs", {user: this.props.auth.user.login})}
+              {counterpart.translate(
+                "general.loggedInAs",
+                {user: this.props.auth.getIn(['user', 'login'])}
+              )}
             </span>
             <ul className="menu-items">
               <RequireAuthority
@@ -76,6 +79,6 @@ class UserMenu extends React.Component {
 }
 
 export default connect(
-  null,
-  {logout}
+  mapStateToProps,
+  {logout, setLocale}
 )(UserMenu);

@@ -27,8 +27,7 @@ const mapStateToProps = state => ({
 });
 class LectureInstance extends React.Component {
   static contextTypes = {
-    socket: React.PropTypes.object.isRequired,
-    auth: React.PropTypes.object.isRequired
+    socket: React.PropTypes.object.isRequired
   }
   constructor(props, context) {
     super(props, context);

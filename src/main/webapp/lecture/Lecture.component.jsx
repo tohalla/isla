@@ -35,7 +35,6 @@ export default class Lecture extends React.Component {
   }
   render() {
     const {id, description, createdAt, closesAt, startsAt} = this.props.lecture;
-    console.log(this.props.lecture);
     const isActive =
       moment().isBefore(moment(closesAt)) && (
         !startsAt ||

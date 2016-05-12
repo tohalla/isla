@@ -16,7 +16,6 @@ const mapStateToProps = state => ({
 });
 class App extends React.Component {
   static childContextTypes = {
-    auth: React.PropTypes.object.isRequired,
     socket: React.PropTypes.object
   }
   constructor(state, context) {
@@ -26,7 +25,7 @@ class App extends React.Component {
         return fetchToken.then(() => {
           const socket = Stomp.over(sock(
             `${location.protocol}//${config.api.host}:${config.api.port}/` +
-            `websocket?token=${localStorage.token || this.props.auth.user.login}`
+            `websocket?token=${localStorage.token || this.props.auth.getIn(['user', 'login'])}`
           ));
           return new Promise((resolve, reject) =>
             socket.connect({},
@@ -40,7 +39,6 @@ class App extends React.Component {
   }
   getChildContext() {
     return {
-      auth: this.props.auth.toJS(),
       socket: this.state.socket
     };
   }
@@ -50,7 +48,7 @@ class App extends React.Component {
     }
     if (nextProps.auth.getIn(['user', 'langKey']) !== counterpart.getLocale()) {
       counterpart.setLocale(
-        this.props.auth.getIn(['user', 'langKey']) ||
+        nextProps.auth.getIn(['user', 'langKey']) ||
         localStorage.langKey ||
         'en'
       );

@@ -33,10 +33,12 @@ const validate = values => {
   return errors;
 };
 
+const mapStateToProps = state => ({
+  auth: state.get('auth')
+});
 class Register extends React.Component {
   static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-    auth: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired
   }
   constructor(props, context) {
     super(props, context);
@@ -44,7 +46,7 @@ class Register extends React.Component {
   }
   componentWillMount() {
     this.props.clearAuthErrors();
-    if (this.context.auth.isAuthenticated) {
+    if (this.props.auth.get('isAuthenticated')) {
       this.context.router.push('/');
     }
   }
@@ -132,6 +134,6 @@ export default reduxForm({
   initialValues: {langKey: 'en'},
   validate,
   getFormState: (state, reduxMountPoint) => state.get(reduxMountPoint).toJS()
-}, null, {
+}, mapStateToProps, {
   register, clearAuthErrors
 })(Register);

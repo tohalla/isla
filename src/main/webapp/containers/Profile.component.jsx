@@ -28,42 +28,40 @@ const validate = values => {
   return errors;
 };
 
+const mapStateToProps = state => ({
+  auth: state.get('auth')
+});
 class Profile extends React.Component {
-  static contextTypes = {
-    auth: React.PropTypes.object.isRequired
-  }
   constructor(props, context) {
     super(props, context);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentWillMount() {
-    if (this.context.auth.user) {
-      const {firstName, lastName, langKey} = this.context.auth.user;
+    if (this.props.auth.get('user')) {
       this.props.initializeForm({
-        firstName,
-        lastName,
+        firstName: this.props.auth.getIn(['user', 'firstName']),
+        lastName: this.props.auth.getIn(['user', 'lastName']),
         password: {
           password: '',
           retype: ''
         },
-        langKey
+        langKey: this.props.auth.getIn(['user', 'langKey'])
       });
     }
   }
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentWillReceiveProps(nextProps) {
     if (
-      nextContext.auth.user &&
-      JSON.stringify(nextContext.auth.user) !== JSON.stringify(this.context.auth.user)
+      nextProps.auth.user &&
+      nextProps.auth.user !== this.props.auth.user
     ) {
-      const {firstName, lastName, langKey} = nextContext.auth.user;
       nextProps.initializeForm({
-        firstName,
-        lastName,
+        firstName: nextProps.auth.getIn(['user', 'firstName']),
+        lastName: nextProps.auth.getIn(['user', 'lastName']),
         password: {
           password: '',
           retype: ''
         },
-        langKey
+        langKey: nextProps.auth.getIn(['user', 'langKey'])
       });
       nextProps.resetForm();
     }
@@ -71,7 +69,7 @@ class Profile extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.update(Object.assign({
-      login: this.context.auth.user.login,
+      login: this.props.auth.getIn(['user', 'login']),
       langKey: this.props.fields.langKey.value,
       firstName: this.props.fields.firstName.value,
       lastName: this.props.fields.lastName.value,
@@ -83,7 +81,7 @@ class Profile extends React.Component {
       .catch(error => this.setState(error));
   }
   render() {
-    const user = this.context.auth.user;
+    const user = this.props.auth.get('user');
     const {
       fields: {password, firstName, lastName, langKey},
       pristine,
@@ -95,7 +93,7 @@ class Profile extends React.Component {
           method="post"
           onSubmit={this.handleSubmit}
       >
-        {this.context.auth.isFetching ? null :
+        {this.props.auth.get('isFetching') ? null :
           <RequireAuthority
               alternativeItem={
                 <div className="error-block">
@@ -112,7 +110,7 @@ class Profile extends React.Component {
                           displayLabelOnMobile
                           label={counterpart.translate('account.login')}
                       >
-                        <span>{user.login}</span>
+                        <span>{user.get('login')}</span>
                       </WithLabel>
                     </div>
                     <div className="form-group">
@@ -121,7 +119,7 @@ class Profile extends React.Component {
                           displayLabelOnMobile
                           label={counterpart.translate('account.email')}
                       >
-                        <span>{user.email}</span>
+                        <span>{user.get('email')}</span>
                       </WithLabel>
                     </div>
                     <div className="form-group">
@@ -200,6 +198,6 @@ export default reduxForm({
   fields,
   validate,
   getFormState: (state, reduxMountPoint) => state.get(reduxMountPoint).toJS()
-}, null, {
+}, mapStateToProps, {
   update
 })(Profile);

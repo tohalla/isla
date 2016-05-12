@@ -1,9 +1,6 @@
 import React from 'react';
 
 export default class Comment extends React.Component {
-  static contextTypes = {
-    auth: React.PropTypes.object.isRequired
-  }
   static propTypes = {
     allowLike: React.PropTypes.bool.isRequired,
     allowModeratorActions: React.PropTypes.bool,

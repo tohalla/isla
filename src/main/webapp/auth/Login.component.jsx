@@ -6,10 +6,12 @@ import counterpart from 'counterpart';
 import {login, clearAuthErrors} from './auth';
 import WithLabel from '../util/WithLabel.component';
 
+const mapStateToProps = state => ({
+  auth: state.get('auth')
+});
 class Login extends React.Component {
   static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-    auth: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired
   }
   constructor(props, context) {
     super(props, context);
@@ -24,7 +26,7 @@ class Login extends React.Component {
   }
   componentWillMount() {
     this.props.clearAuthErrors();
-    if (this.context.auth.isAuthenticated) {
+    if (this.props.auth.get('isAuthenticated')) {
       this.context.router.push('/');
     }
   }
@@ -96,6 +98,6 @@ class Login extends React.Component {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   {login, clearAuthErrors}
 )(Login);

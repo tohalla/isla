@@ -8,13 +8,11 @@ import EntryInput from 'react-redux-entry-input';
 import {fetchUsers} from '../user/user';
 
 const mapStateToProps = state => ({
-  users: state.getIn(['entities', 'users'])
+  users: state.getIn(['entities', 'users']),
+  auth: state.get('auth')
 });
 
 class CourseForm extends React.Component {
-  static contextTypes = {
-    auth: React.PropTypes.object.isRequired
-  }
   static propTypes = {
     course: React.PropTypes.object,
     onCancel: React.PropTypes.func,
@@ -38,7 +36,7 @@ class CourseForm extends React.Component {
     };
   }
   componentWillMount() {
-    if (this.context.auth.user.authorities.indexOf('ROLE_ADMIN') >= 0) {
+    if (this.props.auth.getIn(['user', 'authorities']).contains('ROLE_ADMIN')) {
       this.props.fetchUsers();
     }
   }
