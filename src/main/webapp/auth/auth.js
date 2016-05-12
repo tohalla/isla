@@ -151,4 +151,7 @@ export const logout = () => dispatch => dispatch({
   }
 });
 
-export const setLocale = locale => ({type: SET_LOCALE, locale});
+export const setLocale = locale => {
+  localStorage.setItem('langKey', locale);
+  return {type: SET_LOCALE, locale};
+};

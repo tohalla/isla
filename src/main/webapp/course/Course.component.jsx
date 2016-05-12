@@ -28,7 +28,12 @@ class Course extends React.Component {
     this.onCancel = this.onCancel.bind(this);
   }
   componentWillMount() {
-    this.props.fetchCourses({course: this.props.routeParams.id});
+    this.props.fetchCourses({
+      course: this.props.routeParams.id,
+      authorized: this.props.auth.getIn(['user', 'authorities']) &&
+        this.props.auth.getIn(['user', 'authorities'])
+          .contains('ROLE_ADMIN')
+    });
   }
   shouldComponentUpdate(newProps, newState) {
     return !(
@@ -56,10 +61,10 @@ class Course extends React.Component {
       !this.props.course.get('isFetching') &&
       this.props.course instanceof Map
     ) {
-      const course = this.props.course.toJS();
+      const course = this.props.course;
       let courseActions;
       if (
-        course.hasModeratorRights ||
+        course.get('hasModeratorRights') ||
         (
           this.props.auth.get('user') &&
           this.props.auth.getIn(['user', 'authorities']) &&
@@ -83,7 +88,7 @@ class Course extends React.Component {
                   onCancel={this.onCancel}
                   onSubmit={this.updateCourse}
                   submitText={counterpart.translate('general.submitChanges')}
-                  view={course.view}
+                  view={course.get('view')}
               />
             );
             break;
@@ -125,14 +130,14 @@ class Course extends React.Component {
               </Link>
             </div>
             <div className="course-info">
-              <b>{course.courseName}</b>
+              <b>{course.get('courseName')}</b>
               <div className="course-description">
-                {course.courseDescription}
+                {course.get('courseDescription')}
               </div>
             </div>
             {courseActions}
           </div>
-          <LectureList course={course.id} />
+          <LectureList course={course.get('id')} />
         </div>
       );
     }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import isla.security.AuthoritiesConstants;
 import isla.security.SecurityUtils;
 import isla.security.UserAuthentication;
+import isla.web.rest.dto.CourseDTO;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -41,7 +42,6 @@ public class Course implements Serializable {
     private String courseDescription;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnore
     @JoinTable(name = "course_moderators",
             joinColumns = {@JoinColumn(name = "course_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
@@ -144,4 +144,5 @@ public class Course implements Serializable {
                 + ", course_description='" + courseDescription + "'" + ", moderators='" + moderators
                 + "'" + '}';
     }
+
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import counterpart from 'counterpart';
 import DevTools from './Devtools';
-import {fetchAccount} from './auth/auth';
+import {fetchAccount, setLocale} from './auth/auth';
 import store from './store';
 import {connect} from 'react-redux';
 
@@ -47,6 +47,10 @@ class App extends React.Component {
       window.previousLocation = this.props.location;
     }
     if (nextProps.auth.getIn(['user', 'langKey']) !== counterpart.getLocale()) {
+      if (!nextProps.auth.getIn(['user', 'langKey']) && localStorage.langKey) {
+        this.props.setLocale(localStorage.langKey);
+        return;
+      }
       counterpart.setLocale(
         nextProps.auth.getIn(['user', 'langKey']) ||
         localStorage.langKey ||
@@ -66,7 +70,7 @@ class App extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {}
+  {setLocale}
 )(App);
 
 // translations

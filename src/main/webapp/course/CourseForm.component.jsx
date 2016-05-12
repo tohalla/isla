@@ -6,6 +6,7 @@ import {List, fromJS} from 'immutable';
 import WithLabel from '../util/WithLabel.component';
 import EntryInput from 'react-redux-entry-input';
 import {fetchUsers} from '../user/user';
+import {fetchCourseModerators} from './course';
 
 const mapStateToProps = state => ({
   users: state.getIn(['entities', 'users']),
@@ -30,14 +31,28 @@ class CourseForm extends React.Component {
     this.onCancel = this.onCancel.bind(this);
     const course = this.props.course;
     this.state = {
-      courseName: course ? course.courseName : '',
-      courseDescription: course ? course.courseDescription : '',
-      moderators: course ? fromJS(course.moderators) : new List()
+      courseName: course ? course.get('courseName') : '',
+      courseDescription: course ? course.get('courseDescription') : '',
+      moderators: new List()
     };
   }
   componentWillMount() {
     if (this.props.auth.getIn(['user', 'authorities']).contains('ROLE_ADMIN')) {
       this.props.fetchUsers();
+      if (this.props.course && this.props.course.get('id')) {
+        this.props.fetchCourseModerators(this.props.course.get('id'));
+      }
+    }
+  }
+  componentWillReceiveProps(newProps) {
+    if (this.props.course !== newProps.course) {
+      this.setState({
+        courseName: newProps.course ? newProps.course.get('courseName') : '',
+        courseDescription: newProps.course ?
+          newProps.course.get('courseDescription') : '',
+        moderators: newProps.course ?
+          newProps.course.get('moderators') : new List()
+      });
     }
   }
   onCourseNameChange(event) {
@@ -56,9 +71,9 @@ class CourseForm extends React.Component {
   onCancel() {
     const course = this.props.course;
     this.setState({
-      courseName: course ? course.courseName : '',
-      courseDescription: course ? course.courseDescription : '',
-      moderators: course ? fromJS(course.moderators) : new List()
+      courseName: course ? course.get('courseName') : '',
+      courseDescription: course ? course.get('courseDescription') : '',
+      moderators: course ? course.get('moderators') : new List()
     });
     if (this.props.onCancel) {
       this.props.onCancel();
@@ -71,16 +86,16 @@ class CourseForm extends React.Component {
     }
     const course = this.props.course;
     this.props.onSubmit({
-      id: course ? course.id : null,
+      id: course ? course.get('id') : null,
       courseName: this.state.courseName,
       courseDescription: this.state.courseDescription,
       moderators: this.state.moderators.toJS(),
       view: this.props.view
     });
     this.setState({
-      courseName: course ? course.courseName : '',
-      courseDescription: course ? course.courseDescription : '',
-      moderators: course ? fromJS(course.moderators) : new List()
+      courseName: course ? course.get('courseName') : '',
+      courseDescription: course ? course.get('courseDescription') : '',
+      moderators: course ? fromJS(course.get('moderators')) : new List()
     });
   }
   render() {
@@ -138,5 +153,5 @@ class CourseForm extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {fetchUsers}
+  {fetchUsers, fetchCourseModerators}
 )(CourseForm);

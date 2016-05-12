@@ -42,7 +42,7 @@ export default class LectureForm extends React.Component {
   }
   onSubmit(event) {
     event.preventDefault();
-    const course = this.props.course;
+    const course = this.props.course.toJS();
     this.props.onSubmit(Object.assign(this.state, {course}));
     this.setState({
       description: '',

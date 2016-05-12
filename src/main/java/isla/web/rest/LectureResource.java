@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,7 @@ import isla.domain.Lecture;
 import isla.repository.CommentRepository;
 import isla.repository.LectureRepository;
 import isla.security.AuthoritiesConstants;
+import isla.web.rest.dto.LectureDTO;
 import isla.web.rest.util.HeaderUtil;
 import isla.web.rest.util.PdfBuilder;
 
@@ -61,7 +63,7 @@ public class LectureResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Secured({AuthoritiesConstants.TEACHER, AuthoritiesConstants.ADMIN})
-    public ResponseEntity<Lecture> createLecture(@Valid @RequestBody Lecture lecture)
+    public ResponseEntity<LectureDTO> createLecture(@Valid @RequestBody Lecture lecture)
             throws URISyntaxException {
         log.debug("REST request to save Lecture : {}", lecture);
         if (lecture.getId() != null) {
@@ -81,7 +83,7 @@ public class LectureResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Secured({AuthoritiesConstants.TEACHER, AuthoritiesConstants.ADMIN})
-    public ResponseEntity<Lecture> updateLecture(@Valid @RequestBody Lecture lecture)
+    public ResponseEntity<LectureDTO> updateLecture(@Valid @RequestBody Lecture lecture)
             throws URISyntaxException {
         log.debug("REST request to update Lecture : {}", lecture);
         if (lecture.getId() == null) {
@@ -90,7 +92,7 @@ public class LectureResource {
         Lecture result = lectureRepository.save(lecture);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("lecture", lecture.getId().toString()))
-                .body(result);
+                .body(new LectureDTO(result));
     }
 
     /**
@@ -99,9 +101,11 @@ public class LectureResource {
     @RequestMapping(value = "/lectures", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Lecture>> getAllLectures() {
+    public ResponseEntity<List<LectureDTO>> getAllLectures() {
         log.debug("REST request to get all Lectures");
-        return new ResponseEntity<>(lectureRepository.findAll(), null, HttpStatus.OK);
+        List<LectureDTO> lectures = new ArrayList<LectureDTO>();
+        lectureRepository.findAll().forEach(lecture -> lectures.add(new LectureDTO(lecture)));
+        return new ResponseEntity<>(lectures, null, HttpStatus.OK);
     }
 
     /**
@@ -110,9 +114,11 @@ public class LectureResource {
     @RequestMapping(value = "/lectures/active", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Lecture>> getAllActiveLectures() {
+    public ResponseEntity<List<LectureDTO>> getAllActiveLectures() {
         log.debug("REST request to get all active Lectures");
-        return new ResponseEntity<>(lectureRepository.findAllActive(), null, HttpStatus.OK);
+        List<LectureDTO> lectures = new ArrayList<LectureDTO>();
+        lectureRepository.findAllActive().forEach(lecture -> lectures.add(new LectureDTO(lecture)));
+        return new ResponseEntity<>(lectures, null, HttpStatus.OK);
     }
 
     /**
@@ -120,7 +126,6 @@ public class LectureResource {
      */
     @RequestMapping(value = "/lectures/{id}/comments", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-
     @Timed
     public ResponseEntity<List<Comment>> getAllComments(Pageable pageable, @PathVariable Long id) {
         List<Comment> comments = commentRepository.findByPostedByLectureId(id, false);
@@ -179,10 +184,10 @@ public class LectureResource {
     @RequestMapping(value = "/lectures/{id}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Lecture> getLecture(@PathVariable Long id) {
+    public ResponseEntity<LectureDTO> getLecture(@PathVariable Long id) {
         log.debug("REST request to get Lecture : {}", id);
         return Optional.ofNullable(lectureRepository.findOne(id))
-                .map(lecture -> new ResponseEntity<>(lecture, HttpStatus.OK))
+                .map(lecture -> new ResponseEntity<>(new LectureDTO(lecture), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
