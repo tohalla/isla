@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {Router, Route} from 'react-router';
+import {Router, Route, IndexRoute} from 'react-router';
 
 import App from './App';
 import Default from './containers/Default.component';
@@ -9,6 +9,7 @@ import Admin from './containers/Admin.component';
 import Profile from './containers/Profile.component';
 import Plain from './containers/Plain.component';
 import View from './view/View.component';
+import FrontPage from './view/FrontPage.component';
 import store from './store';
 import Login from './auth/Login.component';
 import LectureInstance from './lecture/LectureInstance.component';
@@ -22,6 +23,7 @@ ReactDOM.render((
     <Router history={history}>
       <Route component={App}>
         <Route component={Default} path="/">
+          <IndexRoute component={FrontPage} />
           <Route component={Login} path="authenticate" />
           <Route component={View} path="views/:id" />
           <Route component={Activate} path="activate" />

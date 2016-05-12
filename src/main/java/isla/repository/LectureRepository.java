@@ -14,6 +14,6 @@ import isla.domain.Lecture;
 public interface LectureRepository extends JpaRepository<Lecture,Long> {
     List<Lecture> findAllByCourse(Course course);
 
-    @Query("select lecture from Lecture lecture where closesAt < CURRENT_TIMESTAMP() and (startsAt IS NULL OR startsAt > CURRENT_TIMESTAMP)")
+    @Query("select lecture from Lecture lecture where closesAt > CURRENT_TIMESTAMP() and (startsAt IS NULL OR startsAt < CURRENT_TIMESTAMP)")
     List<Lecture> findAllActive();
 }

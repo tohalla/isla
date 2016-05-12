@@ -94,7 +94,7 @@ public class Course implements Serializable {
     public void setLectures(Set<Lecture> lectures) {
         this.lectures = lectures;
     }
-    
+
     public void setModerators(Set<User> moderators) {
         this.moderators = moderators;
     }

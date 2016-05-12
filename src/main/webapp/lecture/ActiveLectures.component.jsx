@@ -2,19 +2,16 @@ import React from 'react';
 import {List} from 'immutable';
 import {connect} from 'react-redux';
 
-import {fetchLectures} from './lecture';
+import {fetchActiveLectures} from './lecture';
 import Lecture from './Lecture.component';
 
 const mapStateToProps = state => (
   {lectures: state.getIn(['entities', 'lectures'])
 });
 
-class LectureList extends React.Component {
-  static propTypes = {
-    course: React.PropTypes.number.isRequired
-  }
+class ActiveLectures extends React.Component {
   componentWillMount() {
-    this.props.fetchLectures({course: this.props.course});
+    this.props.fetchActiveLectures();
   }
   shouldComponentUpdate(newProps) {
     return !(this.props.lectures === newProps.lectures);
@@ -39,5 +36,5 @@ class LectureList extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {fetchLectures}
-)(LectureList);
+  {fetchActiveLectures}
+)(ActiveLectures);

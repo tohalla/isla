@@ -28,6 +28,15 @@ export const fetchLectures = props => {
   };
 };
 
+export const fetchActiveLectures = () => {
+  return {
+    [CALL_API]: {
+      types: [LECTURES_REQUEST, LECTURES_SET, LECTURES_FAILURE],
+      endpoint: 'lectures/active'
+    }
+  };
+};
+
 export const addLecture = lecture => {
   return {
     [CALL_API]: {

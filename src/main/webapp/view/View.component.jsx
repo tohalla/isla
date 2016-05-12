@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
   views: state.getIn(['entities', 'views'])
 });
 
-export default class View extends React.Component {
+class View extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {activeView: null};

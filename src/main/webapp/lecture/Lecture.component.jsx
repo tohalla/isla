@@ -8,6 +8,7 @@ import DropdownButton from '../util/DropdownButton.component.jsx';
 
 export default class Lecture extends React.Component {
   static propTypes: {
+    displayCourseName: React.propTypes.boolean,
     lecture: React.propTypes.object.isRequired
   };
   constructor(props, context) {
