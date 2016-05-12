@@ -23,7 +23,15 @@ class ActiveLectures extends React.Component {
       this.props.lectures
       .sort((a, b) => a.get('createdAt') < b.get('createdAt') ? 1 : -1)
       .forEach((lecture, index) => {
-        lectures.push(<Lecture key={index} lecture={lecture.toJS()} />);
+        lectures.push(
+          <Lecture
+              displayCourseName
+              hideActions
+              key={index}
+              lecture={lecture.toJS()}
+              minimal
+          />
+        );
       });
       return (
         <div className="lecture-list">

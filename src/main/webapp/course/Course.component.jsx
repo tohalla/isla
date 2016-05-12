@@ -30,11 +30,11 @@ class Course extends React.Component {
   componentWillMount() {
     this.props.fetchCourses({course: this.props.routeParams.id});
   }
-  shouldComponentUpdate(newProps, newState, newContext) {
+  shouldComponentUpdate(newProps, newState) {
     return !(
       this.state.action === newState.action &&
       this.props.course === newProps.course &&
-      JSON.stringify(this.context) === JSON.stringify(newContext)
+      this.props.auth === newProps.auth
     );
   }
   addLecture(lecture) {

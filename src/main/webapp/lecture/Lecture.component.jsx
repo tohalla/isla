@@ -9,6 +9,8 @@ import DropdownButton from '../util/DropdownButton.component.jsx';
 export default class Lecture extends React.Component {
   static propTypes: {
     displayCourseName: React.propTypes.boolean,
+    minimal: React.propTypes.boolean,
+    hideActions: React.propTypes.boolean,
     lecture: React.propTypes.object.isRequired
   };
   constructor(props, context) {
@@ -34,7 +36,14 @@ export default class Lecture extends React.Component {
     }
   }
   render() {
-    const {id, description, createdAt, closesAt, startsAt} = this.props.lecture;
+    const {
+      id,
+      description,
+      createdAt,
+      closesAt,
+      startsAt,
+      course
+    } = this.props.lecture;
     const isActive =
       moment().isBefore(moment(closesAt)) && (
         !startsAt ||
@@ -44,24 +53,35 @@ export default class Lecture extends React.Component {
       <div className={`lecture-list-item${isActive ? '' : ' inactive'}`}>
         <div className="lecture-title">
           <Link to={`/instance/${id}`}>
-            {moment(createdAt).format('DD.MM.YYYY - HH:mm')}
+            {this.props.displayCourseName ?
+              course.courseName : moment(createdAt).format('DD.MM.YYYY - HH:mm')
+            }
           </Link>
-          <DropdownButton
-              clickableItem={
-                <button className="material-icons icon-gray icon-24">
-                  {'file_download'}
-                </button>
-              }
-              menuItems={['Excel', 'PDF']}
-              onMenuItemClick={this.onMenuItemClick}
-          />
+          {this.props.displayCourseName ?
+            <span className="lecture-description">
+              {moment(createdAt).format('DD.MM.YYYY - HH:mm')}
+            </span> : null
+          }
+          {this.props.hideActions ? null :
+            <DropdownButton
+                clickableItem={
+                  <button className="material-icons icon-gray icon-24">
+                    {'file_download'}
+                  </button>
+                }
+                menuItems={['Excel', 'PDF']}
+                onMenuItemClick={this.onMenuItemClick}
+            />
+          }
         </div>
-        <div className="lecture-description">
-          {description}
-          <div className="right">
-            {counterpart.translate('lecture.openUntil', {time: moment(closesAt).format('DD.MM.YYYY - HH:mm')})}
+        {this.props.minimal ? null :
+          <div className="lecture-description">
+            {description}
+            <div className="right">
+              {counterpart.translate('lecture.openUntil', {time: moment(closesAt).format('DD.MM.YYYY - HH:mm')})}
+            </div>
           </div>
-        </div>
+        }
       </div>
     );
   }

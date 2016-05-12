@@ -30,11 +30,11 @@ class Login extends React.Component {
       this.context.router.push('/');
     }
   }
-  shouldComponentUpdate(newProps, newState, newContext) {
+  shouldComponentUpdate(newProps, newState) {
     return !(
       this.state === newState &&
       this.props.value === newProps.value &&
-      JSON.stringify(this.context) === JSON.stringify(newContext)
+      this.props.auth === newProps.auth
     );
   }
   onSubmit(event) {

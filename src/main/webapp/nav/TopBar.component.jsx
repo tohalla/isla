@@ -9,7 +9,9 @@ import {fetchViews} from '../view/view';
 import {onMobile} from '../util/misc';
 
 const mapStateToProps = state => ({
-  views: state.getIn(['entities', 'views'])
+  views: state.getIn(['entities', 'views']),
+  auth: state.get('auth'),
+  routing: state.get('routing')
 });
 
 class TopBar extends React.Component {
