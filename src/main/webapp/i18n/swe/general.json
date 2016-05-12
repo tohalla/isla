@@ -1,0 +1,19 @@
+{
+  "navText": "Isla",
+  "submitChanges": "Spara ändringar",
+  "createdAt": "Skapad",
+  "cancel": "Annullera",
+  "edit": "Redigera",
+  "loggedInAs": "Inloggad %(user)s",
+  "setLocale": "Välj språk",
+  "notAuthorizedToViewPage": "Du är inte behörighet att visa den sida som du försöker komma åt",
+  "navigation": {
+    "authenticate": "Logga in",
+    "browseLectures": "Sessioner",
+    "browseCourses": "Kurser",
+    "goBack": "Lämna tillbaka"
+  },
+  "footer": {
+    "github": "Kolla in oss på Github!"
+  }
+}

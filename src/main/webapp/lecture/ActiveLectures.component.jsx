@@ -1,6 +1,7 @@
 import React from 'react';
 import {List} from 'immutable';
 import {connect} from 'react-redux';
+import counterpart from 'counterpart';
 
 import {fetchActiveLectures} from './lecture';
 import Lecture from './Lecture.component';
@@ -26,7 +27,9 @@ class ActiveLectures extends React.Component {
       });
       return (
         <div className="lecture-list">
-          {lectures}
+          {this.props.lectures.count() > 0 ? (
+            lectures
+          ) : counterpart.translate('lecture.noActive')}
         </div>
       );
     }

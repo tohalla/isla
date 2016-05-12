@@ -1,0 +1,10 @@
+{
+  "name": "Kursnamn",
+  "description": "Kursbeskrivning",
+  "moderators": "Moderatorer",
+  "create": "Skap nu kurs",
+  "view": "Utsikt",
+  "actions": {
+    "addLecture": "Öppna nu session"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "authenticate": {
+    "title": "Logga in",
+    "authenticate": "Logga in"
+  },
+  "register": {
+    "title": "Registrera",
+    "register": "Skapa ett konto",
+    "completed": "Ett konto har skapat. Ett bekräftelse email kommer bli skickat inom kort."
+  },
+  "activate": {
+    "activated": "Konto har aktiverat. Du kans logga in nu.",
+    "invalidCode": "Ogiltig aktivera kod. Kom ihåg det aktivera kod ska ogiltigförklara i tre dagar."
+  },
+  "errors": {
+    "email": {
+      "invalid": "Ogiltig email."
+    },
+    "password": {
+      "invalidLength": "Krav på lösenord längd är 5-10 tecken.",
+      "dontMatch": "Lösenorden matchar inte."
+    },
+    "loginAlreadyRegistered": "Användarnamn är redan brukad.",
+    "emailAlreadyRegistered": "Email är redan brukad.",
+    "invalidLogin": "Logga in misslyckades. Försök igen."
+  },
+  "login": "Användarnamn",
+  "firstName": "Namn",
+  "lastName": "Efternamn",
+  "password": "Skapa ett lösenord",
+  "retypePassword": "Bekräfta lösenordet",
+  "email": "Email",
+  "selectDefaultLanguage": "Försummelse språk"
+}

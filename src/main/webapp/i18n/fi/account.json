@@ -6,7 +6,7 @@
   "register": {
     "title": "Rekisteröinti",
     "register": "Luo uusi käyttäjätili",
-    "completed": "Rekisteröinti on onnistunut. Vahvistussähköposti lähetetään piakkoin."
+    "completed": "Rekisteröinti on onnistunut. Vahvistussähköposti lähetetään hetken kuluttua."
   },
   "activate": {
     "activated": "Käyttäjätilisi on aktivoitu. Sisäänkirjautuminen on nyt mahdollista.",
