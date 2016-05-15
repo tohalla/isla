@@ -63,7 +63,11 @@ class ActiveLectures extends React.Component {
               />
               {lectures}
             </div>
-          ) : counterpart.translate('lecture.noActive')}
+          ) : (
+            <div className="container">
+              {counterpart.translate('lecture.noActive')}
+            </div>
+          )}
         </div>
       );
     }

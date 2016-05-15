@@ -12,6 +12,7 @@ import WithLabel from '../util/WithLabel.component';
 const fields = [
   'password.password',
   'password.retype',
+  'email',
   'firstName',
   'lastName',
   'langKey'
@@ -40,6 +41,7 @@ class Profile extends React.Component {
     if (this.props.auth.get('user')) {
       this.props.initializeForm({
         firstName: this.props.auth.getIn(['user', 'firstName']),
+        email: this.props.auth.getIn(['user', 'email']),
         lastName: this.props.auth.getIn(['user', 'lastName']),
         password: {
           password: '',
@@ -51,11 +53,11 @@ class Profile extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     if (
-      nextProps.auth.user &&
-      nextProps.auth.user !== this.props.auth.user
+      nextProps.auth !== this.props.auth
     ) {
       nextProps.initializeForm({
         firstName: nextProps.auth.getIn(['user', 'firstName']),
+        email: nextProps.auth.getIn(['user', 'email']),
         lastName: nextProps.auth.getIn(['user', 'lastName']),
         password: {
           password: '',
@@ -72,6 +74,7 @@ class Profile extends React.Component {
       login: this.props.auth.getIn(['user', 'login']),
       langKey: this.props.fields.langKey.value,
       firstName: this.props.fields.firstName.value,
+      email: this.props.fields.email.value,
       lastName: this.props.fields.lastName.value,
       password: this.props.fields.password.password.value
     }))
@@ -83,7 +86,7 @@ class Profile extends React.Component {
   render() {
     const user = this.props.auth.get('user');
     const {
-      fields: {password, firstName, lastName, langKey},
+      fields: {password, firstName, lastName, langKey, email},
       pristine,
       error
     } = this.props;
@@ -114,13 +117,19 @@ class Profile extends React.Component {
                       </WithLabel>
                     </div>
                     <div className="form-group">
-                      <WithLabel
-                          bold
-                          displayLabelOnMobile
-                          label={counterpart.translate('account.email')}
-                      >
-                        <span>{user.get('email')}</span>
-                      </WithLabel>
+                      <EditableField
+                          allowChanges={!email.error && (email.touched || email.active)}
+                          displayValue={
+                            <WithLabel
+                                bold
+                                displayLabelOnMobile
+                                label={counterpart.translate('account.email')}
+                            >
+                              {email.value}
+                            </WithLabel>
+                          }
+                          editField={<input {...email} placeholder={counterpart.translate('account.firstName')}/>}
+                      />
                     </div>
                     <div className="form-group">
                       <EditableField

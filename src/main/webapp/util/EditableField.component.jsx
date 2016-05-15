@@ -14,6 +14,7 @@ export default class EditableField extends React.Component {
     this.state = {editing: false};
     this.startEdit = this.startEdit.bind(this);
     this.cancelEdit = this.cancelEdit.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
     this.finishEdit = this.finishEdit.bind(this);
   }
   startEdit() {
@@ -35,13 +36,21 @@ export default class EditableField extends React.Component {
   finishEdit() {
     this.setState({editing: false});
   }
+  onKeyPress(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.finishEdit();
+    }
+  }
   render() {
     const {displayValue, editField, allowChanges} = this.props;
     if (this.state.editing) {
       return (
         <div className="block editable-toggle">
           <div className="block">
-            {editField}
+            {React.cloneElement(editField, {
+              onKeyPress: this.onKeyPress
+            })}
           </div>
           <div className="block">
             <button

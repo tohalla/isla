@@ -109,7 +109,10 @@ public class AccountResource {
     public ResponseEntity<UserDTO> getAccount() {
         if (SecurityContextHolder.getContext().getAuthentication().getName() == null)
             return new ResponseEntity<>(
-                    new UserDTO(-1, SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), "", "", "", "", false, "",
+                    new UserDTO(-1,
+                            SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+                                    .toString(),
+                            "", "", "", "", false, "",
                             new HashSet<String>(Arrays.asList(AuthoritiesConstants.ANONYMOUS))),
                     HttpStatus.OK);
         return Optional.ofNullable(userService.getUserWithAuthorities())
@@ -126,8 +129,9 @@ public class AccountResource {
     public ResponseEntity<String> saveAccount(@RequestBody UserDTO userDTO) {
         return userRepository.findOneByLogin(userDTO.getLogin())
                 .filter(u -> u.getLogin().equals(SecurityUtils.getCurrentLogin())).map(u -> {
-                    userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getLangKey());
-                    if(checkPasswordLength(userDTO.getPassword())) {
+                    userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(),
+                            userDTO.getLangKey(), userDTO.getEmail());
+                    if (checkPasswordLength(userDTO.getPassword())) {
                         userService.changePassword(userDTO.getPassword());
                     }
                     return new ResponseEntity<String>(HttpStatus.OK);
