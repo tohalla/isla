@@ -5,5 +5,6 @@
     "create": "Avaa istunto"
   },
   "openUntil": "Istunto on aktiivinen %(time)s",
-  "noActive": "Ei aktiivisia istuntoja"
+  "noActive": "Ei aktiivisia istuntoja",
+  "searchPlaceholder": "Kurssin nimi"
 }

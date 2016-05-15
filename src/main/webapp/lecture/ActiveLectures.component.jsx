@@ -11,16 +11,33 @@ const mapStateToProps = state => (
 });
 
 class ActiveLectures extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      query: ''
+    };
+    this.onQueryChange = this.onQueryChange.bind(this);
+  }
   componentWillMount() {
     this.props.fetchActiveLectures();
   }
-  shouldComponentUpdate(newProps) {
-    return !(this.props.lectures === newProps.lectures);
+  shouldComponentUpdate(newProps, newState) {
+    return !(
+      this.props.lectures === newProps.lectures &&
+      this.state.query === newState.query
+    );
+  }
+  onQueryChange(event) {
+    this.setState({query: event.target.value});
   }
   render() {
     if (this.props.lectures instanceof List) {
       const lectures = [];
       this.props.lectures
+      .filter(lecture =>
+        !this.state.query ||
+        lecture.getIn(['course', 'courseName']).indexOf(this.state.query) !== -1
+      )
       .sort((a, b) => a.get('createdAt') < b.get('createdAt') ? 1 : -1)
       .forEach((lecture, index) => {
         lectures.push(
@@ -36,7 +53,16 @@ class ActiveLectures extends React.Component {
       return (
         <div className="lecture-list">
           {this.props.lectures.count() > 0 ? (
-            lectures
+            <div>
+              <input
+                  className="lecture-list-search"
+                  onChange={this.onQueryChange}
+                  placeholder={counterpart.translate('lecture.searchPlaceholder')}
+                  type="text"
+                  value={this.state.query}
+              />
+              {lectures}
+            </div>
           ) : counterpart.translate('lecture.noActive')}
         </div>
       );

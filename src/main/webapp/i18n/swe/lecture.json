@@ -5,5 +5,6 @@
     "create": "Öppna session"
   },
   "openUntil": "Session är aktiv till %(time)s",
-  "noActive": "Ingen aktiv sessioner"
+  "noActive": "Ingen aktiv sessioner",
+  "searchPlaceholder": "Kurs namn"
 }
