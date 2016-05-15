@@ -118,6 +118,7 @@
   align-content: space-between;
   border-bottom: 2px solid $aluminum;
   padding: 0 $comment-horizontal-padding;
+  position: relative;
 
   &.checked{
     background: $carrara;
@@ -156,6 +157,28 @@
     background: url("../images/check.png") no-repeat center top;
     background-size: contain;
   }
+  .new-comment {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 7px;
+    animation: hideNew 10s forwards;
+    animation-iteration-count: 1;
+    background: $green-sea;
+    display: block;
+  }
+  @keyframes hideNew {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.30;
+    }
+    100% {
+      opacity: 0;
+    }
+}
 }
 
 

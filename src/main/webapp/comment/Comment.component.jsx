@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 export default class Comment extends React.Component {
   static propTypes = {
@@ -26,9 +27,12 @@ export default class Comment extends React.Component {
     this.props.onRead(this.props.comment.id);
   }
   render() {
-    const {content, read, liked} = this.props.comment;
+    const {content, read, liked, createdAt} = this.props.comment;
     return (
       <div className={`comment ${read ? 'checked' : ''}`}>
+        {moment.utc().isBefore(moment.utc(createdAt).add(10, 's')) ?
+          <div className="new-comment" /> : null
+        }
         <div className="comment-content" >
           {content}
         </div>
