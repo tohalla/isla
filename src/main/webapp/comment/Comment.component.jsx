@@ -5,6 +5,7 @@ export default class Comment extends React.Component {
     allowLike: React.PropTypes.bool.isRequired,
     allowModeratorActions: React.PropTypes.bool,
     comment: React.PropTypes.object.isRequired,
+    hideActions: React.PropTypes.bool,
     onDelete: React.PropTypes.func.isRequired,
     onLike: React.PropTypes.func.isRequired,
     onRead: React.PropTypes.func.isRequired
@@ -31,35 +32,37 @@ export default class Comment extends React.Component {
         <div className="comment-content" >
           {content}
         </div>
-        <div className="comment-items" >
-          <span className="like-count">{liked}</span>
-          {this.props.allowLike && !this.props.comment.read ?
-            <button
-                className="material-icons icon-darkgray icon-24"
-                onClick={this.onLike}
-            >
-              {'thumb_up'}
-            </button> : null
-          }
-          {this.props.allowModeratorActions ?
-            <span className="moderator-actions">
-              {this.props.comment.read ? null :
-                  <button
-                      className="material-icons icon-darkgray icon-24"
-                      onClick={this.onRead}
-                  >
-                    {'check'}
-                  </button>
-              }
+        {this.props.hideActions ? null : (
+          <div className="comment-items" >
+            <span className="like-count">{liked}</span>
+            {this.props.allowLike && !this.props.comment.read ?
               <button
                   className="material-icons icon-darkgray icon-24"
-                  onClick={this.onDelete}
+                  onClick={this.onLike}
               >
-                {'clear'}
-              </button>
-            </span> : null
-          }
-        </div>
+                {'thumb_up'}
+              </button> : null
+            }
+            {this.props.allowModeratorActions ?
+              <span className="moderator-actions">
+                {this.props.comment.read ? null :
+                    <button
+                        className="material-icons icon-darkgray icon-24"
+                        onClick={this.onRead}
+                    >
+                      {'check'}
+                    </button>
+                }
+                <button
+                    className="material-icons icon-darkgray icon-24"
+                    onClick={this.onDelete}
+                >
+                  {'clear'}
+                </button>
+              </span> : null
+            }
+          </div>
+        )}
       </div>
     );
   }

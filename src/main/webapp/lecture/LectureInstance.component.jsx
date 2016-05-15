@@ -145,6 +145,9 @@ class LectureInstance extends React.Component {
     this.setState({hideChecked: !this.state.hideChecked});
   }
   render() {
+    const expired = moment().isAfter(
+      moment(this.props.lecture.get('closesAt'))
+    );
     const comments = [];
     const {freezeView, likes, hideChecked} = this.state;
     if (this.props.comments instanceof List) {
@@ -170,10 +173,12 @@ class LectureInstance extends React.Component {
                   allowModeratorActions={this.props.lecture.getIn(['course', 'hasModeratorRights'])}
                   comment={mutableComment}
                   displayResults={
+                    expired ||
                     comment.get('read') ||
                     !comment.get('allowLike') ||
                     likes.contains(comment.get('id'))
                   }
+                  hideActions={expired}
                   key={index}
                   onDelete={this.onDelete}
                   onRead={this.onRead}
@@ -186,6 +191,7 @@ class LectureInstance extends React.Component {
                   }
                   allowModeratorActions={this.props.lecture.getIn(['course', 'hasModeratorRights'])}
                   comment={mutableComment}
+                  hideActions={expired}
                   key={index}
                   onDelete={this.onDelete}
                   onLike={this.onLike}
@@ -205,7 +211,7 @@ class LectureInstance extends React.Component {
             </div>
           </div> : null
         }
-        {moment().isBefore(moment(this.props.lecture.get('closesAt'))) ? (
+        {expired ? null : (
             <div className="comment-form-container">
               <NewComment
                   allowModeratorActions={this.props.lecture.getIn(['course', 'hasModeratorRights'])}
@@ -241,7 +247,7 @@ class LectureInstance extends React.Component {
                 </li>
               </ul>
             </div>
-          ) : null
+          )
         }
         {comments}
       </div>
