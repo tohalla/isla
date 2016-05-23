@@ -5,25 +5,29 @@ import {fromJS} from 'immutable';
 import config from '../config';
 import {CALL_API} from '../constants';
 
-const API_ROOT = `http://${config.api.host}:${config.api.port}/api/`;
+const API_ROOT = `http://${config.api.host}:${config.api.port}/`;
 const methods = ['GET', 'POST', 'PUT', 'DELETE'];
 
 const callApi = (endpoint, config) => {
+  let {body, method = 'GET', apiPrefix = 'api/', headers, params} = config;
   let fullUrl = (endpoint.indexOf(API_ROOT) === -1) ?
-    API_ROOT + endpoint : endpoint;
-
-  let {body, method = 'GET', headers, params} = config;
+    API_ROOT + apiPrefix + endpoint : endpoint;
 
   if (params) {
     fullUrl += '?';
     for (let key in params) {
       if (Object.hasOwnProperty.call(params, key)) {
-        fullUrl += `${key}=${params[key]}&`;
+        if (Array.isArray(params[key])) {
+          params[key].forEach(value => { // eslint-disable-line
+            fullUrl += `${key}=${value}&`;
+          });
+        } else {
+          fullUrl += `${key}=${params[key]}&`;
+        }
       }
     }
     fullUrl = fullUrl.slice(0, -1);
   }
-
   if (typeof body === 'object') {
     body = JSON.stringify(body);
   }
@@ -40,8 +44,7 @@ const callApi = (endpoint, config) => {
       body, method, params,
       headers: Object.assign({
         'Authorization': localStorage.token,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Content-Type': 'application/json'
       }, headers)
     }
   )
@@ -60,8 +63,8 @@ export default store => dispatch => action => {
   if (typeof callAPI === 'undefined') {
     return dispatch(action);
   }
-
   let {endpoint, config = {}} = callAPI;
+
   const {types} = callAPI;
 
   if (typeof endpoint === 'function') {

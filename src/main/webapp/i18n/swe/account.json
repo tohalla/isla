@@ -1,7 +1,9 @@
 {
   "authenticate": {
     "title": "Logga in",
-    "authenticate": "Logga in"
+    "authenticate": "Logga in",
+    "passwordRecovery": "Har du glömt lösenordet?",
+    "sendResetLink": "Resetera lösenordet"
   },
   "register": {
     "title": "Registrera",

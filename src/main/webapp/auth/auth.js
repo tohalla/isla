@@ -22,7 +22,13 @@ import {
   ACCOUNT_SET,
   ACCOUNT_FAILURE,
   ERROR_AUTH_CLEAR,
-  SET_LOCALE
+  SET_LOCALE,
+  PASSWORD_RESET_REQUEST,
+  PASSWORD_RESET_FAILURE,
+  PASSWORD_RESET_SUCCESS,
+  PASSWORD_UPDATE_REQUEST,
+  PASSWORD_UPDATE_FAILURE,
+  PASSWORD_UPDATE_SUCCESS
 } from '../constants';
 
 export default createReducer(
@@ -48,39 +54,66 @@ export default createReducer(
     [REGISTER_FAILURE]: (state, action) =>
       state.merge({isFetching: false}, action.response),
     [ERROR_AUTH_CLEAR]: state => state.delete('error'),
-    [SET_LOCALE]: (state, action) => state.setIn(['user', 'langKey'], action.locale)
+    [SET_LOCALE]: (state, action) =>
+      state.setIn(['user', 'langKey'], action.locale)
   }
 );
 
-export const activate = key => {
-  return {
-    [CALL_API]: {
-      types: [ACTIVATE_REQUEST, ACTIVATE_SUCCESS, ACTIVATE_FAILURE],
-      endpoint: 'activate',
-      config: {
-        params: {key},
-        onSuccess: data => data,
-        onFailure: error => Promise.reject(error)
-      }
+export const newPasswordWithResetKey = (key, newPassword) => ({
+  [CALL_API]: {
+    types: [
+      PASSWORD_UPDATE_REQUEST,
+      PASSWORD_UPDATE_SUCCESS,
+      PASSWORD_UPDATE_FAILURE
+    ],
+    endpoint: 'account/reset_password/finish',
+    config: {
+      method: 'POST',
+      body: {key, newPassword}
     }
-  };
-};
+  }
+});
 
-export const fetchAccount = () => {
-  return {
-    [CALL_API]: {
-      types: [ACCOUNT_REQUEST, ACCOUNT_SET, ACCOUNT_FAILURE],
-      endpoint: 'account',
-      config: {
-        onSuccess: data => {
-          if (!localStorage.token) {
-            localStorage.setItem('token', data.login);
-          }
+export const resetPassword = email => ({
+  [CALL_API]: {
+    types: [
+      PASSWORD_RESET_REQUEST,
+      PASSWORD_RESET_SUCCESS,
+      PASSWORD_RESET_FAILURE
+    ],
+    endpoint: 'account/reset_password/init',
+    config: {
+      method: 'POST',
+      body: email
+    }
+  }
+});
+
+export const activate = key => ({
+  [CALL_API]: {
+    types: [ACTIVATE_REQUEST, ACTIVATE_SUCCESS, ACTIVATE_FAILURE],
+    endpoint: 'activate',
+    config: {
+      params: {key},
+      onSuccess: data => data,
+      onFailure: error => Promise.reject(error)
+    }
+  }
+});
+
+export const fetchAccount = () => ({
+  [CALL_API]: {
+    types: [ACCOUNT_REQUEST, ACCOUNT_SET, ACCOUNT_FAILURE],
+    endpoint: 'account',
+    config: {
+      onSuccess: data => {
+        if (!localStorage.token) {
+          localStorage.setItem('token', data.login);
         }
       }
     }
-  };
-};
+  }
+});
 
 export const login = credentials => dispatch => dispatch({
   [CALL_API]: {

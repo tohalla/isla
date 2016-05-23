@@ -1,7 +1,9 @@
 {
   "authenticate": {
     "title": "Kirjaudu",
-    "authenticate": "Kirjaudu"
+    "authenticate": "Kirjaudu",
+    "passwordRecovery": "Unohtuiko salasana?",
+    "sendResetLink": "Lähetä"
   },
   "register": {
     "title": "Rekisteröinti",

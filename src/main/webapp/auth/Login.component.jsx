@@ -91,6 +91,9 @@ class Login extends React.Component {
               {counterpart.translate('account.authenticate.authenticate')}
             </button>
           </div>
+          <Link className="block" to={'/recovery'}>
+            {counterpart.translate('account.authenticate.passwordRecovery')}
+          </Link>
         </form>
       </div>
     );

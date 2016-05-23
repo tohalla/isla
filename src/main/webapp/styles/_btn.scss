@@ -5,6 +5,7 @@ button, .btn{
   border: 0;
   color: $default-btn-color;
   background: $default-btn-background;
+  white-space: nowrap;
   &:hover{
     background: $default-btn-hover-background;
     cursor: pointer;

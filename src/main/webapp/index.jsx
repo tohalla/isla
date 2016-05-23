@@ -12,6 +12,7 @@ import View from './view/View.component';
 import Frontpage from './view/Frontpage.component';
 import store from './store';
 import Login from './auth/Login.component';
+import PasswordRecovery from './auth/PasswordRecovery.component';
 import LectureInstance from './lecture/LectureInstance.component';
 import Course from './course/Course.component';
 import Register from './auth/Register.component';
@@ -25,6 +26,7 @@ ReactDOM.render((
         <Route component={Default} path="/">
           <IndexRoute component={Frontpage} />
           <Route component={Login} path="authenticate" />
+          <Route component={PasswordRecovery} path="recovery(/:key)" />
           <Route component={View} path="views/:id" />
           <Route component={Activate} path="activate" />
           <Route component={Admin} path="admin" />

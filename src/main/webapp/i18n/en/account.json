@@ -1,7 +1,9 @@
 {
   "authenticate": {
     "title": "Log in",
-    "authenticate": "Log in"
+    "authenticate": "Log in",
+    "passwordRecovery": "Did you forget your password?",
+    "sendResetLink": "Reset password"
   },
   "register": {
     "title": "Register",
