@@ -19,7 +19,7 @@ export default class LectureForm extends React.Component {
     this.onCancel = this.onCancel.bind(this);
     this.state = {
       description: '',
-      closesAt: moment().endOf('day')
+      closesAt: moment().add(1, 'days').endOf('day')
     };
   }
   componentWillMount() {
@@ -31,12 +31,14 @@ export default class LectureForm extends React.Component {
     this.setState({description: event.target.value});
   }
   onClosesAtChange(date) {
-    this.setState({closesAt: date ? moment(date).endOf('day') : null});
+    this.setState({
+      closesAt: date ? moment(date).add(1, 'days').endOf('day') : null
+    });
   }
   onCancel() {
     this.setState({
       description: '',
-      closesAt: moment(moment().endOf('day'))
+      closesAt: moment(moment().add(1, 'days').endOf('day'))
     });
     this.props.onCancel();
   }
@@ -46,7 +48,7 @@ export default class LectureForm extends React.Component {
     this.props.onSubmit(Object.assign(this.state, {course}));
     this.setState({
       description: '',
-      closesAt: moment(moment().endOf('day'))
+      closesAt: moment(moment().add(1, 'days').endOf('day'))
     });
   }
   render() {
