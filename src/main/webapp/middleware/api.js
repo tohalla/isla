@@ -44,7 +44,7 @@ const callApi = (endpoint, config) => {
       body, method, params,
       headers: Object.assign({
         'Authorization': localStorage.token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json; charset=utf-8'
       }, headers)
     }
   )

@@ -10,7 +10,7 @@ import {
   CALL_API
 } from '../constants';
 
-export default createReducer(fromJS([]), {
+export default createReducer(fromJS({}), {
   [COMMENTS_REQUEST]: (state, action) => action.response,
   [COMMENTS_SET]: (state, action) => action.response,
   [COMMENT_ADD]: (state, action) => state.push(action.comment),

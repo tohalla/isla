@@ -16,6 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.hibernate.Hibernate;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -33,10 +38,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import isla.domain.Comment;
+import isla.domain.Course;
 import isla.domain.Lecture;
 import isla.repository.CommentRepository;
 import isla.repository.LectureRepository;
 import isla.security.AuthoritiesConstants;
+import isla.security.SecurityUtils;
 import isla.web.rest.dto.LectureDTO;
 import isla.web.rest.util.HeaderUtil;
 import isla.web.rest.util.PdfBuilder;
@@ -74,6 +81,31 @@ public class LectureResource {
         return ResponseEntity.created(new URI("/api/lectures/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("lecture", result.getId().toString()))
                 .body(getLecture(lecture.getId()).getBody());
+    }
+
+    /**
+     * POST /lectures/:id/close -> Closes the lecture.
+     */
+    @RequestMapping(value = "/lectures/{id}/close", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Secured({AuthoritiesConstants.TEACHER, AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER})
+    public ResponseEntity<LectureDTO> closeLecture(@PathVariable Long id)
+            throws URISyntaxException {
+        Lecture lecture = lectureRepository.findOne(id);
+        if (lecture == null) {
+            return ResponseEntity.badRequest().header("Failure", "The lecture doesn't exists")
+                    .body(null);
+        }
+        if (!lecture.getCourse().getHasModeratorRights()) {
+            return ResponseEntity.badRequest().header("Failure", "Not authorized").body(null);
+        }
+        log.debug("REST request to close Lecture : {}", lecture);
+        lecture.setClosesAt(DateTime.now());
+        Lecture result = lectureRepository.save(lecture);
+        return ResponseEntity.accepted()
+                .headers(HeaderUtil.createEntityUpdateAlert("lecture", result.getId().toString()))
+                .body(new LectureDTO(lecture));
     }
 
     /**
@@ -143,41 +175,46 @@ public class LectureResource {
         List<Comment> comments = commentRepository.findByPostedByLectureId(id, true);
         String returnValue = "id;content;createdAt\n";
         for (Comment c : comments) {
-            returnValue += c.getId().toString() + ';' + c.getContent() + ';' + c.getCreatedAt() + '\n';
+            returnValue +=
+                    c.getId().toString() + ';' + c.getContent() + ';' + c.getCreatedAt() + '\n';
         } ;
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment;filename=lecture_" + id + ".csv");
-        
+
         return new ResponseEntity<>(returnValue, headers, HttpStatus.OK);
     }
-    
+
     /**
      * GET /lectures/:id/comments/pdf -> get all the comments of lecture in PDF format.
      */
     @RequestMapping(value = "/lectures/{id}/comments/pdf", method = RequestMethod.GET)
     @Timed
-    public void getAllCommentsPDF(@PathVariable Long id,HttpServletRequest request, HttpServletResponse response) throws IOException {
- 
+    public void getAllCommentsPDF(@PathVariable Long id, HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+
         final ServletContext servletContext = request.getSession().getServletContext();
-        final File tempDirectory = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
+        final File tempDirectory =
+                (File) servletContext.getAttribute("javax.servlet.context.tempdir");
         final String temperotyFilePath = tempDirectory.getAbsolutePath();
 
         String filename = "lecture-" + id + ".pdf";
 
         response.setContentType("application/pdf");
-        response.setHeader("Content-disposition", "attachment; filename="+ filename);
- 
+        response.setHeader("Content-disposition", "attachment; filename=" + filename);
+
         try {
-            List<Comment> comments = commentRepository.findByPostedByLectureId(id, true);     
-            ByteArrayOutputStream baos = PdfBuilder.getCommentsPdf(comments, temperotyFilePath+"\\"+filename);
+            List<Comment> comments = commentRepository.findByPostedByLectureId(id, true);
+            ByteArrayOutputStream baos =
+                    PdfBuilder.getCommentsPdf(comments, temperotyFilePath + "\\" + filename);
             OutputStream os = response.getOutputStream();
             baos.writeTo(os);
             os.flush();
         } catch (Exception e1) {
             e1.printStackTrace();
         }
- 
+
     }
+
     /**
      * GET /lectures/:id -> get the "id" lecture.
      */

@@ -2,11 +2,13 @@ import React from 'react';
 import {Link} from 'react-router';
 import moment from 'moment';
 import counterpart from 'counterpart';
+import {connect} from 'react-redux';
+
+import {closeLecture} from '../lecture/lecture';
+import DropdownButton from '../util/DropdownButton.component.jsx';
 import config from '../config';
 
-import DropdownButton from '../util/DropdownButton.component.jsx';
-
-export default class Lecture extends React.Component {
+class Lecture extends React.Component {
   static propTypes: {
     displayCourseName: React.propTypes.boolean,
     minimal: React.propTypes.boolean,
@@ -16,6 +18,10 @@ export default class Lecture extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.onMenuItemClick = this.onMenuItemClick.bind(this);
+    this.closeLecture = this.closeLecture.bind(this);
+  }
+  closeLecture() {
+    this.props.closeLecture(this.props.lecture);
   }
   onMenuItemClick(item) {
     const link = document.createElement('a');
@@ -77,12 +83,31 @@ export default class Lecture extends React.Component {
         {this.props.minimal ? null :
           <div className="lecture-description">
             {description}
-            <div className="right">
-              {counterpart.translate('lecture.openUntil', {time: moment(closesAt).format('DD.MM.YYYY - HH:mm')})}
-            </div>
+            {isActive ?
+              <div className="right">
+                {counterpart.translate('lecture.openUntil', {time: moment(closesAt).format('DD.MM.YYYY - HH:mm')})}
+                {course.hasModeratorRights ?
+                  <button
+                      className="btn-plain"
+                      onClick={this.closeLecture}
+                      type="button"
+                  >
+                    {counterpart.translate('lecture.closeLecture')}
+                  </button> : null
+                }
+              </div> :
+              <div className="right">
+                {counterpart.translate('lecture.closedAt', {time: moment(closesAt).format('DD.MM.YYYY - HH:mm')})}
+              </div>
+            }
           </div>
         }
       </div>
     );
   }
 }
+
+export default connect(
+  null,
+  {closeLecture}
+)(Lecture);

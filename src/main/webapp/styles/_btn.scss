@@ -6,15 +6,24 @@ button, .btn{
   color: $default-btn-color;
   background: $default-btn-background;
   white-space: nowrap;
+  cursor: pointer;
   &:hover{
     background: $default-btn-hover-background;
-    cursor: pointer;
   }
 }
 button:disabled{
   background: $default-btn-disabled-background;
   color: $default-btn-disabled-color;
+  cursor: initial;
+}
+.btn-plain {
+  padding: 0;
+  margin: 0 5px;
+  border: 0;
+  color: $link-color;
+  background: none;
   &:hover {
-    cursor: initial;
+    color: $link-hover-color;
+    background: none;
   }
 }

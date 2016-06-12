@@ -17,7 +17,7 @@ import {
   CALL_API
 } from '../constants';
 
-export default createReducer(fromJS([]), {
+export default createReducer(fromJS({}), {
   [COURSES_REQUEST]: (state, action) => action.response,
   [COURSES_SET]: (state, action) => action.response,
   [COURSE_ADD_SUCCESS]: (state, action) => state.push(action.response),

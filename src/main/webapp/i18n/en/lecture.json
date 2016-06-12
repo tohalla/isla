@@ -1,10 +1,12 @@
 {
   "lectureCreation": {
-    "description": "Enter description for lecture",
-    "closesAt": "Lecture closes at",
-    "create": "Open lecture"
+    "description": "Enter description for session",
+    "closesAt": "Session closes at",
+    "create": "Open session"
   },
   "openUntil": "Session is active until %(time)s",
   "noActive": "No active sessions",
-  "searchPlaceholder": "Course name"
+  "searchPlaceholder": "Course name",
+  "closeLecture": "Close session",
+  "closedAt": "Session closed at %(time)s"
 }

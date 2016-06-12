@@ -6,5 +6,7 @@
   },
   "openUntil": "Istunto on aktiivinen %(time)s",
   "noActive": "Ei aktiivisia istuntoja",
-  "searchPlaceholder": "Kurssin nimi"
+  "searchPlaceholder": "Kurssin nimi",
+  "closeLecture": "Sulje istunto",
+  "closedAt": "Istunto sulkeutui %(time)s"
 }

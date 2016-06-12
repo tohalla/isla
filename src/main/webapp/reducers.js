@@ -11,11 +11,10 @@ import users from './user/user';
 import lectures from './lecture/lecture';
 
 const routing = createReducer(fromJS({locationBeforeTransitions: null}), {
-  [LOCATION_CHANGE]: (state, action) => {
-    return state.merge({
+  [LOCATION_CHANGE]: (state, action) =>
+    state.merge({
       locationBeforeTransitions: action.payload
-    });
-  }
+    })
 });
 
 const entities = combineReducers({

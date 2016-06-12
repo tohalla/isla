@@ -137,7 +137,7 @@ class Course extends React.Component {
             </div>
             {courseActions}
           </div>
-          <LectureList course={course.get('id')} />
+          {course.has('id') ? <LectureList course={course.get('id')} /> : null}
         </div>
       );
     }
