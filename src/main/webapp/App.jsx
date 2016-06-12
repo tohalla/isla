@@ -46,12 +46,15 @@ class App extends React.Component {
     if (this.props.location.pathname !== nextProps.location.pathname) {
       window.previousLocation = this.props.location;
     }
-    if (nextProps.auth.getIn(['user', 'langKey']) !== counterpart.getLocale()) {
-      if (!nextProps.auth.getIn(['user', 'langKey']) && localStorage.langKey) {
+    if (
+      nextProps.auth.getIn(['user', 'langKey']) !== counterpart.getLocale() ||
+      this.props.auth.getIn(['user', 'langKey']) !== counterpart.getLocale()
+    ) {
+      if (!nextProps.auth.hasIn(['user', 'langKey']) && localStorage.langKey) {
         this.props.setLocale(localStorage.langKey);
         return;
       }
-      counterpart.setLocale(
+      this.props.setLocale(
         nextProps.auth.getIn(['user', 'langKey']) ||
         localStorage.langKey ||
         'en'

@@ -15,5 +15,31 @@
   },
   "footer": {
     "github": "Isla Githubissa!"
+  },
+  "moment": {
+    "months": [
+      "Tammikuu",
+      "Helmikuu",
+      "Maaliskuu",
+      "Huhtikuu",
+      "Toukokuu",
+      "Kesäkuu",
+      "Heinäkuu",
+      "Elokuu",
+      "Syyskuu",
+      "Lokakuu",
+      "Marraskuu",
+      "Joulukuu"
+    ],
+    "weekdays": [
+      "Sunnuntai",
+      "Maanantai",
+      "Tiistai",
+      "Keskiviikko",
+      "Torstai",
+      "Perjantai",
+      "Lauantai"
+    ],
+    "weekdaysMin": ["Su", "Ma", "Ti", "Ke", "To", "Pe", "La"]
   }
 }

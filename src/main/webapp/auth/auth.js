@@ -1,5 +1,7 @@
 import {createReducer} from 'redux-immutablejs';
+import moment from 'moment';
 import {fromJS} from 'immutable';
+import counterpart from 'counterpart';
 
 import {
   CALL_API,
@@ -186,5 +188,7 @@ export const logout = () => dispatch => dispatch({
 
 export const setLocale = locale => {
   localStorage.setItem('langKey', locale);
+  counterpart.setLocale(locale);
+  moment.locale(locale);
   return {type: SET_LOCALE, locale};
 };

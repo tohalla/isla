@@ -69,6 +69,7 @@ export default class LectureForm extends React.Component {
           <DatePicker
               dateFormat="DD.MM.YYYY"
               isClearable
+              locale={counterpart.getLocale()}
               minDate={moment()}
               onChange={this.onClosesAtChange}
               placeholder={counterpart.translate('lecture.lectureCreation.closesAt')}

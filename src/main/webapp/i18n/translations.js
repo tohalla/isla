@@ -1,4 +1,5 @@
 import counterpart from 'counterpart';
+import moment from 'moment';
 
 const translationFiles = require.context(
   "./",
@@ -21,6 +22,13 @@ if (translations) {
   for (let key in translations) {
     if (Object.hasOwnProperty.call(translations, key)) {
       counterpart.registerTranslations(key, translations[key]);
+      if (translations[key].general.moment) {
+        moment.updateLocale(key, {
+          months: translations[key].general.moment.months,
+          weekdays: translations[key].general.moment.weekdays,
+          weekdaysMin: translations[key].general.moment.weekdaysMin
+        });
+      }
     }
   }
 }

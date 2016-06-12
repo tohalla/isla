@@ -15,5 +15,31 @@
   },
   "footer": {
     "github": "Kolla in oss på Github!"
+  },
+  "moment": {
+    "months": [
+      "Januari",
+      "Februari",
+      "Mars",
+      "April",
+      "Maj",
+      "Juni",
+      "Juli",
+      "Augusti",
+      "September",
+      "Oktober",
+      "November",
+      "December"
+    ],
+    "weekdays": [
+      "Söndag",
+      "Måndag",
+      "Tisdag",
+      "Onsdag",
+      "Torsdag",
+      "Fredag",
+      "Lördag"
+    ],
+    "weekdaysMin": ["Sö", "Må", "Ti", "On", "To", "Fr", "Lö"]
   }
 }
