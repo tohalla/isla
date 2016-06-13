@@ -1,4 +1,8 @@
 {
+  "intro": {
+    "title": "Välkommen att använda ISLA program",
+    "content": "ISLA är en webbläsar-baserad program vars mål är att öka deltagande bland människor i skolningar, seminarium och relevanta ändamål.  Programmet är lätt att använda och är utvecklad från responser samlad från användare av programmets alpha version. Programmet är baserad på öppen källkod som tillåter användningen av programmet i diverse omgivningar."
+  },
   "navText": "Isla",
   "submitChanges": "Spara ändringar",
   "createdAt": "Skapad",

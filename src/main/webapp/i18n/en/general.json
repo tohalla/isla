@@ -1,4 +1,8 @@
 {
+  "intro": {
+    "title": "Welcome to use ISLA application",
+    "content": "ISLA is browser-based application which aim is to activate participation among people in educational, seminar or relevant purposes. Application is easy-to-use and it's designed based on feedback gathered from users of application's alpha version. Application is based on terms of open source implementation which allows free use of application in various operational environment."
+  },
   "navText": "Isla",
   "submitChanges": "Save changes",
   "createdAt": "Created at",

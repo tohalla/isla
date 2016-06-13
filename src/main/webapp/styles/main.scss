@@ -115,6 +115,14 @@ html {
     }
   }
 }
+.article {
+  .article-title {
+    font-size: 24px;
+  }
+  .article-content {
+    text-align: justify;
+  }
+}
 @media (max-width: 767px) {
   @import "mobile.scss";
 }

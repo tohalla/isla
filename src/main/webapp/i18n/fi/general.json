@@ -1,4 +1,8 @@
 {
+  "intro": {
+    "title": "Tervetuloa ISLA sovelluksen pariin",
+    "content": "ISLA on selainpohjainen sovellus, jonka tarkoitus on mahdollistaa muun muassa opetus tai muuhun seminaaritilaisuuteen osallistuvien henkilöiden aktivointi. Sovellus on helppokäyttöinen ja toteutuksessa on kuunneltu sovelluksen esiversion käyttäjien toiveita. Sovellus on toteutettu avoimen lähdekoodin reunaehtoja kehittäen mahdollistaen sovelluksen vapaan hyödyntämisen eri toimintaympäristöissä."
+  },
   "navText": "Isla",
   "submitChanges": "Tallenna muutokset",
   "createdAt": "Julkaistu",
