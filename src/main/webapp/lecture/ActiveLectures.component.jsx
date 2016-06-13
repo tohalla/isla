@@ -6,8 +6,9 @@ import counterpart from 'counterpart';
 import {fetchActiveLectures} from './lecture';
 import Lecture from './Lecture.component';
 
-const mapStateToProps = state => (
-  {lectures: state.getIn(['entities', 'lectures'])
+const mapStateToProps = state => ({
+  auth: state.get('auth'),
+  lectures: state.getIn(['entities', 'lectures'])
 });
 
 class ActiveLectures extends React.Component {
@@ -24,7 +25,8 @@ class ActiveLectures extends React.Component {
   shouldComponentUpdate(newProps, newState) {
     return !(
       this.props.lectures === newProps.lectures &&
-      this.state.query === newState.query
+      this.state.query === newState.query &&
+      this.props.auth === newProps.auth
     );
   }
   onQueryChange(event) {
