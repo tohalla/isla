@@ -6,7 +6,7 @@
   },
   "openUntil": "Session is active until %(time)s",
   "noActive": "No active sessions",
-  "searchPlaceholder": "Course name",
+  "searchPlaceholder": "Search by course name",
   "closeLecture": "Close session",
   "closedAt": "Session closed at %(time)s"
 }

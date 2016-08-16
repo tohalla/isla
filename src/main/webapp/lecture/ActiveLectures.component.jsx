@@ -38,7 +38,8 @@ class ActiveLectures extends React.Component {
       this.props.lectures
       .filter(lecture =>
         !this.state.query ||
-        lecture.getIn(['course', 'courseName']).indexOf(this.state.query) !== -1
+        lecture.getIn(['course', 'courseName']).toLowerCase()
+          .indexOf(this.state.query.toLowerCase()) !== -1
       )
       .sort((a, b) => a.get('createdAt') < b.get('createdAt') ? 1 : -1)
       .forEach((lecture, index) => {
