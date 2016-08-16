@@ -128,3 +128,5 @@ Desktop.ini
 *.sublime-workspace
 
 src/main/webapp/scripts/app/entities/**
+
+dist
