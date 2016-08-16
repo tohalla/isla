@@ -106,12 +106,12 @@ public class UserService {
         return newUser;
     }
 
-    public void updateUserInformation(String firstName, String lastName, String email, String langKey) {
+    public void updateUserInformation(String firstName, String lastName, String langKey, String email) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).ifPresent(u -> {
             u.setFirstName(firstName);
             u.setLastName(lastName);
-            u.setEmail(email);
             u.setLangKey(langKey);
+            u.setEmail(email);
             userRepository.save(u);
             log.debug("Changed Information for User: {}", u);
         });

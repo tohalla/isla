@@ -1,9 +1,10 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
+const mapStateToProps = state => ({
+  auth: state.get('auth')
+});
 export default class RequireAuthority extends React.Component {
-  static contextTypes = {
-    auth: React.PropTypes.object
-  }
   static propTypes = {
     alternativeItem: React.PropTypes.object,
     authorities: React.PropTypes.array,
@@ -15,7 +16,9 @@ export default class RequireAuthority extends React.Component {
     const {authority, oneOf, item, alternativeItem} = this.props;
     // if passed as property, will override
     const authorities = this.props.authorities ||
-      (this.context.auth.user ? this.context.auth.user.authorities : null);
+      (this.props.auth.get('user') ?
+        this.props.auth.getIn(['user', 'authorities']).toJS() : null
+      );
     if (authorities) {
       if (
         typeof authority !== 'undefined' &&
@@ -35,3 +38,8 @@ export default class RequireAuthority extends React.Component {
     return item;
   }
 }
+
+export default connect(
+  mapStateToProps,
+  {}
+)(RequireAuthority);

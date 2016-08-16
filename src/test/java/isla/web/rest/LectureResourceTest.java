@@ -88,7 +88,6 @@ public class LectureResourceTest {
     @Before
     public void initTest() {
         lecture = new Lecture();
-        lecture.setCreatedAt();
         lecture.setStartsAt(DEFAULT_STARTS_AT);
         lecture.setClosesAt(DEFAULT_CLOSES_AT);
         lecture.setDescription(DEFAULT_DESCRIPTION);
@@ -185,7 +184,6 @@ public class LectureResourceTest {
 		int databaseSizeBeforeUpdate = lectureRepository.findAll().size();
 
         // Update the lecture
-        lecture.setCreatedAt();
         lecture.setStartsAt(UPDATED_STARTS_AT);
         lecture.setClosesAt(UPDATED_CLOSES_AT);
         lecture.setDescription(UPDATED_DESCRIPTION);

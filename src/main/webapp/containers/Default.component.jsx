@@ -4,14 +4,11 @@ import TopBar from '../nav/TopBar.component';
 import Footer from './Footer.component';
 
 export default class Default extends React.Component {
-  static contextTypes = {
-    auth: React.PropTypes.object.isRequired
-  }
   render() {
     return (
       <div className="stretch">
         <div className="wrapper">
-          <TopBar auth={this.context.auth}/>
+          <TopBar />
           <div className="content">
             {this.props.children}
           </div>

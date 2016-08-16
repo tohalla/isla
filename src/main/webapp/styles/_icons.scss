@@ -24,6 +24,8 @@
   color: $black;
   vertical-align: middle;
   background: none;
+  margin: 0;
+  padding: 0;
   &:hover {
     background: none;
   }
@@ -48,6 +50,20 @@
 .material-icons.icon-darkgray {
   color: $darkgray;
 }
+.material-icons.icon-submit {
+  color: $malibu;
+  &:disabled {
+    color: $gray;
+    background: none;
+  }
+}
+.material-icons.icon-cancel {
+  color: $alizarin;
+  &:disabled {
+    color: $gray;
+    background: none;
+  }
+}
 .material-icons.icon-48 {
   font-size: 48px;
 }
@@ -56,6 +72,9 @@
 }
 .material-icons.icon-24 {
   font-size: 24px;
+}
+.material-icons.icon-20 {
+  font-size: 20px;
 }
 .material-icons.icon-16 {
   font-size: 16px;

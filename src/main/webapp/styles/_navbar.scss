@@ -1,6 +1,6 @@
 $nav-height: 46px;
 nav{
-  height: $nav-height;
+  min-height: $nav-height;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,22 +13,6 @@ nav{
     display: inline-block;
     height: 100%;
     padding: 0 4px;
-  }
-}
-.nav-sub{
-  background: $aluminum;
-  border-bottom: 1px solid $gray;
-  font-size: 80%;
-
-  a{
-    color: $darkgray;
-    text-decoration: none;
-    &:hover{
-      color: $black;
-    }
-  }
-  .active a{
-    text-decoration: underline;
   }
 }
 .default-menu {
@@ -56,16 +40,22 @@ nav{
   }
 }
 .nav-plain{
+  min-height: 0;
   position: absolute;
-  padding: 0 5%;
+  padding: 0;
   top: 0;
   height: auto;
+  z-index: 999;
 
   button, a{
-    margin: 0;
+    margin: 0 1px;
     color: $nav-plain-link-color;
     background: $nav-plain-link-background;
     padding: 2px 4px;
+    text-size: 90%;
+    &:hover {
+      color: $nav-plain-link-hover-color;
+    }
   }
 }
 .menu-items{

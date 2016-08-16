@@ -3,17 +3,16 @@ import {connect} from 'react-redux';
 import {List} from 'immutable';
 
 import CourseList from '../course/CourseList.component';
-import {fetchCourses} from '../course/course';
+import {fetchCourses, addCourse} from '../course/course';
 import CourseForm from '../course/CourseForm.component';
 import RequireAuthoritory from '../util/RequireAuthority.component';
-import {addCourse} from '../course/course';
 
 const mapStateToProps = state => ({
   courses: state.getIn(['entities', 'courses']),
   views: state.getIn(['entities', 'views'])
 });
 
-export default class View extends React.Component {
+class View extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {activeView: null};
@@ -54,12 +53,13 @@ export default class View extends React.Component {
           <RequireAuthoritory
               authority="ROLE_ADMIN"
               item={
-                <CourseForm
-                    onSubmit={this.props.addCourse}
-                    view={this.state.activeView}
-                />
+                <div className="container">
+                  <CourseForm
+                      onSubmit={this.props.addCourse}
+                      view={this.state.activeView}
+                  />
+                </div>
               }
-
           />
           <CourseList courses={this.props.courses.toJS()} />
         </div>

@@ -1,7 +1,15 @@
 {
+  "intro": {
+    "title": "Welcome to use ISLA application",
+    "content": "ISLA is browser-based application which aim is to activate participation among people in educational, seminar or relevant purposes. Application is easy-to-use and it's designed based on feedback gathered from users of application's alpha version. Application is based on terms of open source implementation which allows free use of application in various operational environment."
+  },
   "navText": "Isla",
+  "submitChanges": "Save changes",
   "createdAt": "Created at",
+  "cancel": "Cancel",
+  "edit": "Edit",
   "loggedInAs": "Logged in as %(user)s",
+  "setLocale": "Select language",
   "notAuthorizedToViewPage": "You're not authorized to view the page you're trying to access",
   "navigation": {
     "authenticate": "Authenticate",
@@ -11,5 +19,25 @@
   },
   "footer": {
     "github": "Check us out on Github!"
+  },
+  "moment": {
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "weekdays": [
+      "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+    ],
+    "weekdaysMin": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
   }
 }

@@ -1,10 +1,36 @@
 .lecture-list {
   margin: $default-vertical-margin auto;
+  border: 1px solid $gray;
   width: 90%;
+  max-width: 700px;
+}
+.lecture-list-search {
+  display: block;
+  background: $carrara;
+  border: none;
+  margin: 0;
+  padding: 5px 10px;
+}
+.lecture-list-item {
+  padding: 5px;
+  border: none;
+  & + .lecture-list-item {
+    border-top: 1px solid $aluminum;
+  }
+  &.inactive {
+    background: $carrara;
+  }
+}
+.lecture-title {
+  display: block;
+  width: 100%;
 }
 .lecture-description{
   margin-left: 30px;
   color: $gray;
   font-style: italic;
   font-size: 85%;
+}
+.like-count{
+  margin: 0 5px;
 }

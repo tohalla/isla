@@ -109,7 +109,10 @@ public class AccountResource {
     public ResponseEntity<UserDTO> getAccount() {
         if (SecurityContextHolder.getContext().getAuthentication().getName() == null)
             return new ResponseEntity<>(
-                    new UserDTO(-1, SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), "", "", "", "", false, "",
+                    new UserDTO(-1,
+                            SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+                                    .toString(),
+                            "", "", "", "", false, "",
                             new HashSet<String>(Arrays.asList(AuthoritiesConstants.ANONYMOUS))),
                     HttpStatus.OK);
         return Optional.ofNullable(userService.getUserWithAuthorities())
@@ -127,7 +130,10 @@ public class AccountResource {
         return userRepository.findOneByLogin(userDTO.getLogin())
                 .filter(u -> u.getLogin().equals(SecurityUtils.getCurrentLogin())).map(u -> {
                     userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(),
-                            userDTO.getEmail(), userDTO.getLangKey());
+                            userDTO.getLangKey(), userDTO.getEmail());
+                    if (checkPasswordLength(userDTO.getPassword())) {
+                        userService.changePassword(userDTO.getPassword());
+                    }
                     return new ResponseEntity<String>(HttpStatus.OK);
                 }).orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
@@ -156,18 +162,18 @@ public class AccountResource {
             String baseUrl = request.getScheme() + "://" + request.getServerName() + ":"
                     + request.getServerPort();
             mailService.sendPasswordResetMail(user, baseUrl);
-            return new ResponseEntity<>("e-mail was sent", HttpStatus.OK);
-        }).orElse(new ResponseEntity<>("e-mail address not registered", HttpStatus.BAD_REQUEST));
+            return new ResponseEntity<>("resetOk", HttpStatus.OK);
+        }).orElse(new ResponseEntity<>("resetFail", HttpStatus.BAD_REQUEST));
 
     }
 
-    @RequestMapping(value = "/account/reset_password/finish", method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/account/reset_password/finish", method = RequestMethod.POST)
+    @ResponseBody
     @Timed
     public ResponseEntity<String> finishPasswordReset(
             @RequestBody KeyAndPasswordDTO keyAndPassword) {
         if (!checkPasswordLength(keyAndPassword.getNewPassword())) {
-            return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("invalidPassword", HttpStatus.BAD_REQUEST);
         }
         return userService
                 .completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey())

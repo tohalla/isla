@@ -3,10 +3,10 @@ import counterpart from 'counterpart';
 
 import DefaultCommentForm from './DefaultCommentForm.component';
 import MultipleChoiceCommentForm from './MultipleChoiceCommentForm.component';
-import RequireAuthoritory from '../util/RequireAuthority.component';
 
 export default class NewComment extends React.Component {
   static propTypes = {
+    allowModeratorActions: React.PropTypes.bool,
     onSubmit: React.PropTypes.func.isRequired
   }
   constructor(props, context) {
@@ -18,22 +18,15 @@ export default class NewComment extends React.Component {
     this.setState({commentType: event.target.value});
   }
   render() {
-    const selectCommentType = (
-      <RequireAuthoritory
-          alternativeItem={<span className="select-comment-type" />}
-          authority="ROLE_ADMIN"
-          item={
-            <select
-                className="select-comment-type"
-                onChange={this.onCommentTypeChange}
-                value={this.state.commentType}
-            >
-              <option value="default">{counterpart.translate('lectureInstance.commentTypes.normal')}</option>
-              <option value="multipleChoice">{counterpart.translate('lectureInstance.commentTypes.multipleChoice')}</option>
-            </select>
-          }
-      />
-    );
+    const selectCommentType = this.props.allowModeratorActions ? (
+      <select
+          className="select-comment-type"
+          onChange={this.onCommentTypeChange}
+          value={this.state.commentType}
+      >
+        <option value="default">{counterpart.translate('lectureInstance.commentTypes.normal')}</option>
+        <option value="multipleChoice">{counterpart.translate('lectureInstance.commentTypes.multipleChoice')}</option>
+      </select>) : (<span className="select-comment-type" />);
     const commentForm = () => {
       switch (this.state.commentType) {
         case 'multipleChoice':
@@ -53,10 +46,6 @@ export default class NewComment extends React.Component {
       }
     };
 
-    return (
-      <div className="comment-form-container">
-        {commentForm()}
-      </div>
-    );
+    return commentForm();
   }
 }

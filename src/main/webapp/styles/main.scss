@@ -8,6 +8,7 @@
 @import "alert.scss";
 @import "btn.scss";
 @import "navbar.scss";
+@import "datepicker.scss";
 @import "icons.scss";
 
 *{
@@ -18,11 +19,23 @@ html, body, .stretch{
   height: 100%;
   max-width: 100%;
 }
+.plain {
+  background: $white;
+  min-height: 100%;
+}
 .wrapper {
+  background: $white;
   min-height: 100%;
   height: auto !important;
   height: 100%;
   margin-bottom: -$footer-height;
+}
+.block {
+  width: 100%;
+  display: block;
+}
+.block + *{
+  margin-top: 10px;
 }
 a{
   color: $link-color;
@@ -30,10 +43,13 @@ a{
   &:hover{
     color: $link-hover-color;
   }
+  .block {
+    display: block;
+    padding: 1px 2px;
+  }
 }
-body {
-  background: $background;
-  badding-bottom: $footer-height;
+html {
+  background: $carrara;
   color: #333;
 }
 .container {
@@ -43,7 +59,6 @@ body {
   border-radius: $default-border-radius;
   display: block;
   max-width: 800px;
-  width: 100%;
 }
 .content{
   padding: 30px 5% 10px;
@@ -68,22 +83,25 @@ body {
 .right{
   display: block;
   margin-left: auto;
+  text-align: right;
 }
 .fixed{
   position: fixed;
 }
 .dropdown{
   position: relative;
+  display: inline-block;
 }
 .dropdown-menu {
   border: 1px solid $default-border-color;
   position: absolute;
-  top: 0;
-  left: 0;
+  bottom: 0px;
+  left: 50%;
   z-index: 999;
   list-style: none;
   padding: 0;
   background: $white;
+  transform: translate(-50%, 100%);
   .dropdown-item {
     display: block;
     width: 100%;
@@ -96,4 +114,15 @@ body {
       cursor: pointer;
     }
   }
+}
+.article {
+  .article-title {
+    font-size: 24px;
+  }
+  .article-content {
+    text-align: justify;
+  }
+}
+@media (max-width: 767px) {
+  @import "mobile.scss";
 }

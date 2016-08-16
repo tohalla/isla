@@ -2,8 +2,14 @@ package isla.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import isla.security.AuthoritiesConstants;
+import isla.security.SecurityUtils;
+import isla.security.UserAuthentication;
+import isla.web.rest.dto.CourseDTO;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -36,20 +42,31 @@ public class Course implements Serializable {
     private String courseDescription;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnore
     @JoinTable(name = "course_moderators",
             joinColumns = {@JoinColumn(name = "course_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<User> moderators = new HashSet<>();
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Lecture> lectures = new HashSet<>();
 
     @ManyToOne
     private View view;
-    
+
+    @JsonProperty("hasModeratorRights")
+    public boolean getHasModeratorRights() {
+        if (SecurityUtils.isUserInRole(AuthoritiesConstants.ADMIN))
+            return true;
+        for (User moderator : this.moderators) {
+            if (moderator.getLogin().equals(SecurityUtils.getCurrentLogin()))
+                return true;
+        }
+        return false;
+    }
+
     public Long getId() {
         return id;
     }
@@ -77,7 +94,7 @@ public class Course implements Serializable {
     public void setLectures(Set<Lecture> lectures) {
         this.lectures = lectures;
     }
-    
+
     public void setModerators(Set<User> moderators) {
         this.moderators = moderators;
     }
@@ -89,6 +106,7 @@ public class Course implements Serializable {
     public Set<User> getModerators() {
         return moderators;
     }
+
     public void setView(View view) {
         this.view = view;
     }
@@ -123,6 +141,8 @@ public class Course implements Serializable {
     @Override
     public String toString() {
         return "Course{" + "id=" + id + ", course_name='" + courseName + "'"
-                + ", course_description='" + courseDescription + "'" + '}';
+                + ", course_description='" + courseDescription + "'" + ", moderators='" + moderators
+                + "'" + '}';
     }
+
 }

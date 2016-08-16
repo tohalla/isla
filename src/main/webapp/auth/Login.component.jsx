@@ -6,17 +6,19 @@ import counterpart from 'counterpart';
 import {login, clearAuthErrors} from './auth';
 import WithLabel from '../util/WithLabel.component';
 
+const mapStateToProps = state => ({
+  auth: state.get('auth')
+});
 class Login extends React.Component {
   static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-    auth: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired
   }
   constructor(props, context) {
     super(props, context);
     this.onSubmit = this.onSubmit.bind(this);
     this.allowSubmit = this.allowSubmit.bind(this);
-    this.handleLoginChange = this.handleLoginChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.onLoginChange = this.onLoginChange.bind(this);
+    this.onPasswordChange = this.onPasswordChange.bind(this);
     this.state = {
       login: '',
       password: ''
@@ -24,15 +26,15 @@ class Login extends React.Component {
   }
   componentWillMount() {
     this.props.clearAuthErrors();
-    if (this.context.auth.isAuthenticated) {
+    if (this.props.auth.get('isAuthenticated')) {
       this.context.router.push('/');
     }
   }
-  shouldComponentUpdate(newProps, newState, newContext) {
+  shouldComponentUpdate(newProps, newState) {
     return !(
       this.state === newState &&
       this.props.value === newProps.value &&
-      JSON.stringify(this.context) === JSON.stringify(newContext)
+      this.props.auth === newProps.auth
     );
   }
   onSubmit(event) {
@@ -42,12 +44,12 @@ class Login extends React.Component {
       password: this.state.password
     })
       .then(() => this.context.router.push('/'))
-      .catch(error => this.setState({error: 'invalidLogin'}));
+      .catch(() => this.setState({error: 'invalidLogin'}));
   }
-  handleLoginChange(event) {
+  onLoginChange(event) {
     this.setState({login: event.target.value});
   }
-  handlePasswordChange(event) {
+  onPasswordChange(event) {
     this.setState({password: event.target.value});
   }
   allowSubmit() {
@@ -55,51 +57,50 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <form className="form-vertical-group form-login" onSubmit={this.onSubmit}>
-        {this.state.error ?
-          <div className="error-block">
-            {counterpart.translate(`account.errors.${this.state.error}`)}
-          </div> : null
-        }
-        <WithLabel
-            item={
-              <input
-                  onChange={this.handleLoginChange}
-                  placeholder={counterpart.translate('account.login')}
-                  type="text"
-                  value={this.state.login}
-              />
-            }
-            label={counterpart.translate('account.login')}
-        />
-        <WithLabel
-            item={
-              <input
-                  onChange={this.handlePasswordChange}
-                  placeholder={counterpart.translate('account.password')}
-                  type="password"
-                  value={this.state.password}
-              />
-            }
-            label={counterpart.translate('account.password')}
-        />
-        <div className="form-group">
-          <Link to={'/register'}>
-            {counterpart.translate('account.register.register')}
+      <div className="container">
+        <form className="form-vertical-group form-login" onSubmit={this.onSubmit}>
+          {this.state.error ?
+            <div className="error-block">
+              {counterpart.translate(`account.errors.${this.state.error}`)}
+            </div> : null
+          }
+          <WithLabel label={counterpart.translate('account.login')}>
+            <input
+                onChange={this.onLoginChange}
+                placeholder={counterpart.translate('account.login')}
+                type="text"
+                value={this.state.login}
+            />
+          </WithLabel>
+          <WithLabel label={counterpart.translate('account.password')}>
+            <input
+                onChange={this.onPasswordChange}
+                placeholder={counterpart.translate('account.password')}
+                type="password"
+                value={this.state.password}
+            />
+          </WithLabel>
+          <div className="form-group">
+            <Link to={'/register'}>
+              {counterpart.translate('account.register.register')}
+            </Link>
+            <button
+                disabled={!this.allowSubmit()}
+                type="submit"
+            >
+              {counterpart.translate('account.authenticate.authenticate')}
+            </button>
+          </div>
+          <Link className="block" to={'/recovery'}>
+            {counterpart.translate('account.authenticate.passwordRecovery')}
           </Link>
-          <button
-              disabled={!this.allowSubmit()}
-              type="submit"
-          >
-            {counterpart.translate('account.authenticate.authenticate')}
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     );
   }
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   {login, clearAuthErrors}
 )(Login);

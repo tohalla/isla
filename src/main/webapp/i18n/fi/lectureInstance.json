@@ -1,0 +1,22 @@
+{
+  "actions": {
+    "freeze": {
+      "disabled": "Pysäytä näkymä",
+      "enabled": "Vapauta näkymä"
+    },
+    "hideChecked": {
+      "disabled": "Piilota luetut kommentit",
+      "enabled": "Näytä luetut kommentit"
+    },
+    "displayQRCode": "Näytä QR-koodi"
+  },
+  "commentCreation": {
+    "create": "lähetä",
+    "content": "Kommentti",
+    "choiceContent": "Valinta"
+  },
+  "commentTypes": {
+    "normal": "Normaali",
+    "multipleChoice": "Monivalinta"
+  }
+}

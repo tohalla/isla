@@ -3,11 +3,7 @@ import counterpart from 'counterpart';
 
 export default class Locales extends React.Component {
   static propTypes = {
-    onChange: React.PropTypes.func.isRequired,
-    value: React.PropTypes.string
-  };
-  static defaultValues = {
-    value: counterpart.getLocale()
+    field: React.PropTypes.object.isRequired
   };
   render() {
     const locales = [];
@@ -15,14 +11,14 @@ export default class Locales extends React.Component {
     for (let key in translations) {
       if (Object.hasOwnProperty.call(translations, key)) {
         locales.push(
-          <option active={key === this.props.value} key={key}>
+          <option active={key === this.props.field.value} key={key}>
             {key}
           </option>
         );
       }
     }
     return (
-      <select onChange={this.props.onChange}>
+      <select {...this.props.field}>
         {locales}
       </select>
     );

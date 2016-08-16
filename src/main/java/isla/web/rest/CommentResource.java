@@ -50,6 +50,10 @@ public class CommentResource {
             return ResponseEntity.badRequest()
                     .header("Failure", "A new comment cannot already have an ID").body(null);
         }
+        if (comment.getLecture().getClosesAt().isBeforeNow()) {
+            return ResponseEntity.badRequest()
+                    .header("Failure", "Lecture has been closed").body(null);
+        }
         Comment result = commentRepository.save(comment);
         return ResponseEntity.created(new URI("/api/comments/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("comment", result.getId().toString()))
@@ -68,6 +72,10 @@ public class CommentResource {
         log.debug("REST request to update Comment : {}", comment);
         if (comment.getId() == null) {
             return createComment(comment);
+        }
+        if (comment.getLecture().getClosesAt().isBeforeNow()) {
+            return ResponseEntity.badRequest()
+                    .header("Failure", "Lecture has been closed").body(null);
         }
         Comment result = commentRepository.save(comment);
         return ResponseEntity.ok()

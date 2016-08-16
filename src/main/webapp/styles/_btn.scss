@@ -1,9 +1,12 @@
 button, .btn{
   outline: none;
   padding: 6px;
-  border: 0px;
+  margin: 1px;
+  border: 0;
   color: $default-btn-color;
   background: $default-btn-background;
+  white-space: nowrap;
+  cursor: pointer;
   &:hover{
     background: $default-btn-hover-background;
   }
@@ -11,4 +14,16 @@ button, .btn{
 button:disabled{
   background: $default-btn-disabled-background;
   color: $default-btn-disabled-color;
+  cursor: initial;
+}
+.btn-plain {
+  padding: 0;
+  margin: 0 5px;
+  border: 0;
+  color: $link-color;
+  background: none;
+  &:hover {
+    color: $link-hover-color;
+    background: none;
+  }
 }

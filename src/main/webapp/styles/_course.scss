@@ -17,3 +17,16 @@
   background: $carrara;
   padding: 4px 8px;
 }
+.course-info {
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow-x: auto;
+  margin: 10px auto;
+  padding: $default-vertical-padding $default-horizontal-padding;
+  display: block;
+  .course-description {
+    font-size: 90%;
+    padding: 5px 10px;
+    color: $gray;
+  }
+}

@@ -3,20 +3,30 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import counterpart from 'counterpart';
 
-import {logout} from '../auth/auth';
+import {logout, setLocale} from '../auth/auth';
 import RequireAuthority from '../util/RequireAuthority.component';
+import Locales from '../i18n/Locales.component';
 
+const mapStateToProps = state => ({
+  auth: state.get('auth')
+});
 class UserMenu extends React.Component {
-  static propTypes = {
-    auth: React.PropTypes.object.isRequired
-  }
   render() {
+    const localesField = {
+      onChange: event => {
+        this.props.setLocale(event.target.value);
+      },
+      value: this.props.auth.getIn(['user', 'langKey']) || 'en'
+    };
     return (
       <span className="user-menu">
-        {this.props.auth.isAuthenticated ?
+        {this.props.auth.get('isAuthenticated') ?
           <span>
-            <span>
-              {counterpart.translate("general.loggedInAs", {user: this.props.auth.user.login})}
+            <span className="logged-in-as">
+              {counterpart.translate(
+                "general.loggedInAs",
+                {user: this.props.auth.getIn(['user', 'login'])}
+              )}
             </span>
             <ul className="menu-items">
               <RequireAuthority
@@ -52,9 +62,14 @@ class UserMenu extends React.Component {
             </ul>
           </span> :
           <ul className="menu-items">
-            <li><Link to={'/authenticate'}>
-              {counterpart.translate('general.navigation.authenticate')}
-            </Link></li>
+            <li>
+              <Link to={'/authenticate'}>
+                {counterpart.translate('general.navigation.authenticate')}
+              </Link>
+            </li>
+            <li>
+              <Locales field={localesField} />
+            </li>
           </ul>
 
         }
@@ -64,6 +79,6 @@ class UserMenu extends React.Component {
 }
 
 export default connect(
-  null,
-  {logout}
+  mapStateToProps,
+  {logout, setLocale}
 )(UserMenu);

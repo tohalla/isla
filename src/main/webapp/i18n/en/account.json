@@ -1,7 +1,9 @@
 {
   "authenticate": {
     "title": "Log in",
-    "authenticate": "Log in"
+    "authenticate": "Log in",
+    "passwordRecovery": "Did you forget your password?",
+    "sendResetLink": "Reset password"
   },
   "register": {
     "title": "Register",
@@ -25,6 +27,8 @@
     "invalidLogin": "Login failed with given credentials."
   },
   "login": "Username",
+  "firstName": "First name",
+  "lastName": "Last name",
   "password": "Password",
   "retypePassword": "Retype password",
   "email": "Email",

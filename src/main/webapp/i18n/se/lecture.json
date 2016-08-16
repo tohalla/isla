@@ -1,0 +1,12 @@
+{
+  "lectureCreation": {
+    "description": "Lägg till en beskrivning för sessionen",
+    "closesAt": "Session stänger",
+    "create": "Öppna session"
+  },
+  "openUntil": "Session är aktiv till %(time)s",
+  "noActive": "Ingen aktiv sessioner",
+  "searchPlaceholder": "Sök med kursnamn",
+  "closeLecture": "Stänga sessionen",
+  "closedAt": "Session avslutades %(time)s"
+}

@@ -1,4 +1,15 @@
 {
+  "actions": {
+    "freeze": {
+      "disabled": "Freeze view",
+      "enabled": "Unfreeze view"
+    },
+    "hideChecked": {
+      "disabled": "Hide checked comments",
+      "enabled": "Show checked comments"
+    },
+    "displayQRCode": "Display QR-code"
+  },
   "commentCreation": {
     "create": "send",
     "content": "Comment",

@@ -1,0 +1,22 @@
+{
+  "actions": {
+    "freeze": {
+      "disabled": "Stoppa utsikt",
+      "enabled": "Befria utsikt"
+    },
+    "hideChecked": {
+      "disabled": "Dölja kontrolleras kommentarer",
+      "enabled": "Visa kontrolleras kommentarer"
+    },
+    "displayQRCode": "Visa QR-kod"
+  },
+  "commentCreation": {
+    "create": "skicka",
+    "content": "Kommentar",
+    "choiceContent": "Val"
+  },
+  "commentTypes": {
+    "normal": "Normal",
+    "multipleChoice": "Flervalsfråga"
+  }
+}

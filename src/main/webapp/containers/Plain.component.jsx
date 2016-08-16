@@ -7,7 +7,9 @@ export default class Default extends React.Component {
     return (
       <div className="stretch">
         <TopBarPlain />
-        {this.props.children}
+        <div className="plain">
+          {this.props.children}
+        </div>
       </div>
     );
   }

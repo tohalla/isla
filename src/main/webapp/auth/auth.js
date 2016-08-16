@@ -1,11 +1,16 @@
 import {createReducer} from 'redux-immutablejs';
+import moment from 'moment';
 import {fromJS} from 'immutable';
+import counterpart from 'counterpart';
 
 import {
   CALL_API,
   REGISTER_SUCCESS,
   REGISTER_REQUEST,
   REGISTER_FAILURE,
+  UPDATE_ACCOUNT_SUCCESS,
+  UPDATE_ACCOUNT_REQUEST,
+  UPDATE_ACCOUNT_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
@@ -18,7 +23,14 @@ import {
   ACCOUNT_REQUEST,
   ACCOUNT_SET,
   ACCOUNT_FAILURE,
-  ERROR_AUTH_CLEAR
+  ERROR_AUTH_CLEAR,
+  SET_LOCALE,
+  PASSWORD_RESET_REQUEST,
+  PASSWORD_RESET_FAILURE,
+  PASSWORD_RESET_SUCCESS,
+  PASSWORD_UPDATE_REQUEST,
+  PASSWORD_UPDATE_FAILURE,
+  PASSWORD_UPDATE_SUCCESS
 } from '../constants';
 
 export default createReducer(
@@ -37,43 +49,73 @@ export default createReducer(
     }).set('user', action.response),
     [ACCOUNT_FAILURE]: (state, action) =>
       state.merge({isFetching: false}, action.response),
+    [ACCOUNT_REQUEST]: (state, action) =>
+      state.merge({isFetching: true}, action.response),
     [LOGOUT_FAILURE]: (state, action) =>
       state.merge({isFetching: false}, action.response),
     [REGISTER_FAILURE]: (state, action) =>
       state.merge({isFetching: false}, action.response),
-    [ERROR_AUTH_CLEAR]: state => state.delete('error')
+    [ERROR_AUTH_CLEAR]: state => state.delete('error'),
+    [SET_LOCALE]: (state, action) =>
+      state.setIn(['user', 'langKey'], action.locale)
   }
 );
 
-export const activate = key => {
-  return {
-    [CALL_API]: {
-      types: [ACTIVATE_REQUEST, ACTIVATE_SUCCESS, ACTIVATE_FAILURE],
-      endpoint: 'activate',
-      config: {
-        params: {key},
-        onSuccess: data => data,
-        onFailure: error => Promise.reject(error)
-      }
+export const newPasswordWithResetKey = (key, newPassword) => ({
+  [CALL_API]: {
+    types: [
+      PASSWORD_UPDATE_REQUEST,
+      PASSWORD_UPDATE_SUCCESS,
+      PASSWORD_UPDATE_FAILURE
+    ],
+    endpoint: 'account/reset_password/finish',
+    config: {
+      method: 'POST',
+      body: {key, newPassword}
     }
-  };
-};
+  }
+});
 
-export const fetchAccount = () => {
-  return {
-    [CALL_API]: {
-      types: [ACCOUNT_REQUEST, ACCOUNT_SET, ACCOUNT_FAILURE],
-      endpoint: 'account',
-      config: {
-        onSuccess: data => {
-          if (!localStorage.token) {
-            localStorage.setItem('token', data.login);
-          }
+export const resetPassword = email => ({
+  [CALL_API]: {
+    types: [
+      PASSWORD_RESET_REQUEST,
+      PASSWORD_RESET_SUCCESS,
+      PASSWORD_RESET_FAILURE
+    ],
+    endpoint: 'account/reset_password/init',
+    config: {
+      method: 'POST',
+      body: email
+    }
+  }
+});
+
+export const activate = key => ({
+  [CALL_API]: {
+    types: [ACTIVATE_REQUEST, ACTIVATE_SUCCESS, ACTIVATE_FAILURE],
+    endpoint: 'activate',
+    config: {
+      params: {key},
+      onSuccess: data => data,
+      onFailure: error => Promise.reject(error)
+    }
+  }
+});
+
+export const fetchAccount = () => ({
+  [CALL_API]: {
+    types: [ACCOUNT_REQUEST, ACCOUNT_SET, ACCOUNT_FAILURE],
+    endpoint: 'account',
+    config: {
+      onSuccess: data => {
+        if (!localStorage.token) {
+          localStorage.setItem('token', data.login);
         }
       }
     }
-  };
-};
+  }
+});
 
 export const login = credentials => dispatch => dispatch({
   [CALL_API]: {
@@ -90,7 +132,7 @@ export const login = credentials => dispatch => dispatch({
       },
       onSuccess: data => {
         localStorage.setItem('token', `Bearer ${data.token}`);
-        return dispatch(fetchAccount());
+        window.location = '/';
       },
       onFailure: error => Promise.reject(error)
     }
@@ -112,6 +154,19 @@ export const register = user => {
   };
 };
 
+export const update = user => dispatch => dispatch({
+  [CALL_API]: {
+    types: [UPDATE_ACCOUNT_REQUEST, UPDATE_ACCOUNT_SUCCESS, UPDATE_ACCOUNT_FAILURE],
+    endpoint: 'account',
+    config: {
+      body: user,
+      method: 'POST',
+      onSuccess: () => dispatch(fetchAccount()),
+      onFailure: error => Promise.reject(error)
+    }
+  }
+});
+
 export const clearAuthErrors = () => {
   return {
     type: [ERROR_AUTH_CLEAR]
@@ -125,9 +180,15 @@ export const logout = () => dispatch => dispatch({
     config: {
       onSuccess: () => {
         localStorage.removeItem('token');
-        dispatch(fetchAccount());
+        window.location = '/';
       }
     }
   }
 });
 
+export const setLocale = locale => {
+  localStorage.setItem('langKey', locale);
+  counterpart.setLocale(locale);
+  moment.locale(locale);
+  return {type: SET_LOCALE, locale};
+};

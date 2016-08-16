@@ -1,0 +1,36 @@
+{
+  "authenticate": {
+    "title": "Kirjaudu",
+    "authenticate": "Kirjaudu",
+    "passwordRecovery": "Unohtuiko salasana?",
+    "sendResetLink": "Lähetä"
+  },
+  "register": {
+    "title": "Rekisteröinti",
+    "register": "Luo uusi käyttäjätili",
+    "completed": "Rekisteröinti on onnistunut. Vahvistussähköposti lähetetään hetken kuluttua."
+  },
+  "activate": {
+    "activated": "Käyttäjätilisi on aktivoitu. Sisäänkirjautuminen on nyt mahdollista.",
+    "invalidCode": "Syöttämäsi aktivointikoodi on epäkelpo. Huomioi, että aktivointikoodi mitätöityy kolmen päivän kuluessa."
+  },
+  "errors": {
+    "email": {
+      "invalid": "Syöttämäsi sähköpostiosoite ei ole järjestelmässä."
+    },
+    "password": {
+      "invalidLength": "Salasanan pituus tulee olla 5-50 merkkiä.",
+      "dontMatch": "Salasanat eivät täsmää."
+    },
+    "loginAlreadyRegistered": "Valitsemasi käyttäjänimi on jo käytössä toisella käyttäjällä.",
+    "emailAlreadyRegistered": "Sähköpostiosoite on jo käytössä toisella käyttäjällä.",
+    "invalidLogin": "Kirjautuminen epäonnistui. Yritä uudelleen."
+  },
+  "login": "Käyttäjänimi",
+  "firstName": "Etunimi",
+  "lastName": "Sukunimi",
+  "password": "Salasana",
+  "retypePassword": "Syötä salasana uudelleen",
+  "email": "Email",
+  "selectDefaultLanguage": "Oletuskieli"
+}

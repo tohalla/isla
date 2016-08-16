@@ -10,7 +10,7 @@ export default class DefaultComment extends React.Component {
     super(props, context);
     this.onContentChange = this.onContentChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.state = {comment: {}};
+    this.state = {comment: {content: ''}};
   }
   onContentChange(event) {
     this.setState(Object.assign(
@@ -23,7 +23,7 @@ export default class DefaultComment extends React.Component {
       return;
     }
     this.props.onSubmit(this.state.comment);
-    this.setState({comment: {}});
+    this.setState({comment: {content: ''}});
   }
   render() {
     return (

@@ -1,8 +1,10 @@
 {
-  "courseCreation": {
-    "name": "Course name",
-    "description": "Description",
-    "create": "Create course",
-    "view": "View"
+  "name": "Course name",
+  "description": "Description",
+  "moderators": "Moderators",
+  "create": "Create course",
+  "view": "View",
+  "actions": {
+    "addLecture": "Open new lecture"
   }
 }

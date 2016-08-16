@@ -1,0 +1,12 @@
+{
+  "lectureCreation": {
+    "description": "Istunnon kuvaus",
+    "closesAt": "Istunto sulkeutuu",
+    "create": "Avaa istunto"
+  },
+  "openUntil": "Istunto on aktiivinen %(time)s",
+  "noActive": "Ei aktiivisia istuntoja",
+  "searchPlaceholder": "Hae kurssin nimellä",
+  "closeLecture": "Sulje istunto",
+  "closedAt": "Istunto sulkeutui %(time)s"
+}

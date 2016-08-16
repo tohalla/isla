@@ -4,8 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
-const pkg = require('./package.json');
-
 const PATHS = {
   entry: path.join(__dirname, 'src', 'main', 'webapp', 'index'),
   dist: path.join(__dirname, 'src', 'main', 'webapp', 'dist')
@@ -13,12 +11,7 @@ const PATHS = {
 
 module.exports = {
   entry: {
-    main: PATHS.entry,
-    vendor: Object.keys(pkg.dependencies).filter(
-      p => {
-        return p !== 'alt-utils';
-      }
-    )
+    main: PATHS.entry
   },
   resolve: {
     extensions: ['', '.js', '.jsx']

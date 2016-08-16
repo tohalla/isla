@@ -20,9 +20,11 @@ class LectureList extends React.Component {
     return !(this.props.lectures === newProps.lectures);
   }
   render() {
-    if (this.props.lectures instanceof List) {
+    if (this.props.lectures instanceof List && this.props.lectures.count()) {
       const lectures = [];
-      this.props.lectures.forEach((lecture, index) => {
+      this.props.lectures
+      .sort((a, b) => a.get('createdAt') < b.get('createdAt') ? 1 : -1)
+      .forEach((lecture, index) => {
         lectures.push(<Lecture key={index} lecture={lecture.toJS()} />);
       });
       return (
