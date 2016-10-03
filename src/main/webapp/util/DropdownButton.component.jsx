@@ -1,7 +1,7 @@
 import React from 'react';
 import onclickoutside from 'react-click-outside';
 
-export default class DropdownButton extends React.Component {
+class DropdownButton extends React.Component {
   static propTypes: {
     clickableItem: React.PropTypes.object.isRequired,
     onMenuItemClick: React.PropTypes.func.isRequired,

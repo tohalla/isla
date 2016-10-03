@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 const mapStateToProps = state => ({
   auth: state.get('auth')
 });
-export default class RequireAuthority extends React.Component {
+class RequireAuthority extends React.Component {
   static propTypes = {
     alternativeItem: React.PropTypes.object,
     authorities: React.PropTypes.array,
